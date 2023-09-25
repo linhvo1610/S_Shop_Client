@@ -17,7 +17,7 @@ public class SplassActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // Start your main activity here
-                Intent mainIntent = new Intent(SplassActivity.this, MainActivity.class);
+                Intent mainIntent = new Intent(SplassActivity.this, DangNhapActivity.class);
                 startActivity(mainIntent);
                 finish();
             }
