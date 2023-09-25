@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/boder"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+       >
+        <ImageView
+            android:id="@+id/imgproduct"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/giay1"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:text="Title"/>
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:text="Description"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+       android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/boder">
+        <TextView
+            android:id="@+id/tvQuartily"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:text="Quantity:"/>
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:textColor="#FF0000"
+            android:textSize="15dp"
+            android:text="Price:"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
