@@ -24,7 +24,7 @@ public class DangNhapActivity extends AppCompatActivity {
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DangNhapActivity.this, MainActivity.class);
+                Intent intent = new Intent(DangNhapActivity.this, Tab_Giaodien_Activity.class);
                 startActivity(intent);
 
                 Toast.makeText(DangNhapActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
