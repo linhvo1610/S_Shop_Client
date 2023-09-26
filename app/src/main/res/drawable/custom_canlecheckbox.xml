@@ -1,0 +1,11 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" /> <!-- Màu viền khi không được chọn -->
+            <stroke android:color="#636363" android:width="0.8dp" /> <!-- Màu viền ngoài -->
+            <corners android:radius="4dp" /> <!-- Bo góc viền -->
+        </shape>
+    </item>
+</selector>

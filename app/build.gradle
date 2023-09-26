@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'account.fpoly.s_shop_client'
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "account.fpoly.s_shop_client"
-        minSdk 26
-        targetSdk 32
+        minSdk 25
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -36,4 +36,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation'com.google.android.material:material:1.11.0-alpha03'
+    implementation'com.makeramen:roundedimageview:2.3.0'
+    implementation('pl.droidsonroids.gif:android-gif-drawable:1.1.16')
+    implementation ('de.hdodenhof:circleimageview:3.1.0')
 }
