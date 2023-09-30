@@ -12,12 +12,14 @@ import androidx.fragment.app.Fragment;
 
 import account.fpoly.s_shop_client.Chat_Admin;
 import account.fpoly.s_shop_client.ChitietProduct;
+import account.fpoly.s_shop_client.Notification;
 import account.fpoly.s_shop_client.R;
 
 
 public class HomeFragment extends Fragment {
 
-    ImageView chat_admin;
+    ImageView chat_admin,notification;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -26,10 +28,17 @@ public class HomeFragment extends Fragment {
 
         LinearLayout iteam1 = view.findViewById(R.id.iteam1);
         chat_admin = view.findViewById(R.id.chat_admin);
+        notification= view.findViewById(R.id.iconNotification);
         chat_admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), Chat_Admin.class));
+            }
+        });
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+             startActivity(new Intent(getContext(), Notification.class));
             }
         });
 
