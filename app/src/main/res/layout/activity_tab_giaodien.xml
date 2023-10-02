@@ -18,19 +18,35 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp" />
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_navigation"/>
+
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottom_navigation"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginBottom="0dp"-->
+<!--        android:background="@drawable/round_conner"-->
+<!--        android:elevation="2dp"-->
+<!--        app:itemIconSize="27dp"-->
+<!--        app:itemIconTint="@drawable/iteam_selector"-->
+<!--        app:itemRippleColor="@android:color/transparent"-->
+<!--        app:labelVisibilityMode="unlabeled"-->
+<!--        app:menu="@menu/iteam_menu" />-->
+
+    <me.ibrahimsn.lib.SmoothBottomBar
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="0dp"
-        android:background="@drawable/round_conner"
-        android:elevation="2dp"
-        app:itemIconSize="27dp"
-        app:itemIconTint="@drawable/iteam_selector"
-        app:itemRippleColor="@android:color/transparent"
-        app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/iteam_menu" />
+        app:backgroundColor="#673AB7"
+        app:indicatorRadius="10dp"
+        app:menu="@menu/iteam_menu"/>
 
 </RelativeLayout>
