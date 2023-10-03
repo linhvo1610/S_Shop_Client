@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical"
     tools:context=".HistoryOrderClient">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/borderrdio"
+            android:textColor="@color/white"
             android:textSize="30dp"
             android:text="History"
             android:gravity="center"
@@ -35,7 +37,7 @@
                     android:background="@drawable/boder"
                     android:layout_marginLeft="15dp"
                     android:padding="10dp"
-                    android:hint="History..."
+                    android:hint="Nhập tên sản phẩm hoặc tên Shop...."
                     />
         </LinearLayout>
     </LinearLayout>
@@ -46,5 +48,6 @@
         tools:listitem="@layout/item_history"
         android:id="@+id/Rcv_History"
         />
+
 
 </LinearLayout>
