@@ -71,6 +71,56 @@
             android:textSize="15dp"
             android:text="Price:"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_local_shipping_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="8"
+            android:layout_marginLeft="30dp"
+            android:text="Đơn hàng đã giao thành công" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="80dp"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_chevron_right_24"/>
+
+    </LinearLayout>
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:padding="10dp"
+       android:orientation="horizontal">
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="20"
+           android:textSize="15dp"
+           android:textStyle="bold"
+           android:text="Không nhận được đánh giá "/>
+       <Button
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="10"
+           android:backgroundTint="#E91E63"
+           android:layout_marginLeft="80dp"
+           android:hint="Mua Lại"
+           android:textColorHint="@color/white"
+           />
+
+   </LinearLayout>
+
 
 
 

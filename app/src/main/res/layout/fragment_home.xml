@@ -36,12 +36,14 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 >
+
                 <ImageView
+                    android:id="@+id/iconNotification"
                     android:layout_width="27dp"
                     android:layout_height="27dp"
-                    android:src="@drawable/bell"
                     android:layout_marginRight="22dp"
-                    />
+                    android:src="@drawable/bell" />
+
                 <ImageView
                     android:layout_width="27dp"
                     android:layout_height="27dp"
