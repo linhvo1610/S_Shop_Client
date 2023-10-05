@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import account.fpoly.s_shop_client.Chat_Admin;
 import account.fpoly.s_shop_client.ChitietProduct;
@@ -19,6 +21,7 @@ import account.fpoly.s_shop_client.R;
 public class HomeFragment extends Fragment {
 
     ImageView chat_admin,notification;
+    TextView chuyen;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,15 +29,15 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_home, container, false);
 
-        LinearLayout iteam1 = view.findViewById(R.id.iteam1);
-        chat_admin = view.findViewById(R.id.chat_admin);
+//        chat_admin = view.findViewById(R.id.chat_admin);
         notification= view.findViewById(R.id.iconNotification);
-        chat_admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), Chat_Admin.class));
-            }
-        });
+        chuyen= view.findViewById(R.id.chuyen);
+//        chat_admin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getContext(), Chat_Admin.class));
+//            }
+//        });
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,7 +45,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        iteam1.setOnClickListener(new View.OnClickListener() {
+        chuyen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), ChitietProduct.class));
