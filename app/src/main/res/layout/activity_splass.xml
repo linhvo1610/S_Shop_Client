@@ -9,9 +9,9 @@
     android:gravity="center">
 
     <pl.droidsonroids.gif.GifImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/loading"/>
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:src="@drawable/logo_sshop"/>
 
 
 </LinearLayout>
