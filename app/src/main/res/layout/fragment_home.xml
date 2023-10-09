@@ -92,7 +92,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:hint="Search for products"
-                        android:layout_marginLeft="9dp"
+                        android:layout_marginLeft="8dp"
                         />
                 </LinearLayout>
                 <LinearLayout
