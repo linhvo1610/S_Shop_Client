@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'account.fpoly.s_shop_client'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "account.fpoly.s_shop_client"
