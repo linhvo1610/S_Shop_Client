@@ -61,6 +61,12 @@
                         android:layout_height="25dp"
                         android:layout_gravity="center"
                         android:src="@drawable/bell_white" />
+                    <ImageView
+                        android:layout_width="19dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/messenger" />
                 </LinearLayout>
 
             </LinearLayout>
