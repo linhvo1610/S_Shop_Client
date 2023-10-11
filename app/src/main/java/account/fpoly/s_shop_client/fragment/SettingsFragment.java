@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import account.fpoly.s_shop_client.R;
 
-public class InfoUserFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_info_user, container, false);
+        View view =inflater.inflate(R.layout.fragment_setting_user, container, false);
 
         return view;
     }

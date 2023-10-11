@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import account.fpoly.s_shop_client.fragment.GiohangFragment;
 import account.fpoly.s_shop_client.fragment.HomeFragment;
-import account.fpoly.s_shop_client.fragment.InfoUserFragment;
+import account.fpoly.s_shop_client.fragment.SettingsFragment;
 import account.fpoly.s_shop_client.fragment.LichsuFragment;
 
 public class Tab_Giaodien_Activity extends AppCompatActivity {
@@ -28,8 +28,8 @@ public class Tab_Giaodien_Activity extends AppCompatActivity {
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.setArguments(bundle);
 
-        InfoUserFragment infoUserFragment = new InfoUserFragment();
-        infoUserFragment.setArguments(bundle);
+        SettingsFragment settingsFragment = new SettingsFragment();
+        settingsFragment.setArguments(bundle);
 
         LichsuFragment lichsuFragment = new LichsuFragment();
         lichsuFragment.setArguments(bundle);
@@ -56,7 +56,7 @@ public class Tab_Giaodien_Activity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.body_contaiber,lichsuFragment).commit();
 
                 }else if (item.getItemId() == R.id.nav_setting) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.body_contaiber,infoUserFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.body_contaiber, settingsFragment).commit();
 
                 }
                 return true;
