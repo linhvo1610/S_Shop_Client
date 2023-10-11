@@ -22,6 +22,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
 public class DangNhapActivity extends AppCompatActivity {
     TextView tvDangKy;
     Button btnDangNhap;
@@ -118,7 +119,9 @@ public class DangNhapActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<UserModal>> call, Throwable t) {
                 Toast.makeText(DangNhapActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
+
 }

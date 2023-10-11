@@ -24,11 +24,9 @@
         <activity
             android:name=".Notification"
             android:exported="false" />
+
         <activity
             android:name=".Message"
-            android:exported="false" />
-        <activity
-            android:name=".Notification"
             android:exported="false" />
         <activity
             android:name=".Chat_Admin"

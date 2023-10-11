@@ -1,5 +1,7 @@
 package account.fpoly.s_shop_client.Modal;
 
+
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;

@@ -19,6 +19,7 @@ import account.fpoly.s_shop_client.fragment.LichsuFragment;
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
 
+
 public class Tab_Giaodien_Activity extends AppCompatActivity {
 
     SmoothBottomBar navigationView;
@@ -57,11 +58,11 @@ public class Tab_Giaodien_Activity extends AppCompatActivity {
                 if (i == 1){
                     replaceFragment(giohangFragment);
                 }
-
-
-        
+                if (i == 2){
+                    replaceFragment(lichsuFragment);
+                }
                 if (i == 3){
-                    replaceFragment(infoUserFragment);
+                    replaceFragment(settingsFragment);
                 }
 
                 return false;
