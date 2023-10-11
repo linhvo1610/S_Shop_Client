@@ -2,6 +2,9 @@ package account.fpoly.s_shop_client;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,10 +16,12 @@ import account.fpoly.s_shop_client.fragment.GiohangFragment;
 import account.fpoly.s_shop_client.fragment.HomeFragment;
 import account.fpoly.s_shop_client.fragment.SettingsFragment;
 import account.fpoly.s_shop_client.fragment.LichsuFragment;
+import me.ibrahimsn.lib.OnItemSelectedListener;
+import me.ibrahimsn.lib.SmoothBottomBar;
 
 public class Tab_Giaodien_Activity extends AppCompatActivity {
 
-    BottomNavigationView navigationView;
+    SmoothBottomBar navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,29 +44,36 @@ public class Tab_Giaodien_Activity extends AppCompatActivity {
 
 
         navigationView = findViewById(R.id.bottom_navigation);
-        getSupportFragmentManager().beginTransaction().replace(R.id.body_contaiber, new HomeFragment()).commit();
-        navigationView.setSelectedItemId(R.id.nav_home);
 
-        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        replaceFragment(new HomeFragment());
+
+        navigationView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                if (item.getItemId() == R.id.nav_home) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.body_contaiber,homeFragment).commit();
-
-                }else if (item.getItemId() == R.id.nav_giohang) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.body_contaiber,giohangFragment).commit();
-
-                }else if (item.getItemId() == R.id.nav_tym) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.body_contaiber,lichsuFragment).commit();
-
-                }else if (item.getItemId() == R.id.nav_setting) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.body_contaiber, settingsFragment).commit();
-
+            public boolean onItemSelect(int i) {
+                if (i == 0){
+                    replaceFragment(homeFragment);
                 }
-                return true;
 
+                if (i == 1){
+                    replaceFragment(giohangFragment);
+                }
+
+
+        
+                if (i == 3){
+                    replaceFragment(infoUserFragment);
+                }
+
+                return false;
             }
         });
+
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit();
     }
 }
