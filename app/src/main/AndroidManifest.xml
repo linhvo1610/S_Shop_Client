@@ -24,6 +24,9 @@
         <activity
             android:name=".Notification"
             android:exported="false" />
+        <activity
+            android:name=".HistoryOrderClient"
+            android:exported="false" />
 
         <activity
             android:name=".Message"
