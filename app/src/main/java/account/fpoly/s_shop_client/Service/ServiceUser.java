@@ -14,14 +14,14 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ServiceUser {
-    // link API: http://192.168.1.7:3000
+    // link API: http://192.168.1.13:3000
     Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create();
 
-    @GET("/api/listuser")
+    @GET("/api/users")
     Call<List<UserModal>> getallUser();
-    @POST("/api/dangki")
+    @POST("/api/register")
     Call<UserModal> dangkiUser(@Body UserModal data);
     @PUT("/api/updateuser/{id}")
     Call<UserModal> suaUser(@Path("id") String id, @Body UserModal data);

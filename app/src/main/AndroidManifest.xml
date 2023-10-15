@@ -41,10 +41,10 @@
             android:name=".Tab_Giaodien_Activity"
             android:exported="false" />
         <activity
-            android:name=".DangKyActivity"
+            android:name=".GiaoDien.DangKyActivity"
             android:exported="false" />
         <activity
-            android:name=".DangNhapActivity"
+            android:name=".GiaoDien.DangNhapActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

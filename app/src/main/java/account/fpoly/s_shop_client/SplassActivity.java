@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import account.fpoly.s_shop_client.GiaoDien.DangNhapActivity;
+
 public class SplassActivity extends AppCompatActivity {
 
     @Override
