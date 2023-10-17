@@ -10,35 +10,36 @@ public class UserModal implements Serializable {
     @SerializedName("_id")
     private String id;
     private String username;
-    private String hoten;
-    private String email;
-    private String anhdaidien;
     private String password;
+    private String fullname;
+    private String email;
+    private String image;
     private String phone;
+    private String dob;
+    private String sex;
+    private String role;
 
-    public UserModal(String id, String username, String hoten, String email, String anhdaidien, String password, String phone) {
+    public UserModal(String id, String username, String password, String fullname, String email, String image, String phone, String dob, String sex, String role) {
         this.id = id;
         this.username = username;
-        this.hoten = hoten;
-        this.email = email;
-        this.anhdaidien = anhdaidien;
         this.password = password;
+        this.fullname = fullname;
+        this.email = email;
+        this.image = image;
         this.phone = phone;
+        this.dob = dob;
+        this.sex = sex;
+        this.role = role;
     }
 
-    public UserModal(String username, String hoten, String email, String anhdaidien, String password, String phone) {
+    public UserModal(String username, String password, String email, String phone, String dob, String sex, String fullname) {
         this.username = username;
-        this.hoten = hoten;
+        this.password = password;
         this.email = email;
-        this.anhdaidien = anhdaidien;
-        this.password = password;
         this.phone = phone;
-    }
-
-    public UserModal(String username, String password, String phone) {
-        this.username = username;
-        this.password = password;
-        this.phone = phone;
+        this.dob = dob;
+        this.sex = sex;
+        this.fullname = fullname;
     }
 
     public String getId() {
@@ -57,12 +58,20 @@ public class UserModal implements Serializable {
         this.username = username;
     }
 
-    public String getHoten() {
-        return hoten;
+    public String getPassword() {
+        return password;
     }
 
-    public void setHoten(String hoten) {
-        this.hoten = hoten;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getEmail() {
@@ -73,20 +82,12 @@ public class UserModal implements Serializable {
         this.email = email;
     }
 
-    public String getAnhdaidien() {
-        return anhdaidien;
+    public String getImage() {
+        return image;
     }
 
-    public void setAnhdaidien(String anhdaidien) {
-        this.anhdaidien = anhdaidien;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getPhone() {
@@ -95,5 +96,29 @@ public class UserModal implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -1,4 +1,4 @@
-package account.fpoly.s_shop_client;
+package account.fpoly.s_shop_client.GiaoDien;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,8 +14,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
+import account.fpoly.s_shop_client.MainActivity;
 import account.fpoly.s_shop_client.Modal.UserModal;
+import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.ServiceUser;
+import account.fpoly.s_shop_client.Tab_Giaodien_Activity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,7 +34,7 @@ public class DangNhapActivity extends AppCompatActivity {
     private UserModal mUser;
     private Retrofit retrofit;
     private ServiceUser serviceUser;
-    private String url = "http://192.168.1.7:3000";
+    private String url = "http://192.168.1.13:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +52,6 @@ public class DangNhapActivity extends AppCompatActivity {
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DangNhapActivity.this, Tab_Giaodien_Activity.class);
-                startActivity(intent);
-
                 DangNhap();
 
                 Toast.makeText(DangNhapActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
@@ -97,9 +97,9 @@ public class DangNhapActivity extends AppCompatActivity {
             intent.putExtra("username", mUser.getUsername());
             intent.putExtra("email", mUser.getEmail());
             intent.putExtra("idUser", mUser.getId());
-            intent.putExtra("anhdaidien", mUser.getAnhdaidien());
+            intent.putExtra("image", mUser.getImage());
             intent.putExtra("password", mUser.getPassword());
-            intent.putExtra("hoten", mUser.getHoten());
+            intent.putExtra("fullname", mUser.getFullname());
             startActivity(intent);
         } else {
             Toast.makeText(this, "Tài khoản hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
@@ -114,6 +114,8 @@ public class DangNhapActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<UserModal>> call, Response<List<UserModal>> response) {
                 listUser = response.body();
+
+                Toast.makeText(DangNhapActivity.this, "Lấy dữ liệu thành công", Toast.LENGTH_SHORT).show();
             }
 
             @Override
