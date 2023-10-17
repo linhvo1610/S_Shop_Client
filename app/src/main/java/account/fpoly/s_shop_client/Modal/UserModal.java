@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class UserModal implements Serializable {
     @SerializedName("_id")
-    private String id;
+    private String _id;
     private String username;
     private String password;
     private String fullname;
@@ -19,8 +19,11 @@ public class UserModal implements Serializable {
     private String sex;
     private String role;
 
+    public UserModal() {
+    }
+
     public UserModal(String id, String username, String password, String fullname, String email, String image, String phone, String dob, String sex, String role) {
-        this.id = id;
+        this._id = id;
         this.username = username;
         this.password = password;
         this.fullname = fullname;
@@ -42,12 +45,17 @@ public class UserModal implements Serializable {
         this.fullname = fullname;
     }
 
-    public String getId() {
-        return id;
+    public UserModal(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getUsername() {

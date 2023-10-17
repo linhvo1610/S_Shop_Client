@@ -34,6 +34,7 @@
                     android:layout_gravity="center"
                     >
                     <ImageView
+                        android:id="@+id/back"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/back"
@@ -111,6 +112,7 @@
                                 android:layout_height="130dp"
                                 android:src="@drawable/girl"
                                 android:scaleType="centerCrop"
+                                android:id="@+id/image"
                                 />
                         </androidx.cardview.widget.CardView>
                         <TextView
@@ -146,6 +148,7 @@
                             android:textSize="20dp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
+                            android:id="@+id/edfullname"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -171,6 +174,9 @@
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:inputType="textEmailAddress"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:id="@+id/edemail"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -194,8 +200,11 @@
                             android:background="@android:color/transparent"
                             android:textSize="20dp"
                             android:textColor="@color/black"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:textStyle="bold"
                             android:inputType="number"
+                            android:id="@+id/edphone"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -213,14 +222,19 @@
                             android:textSize="17dp"
                             />
                         <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:hint="Nam"
                             android:background="@android:color/transparent"
                             android:textSize="20dp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
+                            android:id="@+id/edgioitinh"
                             />
+                        <Spinner
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/gender_spinner"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -244,35 +258,42 @@
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:inputType="date"
+                            android:id="@+id/edngaysinh"
                             />
                     </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/borderrdio"
-                        android:textSize="18dp"
-                        android:textColor="@color/white"
-                        android:text="Cập nhập"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:layout_marginTop="40dp"
-                        />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
+                        android:id="@+id/update"
                         >
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
+                            android:background="@drawable/borderrdio"
                             android:textSize="18dp"
-                            android:textColor="@color/colorAccrnt"
-                            android:text="Xóa tài khoản"
+                            android:textColor="@color/white"
+                            android:text="Cập nhập"
                             android:textStyle="bold"
                             android:gravity="center"
+                            android:layout_marginTop="40dp"
                             />
                     </LinearLayout>
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="15dp"-->
+<!--                        >-->
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="50dp"-->
+<!--                            android:textSize="18dp"-->
+<!--                            android:textColor="@color/colorAccrnt"-->
+<!--                            android:text="Xóa tài khoản"-->
+<!--                            android:textStyle="bold"-->
+<!--                            android:gravity="center"-->
+<!--                            />-->
+<!--                    </LinearLayout>-->
 
                 </LinearLayout>
             </ScrollView>
