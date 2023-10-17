@@ -37,7 +37,8 @@
                         android:id="@+id/back"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/back"
+                        android:src="@drawable/back_ping"
+                        android:layout_marginLeft="8dp"
                         android:scaleType="centerCrop"
                         />
                 </LinearLayout>
@@ -250,8 +251,8 @@
                             android:textSize="17dp"
                             />
                         <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:hint="12/05/2003"
                             android:background="@android:color/transparent"
                             android:textSize="20dp"
@@ -260,6 +261,18 @@
                             android:inputType="date"
                             android:id="@+id/edngaysinh"
                             />
+                        <Button
+                            android:id="@+id/datePickerButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="JAN 01 2020"
+                            android:textSize="17dp"
+                            android:textColor="@color/black"
+                            android:background="@android:color/transparent"
+                            android:gravity="left"
+                            android:paddingLeft="0dp"
+                            android:onClick="openDatePicker"/>
+
                     </LinearLayout>
 
                     <LinearLayout

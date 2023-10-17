@@ -3,11 +3,15 @@ package account.fpoly.s_shop_client;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -26,6 +30,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import account.fpoly.s_shop_client.API.API;
@@ -47,6 +52,9 @@ public class InfoUserActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     List<UserModal> list;
 
+    private DatePickerDialog datePickerDialog;
+    private Button dateButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +68,11 @@ public class InfoUserActivity extends AppCompatActivity {
     }
 
     private void anhxa() {
+        dateButton = findViewById(R.id.datePickerButton);
+        initDatePicker();
+        dateButton.setText(getTodaysDate());
+
+
         edfullname = findViewById(R.id.edfullname);
         edgioitinh = findViewById(R.id.edgioitinh);
         edngaysinh = findViewById(R.id.edngaysinh);
@@ -101,6 +114,7 @@ public class InfoUserActivity extends AppCompatActivity {
         String phoneuser = edphone.getText().toString().trim();
         String gioitinhuser = edgioitinh.getText().toString().trim();
         String ngaysinhuser = edngaysinh.getText().toString().trim();
+        String ngaysinhDate = dateButton.getText().toString().trim();
 
         String selectedGender = genderSpinner.getSelectedItem().toString();
 
@@ -108,10 +122,12 @@ public class InfoUserActivity extends AppCompatActivity {
         user.setFullname(fullnameuser);
         user.setEmail(emailuser);
         user.setPhone(phoneuser);
-        user.setDob(ngaysinhuser);
+//        user.setDob(ngaysinhuser);
         user.setSex(selectedGender);
         user.setRole(curphanquyen);
         user.setPassword(curpasswd);
+
+        user.setDob(ngaysinhDate);
 
         API_User.apiUser.updateUser(curid,user).enqueue(new Callback<UserModal>() {
             @Override
@@ -149,8 +165,10 @@ public class InfoUserActivity extends AppCompatActivity {
 
         edfullname.setText(name);
         edemail.setText(email);
-        edngaysinh.setText(ngaysinh);
+//        edngaysinh.setText(ngaysinh);
         edphone.setText(phone);
+
+        dateButton.setText(ngaysinh);
 
         list= new ArrayList<>();
         Glide.with(getBaseContext())
@@ -179,6 +197,8 @@ public class InfoUserActivity extends AppCompatActivity {
                         String selectedGender = gioitinhuser; // Giới tính đã chọn
                         int position = Arrays.asList(genders).indexOf(selectedGender);
                         genderSpinner.setSelection(position);
+
+                        dateButton.setText(jsonObject.getString("dob"));
                     }
 
                 }catch (Exception e){
@@ -202,5 +222,79 @@ public class InfoUserActivity extends AppCompatActivity {
             super.onBackPressed();
             finish();
         }
+    }
+    private String getTodaysDate()
+    {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        month = month + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return makeDateString(day, month, year);
+    }
+    private void initDatePicker()
+    {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day)
+            {
+                month = month + 1;
+                String date = makeDateString(day, month, year);
+                dateButton.setText(date);
+            }
+        };
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+
+        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
+        //datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+
+    }
+
+    private String makeDateString(int day, int month, int year)
+    {
+        return   day + "/" + getMonthFormat(month) +  "/" + year;
+    }
+
+    private String getMonthFormat(int month)
+    {
+        if(month == 1)
+            return "1";
+        if(month == 2)
+            return "2";
+        if(month == 3)
+            return "3";
+        if(month == 4)
+            return "4";
+        if(month == 5)
+            return "5";
+        if(month == 6)
+            return "6";
+        if(month == 7)
+            return "7";
+        if(month == 8)
+            return "8";
+        if(month == 9)
+            return "9";
+        if(month == 10)
+            return "10";
+        if(month == 11)
+            return "11";
+        if(month == 12)
+            return "12";
+
+        //default should never happen
+        return "JAN";
+    }
+
+    public void openDatePicker(View view)
+    {
+        datePickerDialog.show();
     }
 }
