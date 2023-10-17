@@ -27,7 +27,7 @@ public class DangKyActivity extends AppCompatActivity {
     private EditText dangky_dob, dangky_sex, dangky_fullname;
     private Retrofit retrofit;
     private ServiceUser serviceUser;
-    private String url = "http://192.168.1.13:3000";
+    private String url = "http://10.24.2.40:3000";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

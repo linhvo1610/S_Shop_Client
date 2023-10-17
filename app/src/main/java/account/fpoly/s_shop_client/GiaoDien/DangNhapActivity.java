@@ -3,6 +3,7 @@ package account.fpoly.s_shop_client.GiaoDien;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
+import account.fpoly.s_shop_client.API.API_User;
 import account.fpoly.s_shop_client.MainActivity;
 import account.fpoly.s_shop_client.Modal.UserModal;
 import account.fpoly.s_shop_client.R;
@@ -47,14 +49,12 @@ public class DangNhapActivity extends AppCompatActivity {
         txtuser = findViewById(R.id.txt_username);
         txtpass = findViewById(R.id.txt_password);
 
-        GetListUser();
+//        GetListUser();
 
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DangNhap();
-
-                Toast.makeText(DangNhapActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                loginUser();
             }
         });
         tvDangKy.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +64,53 @@ public class DangNhapActivity extends AppCompatActivity {
                 startActivity(intent);
 
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+    }
+    public void loginUser(){
+        String username = txtuser.getText().toString().trim();
+        String password = txtpass.getText().toString().trim();
+
+        UserModal userModal = new UserModal(username,password);
+        if (username.isEmpty()){
+            Toast.makeText(this, "Nhập Username", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (password.isEmpty()){
+            Toast.makeText(this, "Nhập password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        API_User.apiUser.login(userModal).enqueue(new Callback<UserModal>() {
+            @Override
+            public void onResponse(Call<UserModal> call, Response<UserModal> response) {
+                if (response.isSuccessful()){
+                    UserModal userModal1 = response.body();
+                    SharedPreferences preferences = getSharedPreferences("infoUser",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("fullname", userModal1.getFullname());
+                    editor.putString("username", userModal1.getUsername());
+                    editor.putString("email", userModal1.getEmail());
+                    editor.putString("phone", userModal1.getPhone());
+                    editor.putString("ngaysinh", userModal1.getDob());
+                    editor.putString("image", userModal1.getImage());
+                    editor.putString("password", userModal1.getPassword());
+                    editor.putString("phanquyen", userModal1.getRole());
+                    editor.putString("iduser", userModal1.get_id());
+                    editor.apply();
+                    if (userModal1.getRole().equalsIgnoreCase("User")){
+                        startActivity(new Intent(getBaseContext(),Tab_Giaodien_Activity.class));
+                        Toast.makeText(DangNhapActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DangNhapActivity.this, "isuser"+ userModal1.get_id(), Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(DangNhapActivity.this, "App danh cho User", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<UserModal> call, Throwable t) {
+
             }
         });
     }
@@ -96,7 +143,7 @@ public class DangNhapActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("username", mUser.getUsername());
             intent.putExtra("email", mUser.getEmail());
-            intent.putExtra("idUser", mUser.getId());
+            intent.putExtra("idUser", mUser.get_id());
             intent.putExtra("image", mUser.getImage());
             intent.putExtra("password", mUser.getPassword());
             intent.putExtra("fullname", mUser.getFullname());
