@@ -28,4 +28,7 @@ public interface API_User {
 
     @PUT("updateUser/{id}")
     Call<UserModal> updateUser(@Path("id") String id, @Body UserModal user);
+
+    @POST("register")
+    Call<UserModal> postUser (@Body UserModal userModal);
 }

@@ -42,6 +42,7 @@
             android:exported="false" />
         <activity
             android:name=".Tab_Giaodien_Activity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".GiaoDien.DangKyActivity"
