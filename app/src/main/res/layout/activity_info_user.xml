@@ -144,7 +144,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Van Hai"
+                            android:hint="Cập nhập..."
                             android:background="@android:color/transparent"
                             android:textSize="20dp"
                             android:textColor="@color/black"
@@ -265,7 +265,7 @@
                             android:id="@+id/datePickerButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="JAN 01 2020"
+                            android:hint="Cập nhập..."
                             android:textSize="17dp"
                             android:textColor="@color/black"
                             android:background="@android:color/transparent"

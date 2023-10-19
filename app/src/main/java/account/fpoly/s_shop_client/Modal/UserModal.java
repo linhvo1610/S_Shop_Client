@@ -35,13 +35,13 @@ public class UserModal implements Serializable {
         this.role = role;
     }
 
-    public UserModal(String username, String password, String email, String phone, String dob, String sex, String fullname) {
+    public UserModal(String username, String password, String email, String phone, String dob,  String fullname ) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
         this.dob = dob;
-        this.sex = sex;
+//        this.sex = sex;
         this.fullname = fullname;
     }
 
