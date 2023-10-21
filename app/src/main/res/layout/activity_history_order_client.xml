@@ -11,35 +11,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/borderrdio"
-            android:textColor="@color/white"
-            android:textSize="30dp"
-            android:text="History"
-            android:gravity="center"
-            />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/icon_search"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:background="@drawable/borderrdio">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:text="History"
+                android:gravity="center"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:background="@drawable/border_search"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_search"/>
 
                 <EditText
-                    android:id="@+id/textInputEditTextHistory"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/boder"
-                    android:layout_marginLeft="15dp"
-                    android:padding="10dp"
-                    android:hint="Nhập tên sản phẩm hoặc tên Shop...."
+                    android:background="@android:color/transparent"
+                    android:hint="Search for products"
+                    android:layout_marginLeft="8dp"
                     />
+            </LinearLayout>
         </LinearLayout>
+
+
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
