@@ -31,4 +31,6 @@ public interface API_User {
 
     @POST("register")
     Call<UserModal> postUser (@Body UserModal userModal);
+    @POST("logout")
+    Call<Void> logout();
 }

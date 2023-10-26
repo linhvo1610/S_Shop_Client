@@ -18,6 +18,15 @@ public class UserModal implements Serializable {
     private String dob;
     private String sex;
     private String role;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public UserModal() {
     }
