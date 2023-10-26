@@ -3,8 +3,11 @@ package account.fpoly.s_shop_client;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,6 +39,7 @@ import java.util.List;
 
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_User;
+import account.fpoly.s_shop_client.GiaoDien.DangNhapActivity;
 import account.fpoly.s_shop_client.Modal.UserModal;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +50,7 @@ public class InfoUserActivity extends AppCompatActivity {
     TextInputEditText edfullname,edgioitinh,edngaysinh,edemail,edphone;
     ImageView image,back;
     Spinner genderSpinner;
+    TextView btndangxuat;
     String curgioitinh,curid,name,email,phone,ngaysinh,curpasswd,curphanquyen,
             curimage,currol;
     LinearLayout update;
@@ -64,15 +70,22 @@ public class InfoUserActivity extends AppCompatActivity {
 
         hienthiInfo();
         hienthiInfomationUser();
+        btndangxuat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
 
     }
 
+    @SuppressLint("WrongViewCast")
     private void anhxa() {
         dateButton = findViewById(R.id.datePickerButton);
         initDatePicker();
         dateButton.setText(getTodaysDate());
 
-
+        btndangxuat=findViewById(R.id.btndangxuat);
         edfullname = findViewById(R.id.edfullname);
         edgioitinh = findViewById(R.id.edgioitinh);
         edngaysinh = findViewById(R.id.edngaysinh);
@@ -177,6 +190,14 @@ public class InfoUserActivity extends AppCompatActivity {
         String selectedGender = curgioitinh; // Giới tính đã chọn
         int position = Arrays.asList(genders).indexOf(selectedGender);
         genderSpinner.setSelection(position);
+    }
+    public void logout() {
+        SharedPreferences preferences= getSharedPreferences("infoUser", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+        editor.remove("token");
+        editor.apply();
+        startActivity(new Intent(InfoUserActivity.this, DangNhapActivity.class));
+        finish();
     }
     private void hienthiInfomationUser(){
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
