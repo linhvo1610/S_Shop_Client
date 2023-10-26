@@ -70,7 +70,7 @@
 <!--                        android:textColor="#888484"-->
 <!--                        />-->
                     <TextView
-                        android:id="@+id/txt_price"
+                        android:id="@+id/txt_price_product"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" đ149.275"

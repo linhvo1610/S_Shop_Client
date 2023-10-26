@@ -1,6 +1,7 @@
 package account.fpoly.s_shop_client.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import account.fpoly.s_shop_client.API.API;
+import account.fpoly.s_shop_client.ChitietProduct;
 import account.fpoly.s_shop_client.Modal.ProductModal;
 import account.fpoly.s_shop_client.R;
 
@@ -41,6 +43,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
         holder.NameProduct.setText(""+sp.getName());
         holder.PriceProduct.setText(""+sp.getPrice());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ChitietProduct.class);
+                context.startActivity(intent);
+
+            }
+        });
 
         Glide.with(context)
                 .load( API.api_reg + sp.getImage())
@@ -61,7 +71,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         public ProductViewHoder(@NonNull View itemView) {
             super(itemView);
             NameProduct=itemView.findViewById(R.id.txt_nameproduct);
-            PriceProduct=itemView.findViewById(R.id.txt_price);
+            PriceProduct=itemView.findViewById(R.id.txt_price_product);
             ImageProduct=itemView.findViewById(R.id.img_product);
         }
     }

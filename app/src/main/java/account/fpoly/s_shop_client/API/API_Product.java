@@ -27,5 +27,4 @@ public interface API_Product {
 
     @GET("product")
     Call<ReceProduct> listProduct();
-
         }
