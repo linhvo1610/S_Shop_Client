@@ -1,8 +1,11 @@
 package account.fpoly.s_shop_client.Modal;
 
+import android.util.Size;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Array;
+import java.util.List;
 
 public class ProductModal {
     @SerializedName("_id")
@@ -11,10 +14,39 @@ public class ProductModal {
     private  String trademark;
     private  String price;
     private  String description;
-    private SizeProduct sizeProduct;
+    private List<Size> sizes;
+
     private  String id_cat;
     private String image;
 
+    public static class Size {
+        private int size;
+        private int quantity;
+
+        public int getSize() {
+            return size;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
+        }
+    }
+
+    public List<Size> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(List<Size> sizes) {
+        this.sizes = sizes;
+    }
     public String getId() {
         return id;
     }
@@ -55,13 +87,6 @@ public class ProductModal {
         this.description = description;
     }
 
-    public SizeProduct getSizeProduct() {
-        return sizeProduct;
-    }
-
-    public void setSizeProduct(SizeProduct sizeProduct) {
-        this.sizeProduct = sizeProduct;
-    }
 
     public String getId_cat() {
         return id_cat;

@@ -101,7 +101,6 @@ public class DangNhapActivity extends AppCompatActivity {
                     if (userModal1.getRole().equalsIgnoreCase("User")){
                         startActivity(new Intent(getBaseContext(),Tab_Giaodien_Activity.class));
                         Toast.makeText(DangNhapActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(DangNhapActivity.this, "Token:"+userModal1.getToken(), Toast.LENGTH_SHORT).show();
                     }else if (userModal1.getRole().equalsIgnoreCase("Admin")){
                         Toast.makeText(DangNhapActivity.this, "App danh cho User", Toast.LENGTH_SHORT).show();
                     }
