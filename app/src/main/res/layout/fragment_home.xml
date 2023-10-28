@@ -164,15 +164,7 @@
                     android:gravity="left"
                     android:background="@color/white"
                     >
-                    <TextView
-                        android:id="@+id/chuyen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:text="Gợi ý cho bạn ( click chuyen ow day )"
-                        android:layout_marginLeft="8dp"
-                        android:gravity="center"
-                        android:textColor="@color/colorAccrnt"
-                        />
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -187,6 +179,15 @@
                         app:spanCount="2"
                         tools:listitem="@layout/iteam_product"
                         android:id="@+id/rcv_product"/>
+
+                    <TextView
+                        android:id="@+id/chuyen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="center"
+                        android:text="Gợi ý cho bạn ( click chuyen ow day )"
+                        android:textColor="@color/colorAccrnt" />
                 </LinearLayout>
             </LinearLayout>
 

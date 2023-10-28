@@ -2,6 +2,7 @@ package account.fpoly.s_shop_client;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -58,7 +59,11 @@ public class ChitietProduct extends AppCompatActivity {
                 TextView buttonMinus = bottomView.findViewById(R.id.buttonMinus );
                 TextView buttonPlus = bottomView.findViewById(R.id.buttonPlus);
                 EditText edsoluong = bottomView.findViewById(R.id.numberPickerQuantity);
+                TextView price = bottomView.findViewById(R.id.price);
 
+                SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
+                String price_product = sharedPreferences.getString("price", null);
+                price.setText(price_product);
 
 //                numberPicker.setText(String.valueOf(sol)); // Giá trị mặc định
 

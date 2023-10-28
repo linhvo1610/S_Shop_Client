@@ -125,6 +125,7 @@
                         android:layout_height="wrap_content"
                         android:text=" 349"
                         android:textSize="13dp"
+                        android:id="@+id/totalQuantity"
                         />
                 </LinearLayout>
                 <LinearLayout
@@ -142,6 +143,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Hà Nội"
+                        android:textSize="13dp"
+                        android:layout_marginLeft="6dp"
+                        />
+                    <TextView
+                        android:id="@+id/sizePro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="size"
                         android:textSize="13dp"
                         android:layout_marginLeft="6dp"
                         />

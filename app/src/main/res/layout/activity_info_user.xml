@@ -50,6 +50,7 @@
                     android:layout_gravity="center"
                     >
                     <TextView
+                        android:id="@+id/logout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textColor="@color/black"
@@ -68,16 +69,16 @@
                     android:layout_marginRight="10dp"
                     android:layout_gravity="center"
                     >
+
                     <TextView
                         android:id="@+id/btndangxuat"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColor="@color/colorPrimaty"
-                        android:text="Đăng xuất"
-                        android:textSize="18dp"
-                        android:textStyle="bold"
                         android:gravity="center"
-                        />
+                        android:text="Đăng xuất"
+                        android:textColor="@color/colorPrimaty"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
