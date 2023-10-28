@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import account.fpoly.s_shop_client.GiaoDien.ChitietProduct;
+import account.fpoly.s_shop_client.API.API;
+import account.fpoly.s_shop_client.ChitietProduct;
 import account.fpoly.s_shop_client.Modal.ProductModal;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.IClickItemListener;
@@ -60,6 +62,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 editor.putString("giaProduct", productModal.getPrice());
                 editor.putString("anhProduct", productModal.getImage());
                 editor.apply();
+        ProductModal sp = list.get(position);
+        if (sp == null){
+                    return;
+        }
+        holder.NameProduct.setText(""+sp.getName());
+        holder.PriceProduct.setText(""+sp.getPrice());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ChitietProduct.class);
+                context.startActivity(intent);
+
+            }
+        });
 
                 iClickItemListener.onCLickItemProduct(productModal);
             }
@@ -80,7 +96,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         public ProductViewHoder(@NonNull View itemView) {
             super(itemView);
             NameProduct=itemView.findViewById(R.id.txt_nameproduct);
-            PriceProduct=itemView.findViewById(R.id.txt_price);
+            PriceProduct=itemView.findViewById(R.id.txt_price_product);
             ImageProduct=itemView.findViewById(R.id.img_product);
             Description=itemView.findViewById(R.id.chitiet_description);
         }
