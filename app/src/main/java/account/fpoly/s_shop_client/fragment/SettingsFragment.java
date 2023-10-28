@@ -25,8 +25,6 @@ public class SettingsFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_setting_user, container, false);
-        imginfo=view.findViewById(R.id.img_info);
-        imghistory=view.findViewById(R.id.img_history);
         imghistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

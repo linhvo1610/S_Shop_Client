@@ -36,7 +36,7 @@ public class DangNhapActivity extends AppCompatActivity {
     private UserModal mUser;
     private Retrofit retrofit;
     private ServiceUser serviceUser;
-    private String url = "http://192.168.1.10:3000";
+    private String url = "http://192.168.1.7:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
