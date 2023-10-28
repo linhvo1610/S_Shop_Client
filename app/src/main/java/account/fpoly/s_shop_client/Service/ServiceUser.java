@@ -25,4 +25,5 @@ public interface ServiceUser {
     Call<UserModal> dangkiUser(@Body UserModal data);
     @PUT("/api/updateuser/{id}")
     Call<UserModal> suaUser(@Path("id") String id, @Body UserModal data);
+
 }

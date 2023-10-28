@@ -38,7 +38,7 @@
             android:name=".MuaProduct"
             android:exported="false" />
         <activity
-            android:name=".ChitietProduct"
+            android:name=".GiaoDien.ChitietProduct"
             android:exported="false" />
         <activity
             android:name=".Tab_Giaodien_Activity"
