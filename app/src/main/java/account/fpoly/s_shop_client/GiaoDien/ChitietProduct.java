@@ -1,7 +1,8 @@
-package account.fpoly.s_shop_client;
+package account.fpoly.s_shop_client.GiaoDien;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,17 +19,40 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.squareup.picasso.Picasso;
+
+import account.fpoly.s_shop_client.API.API_Product;
+import account.fpoly.s_shop_client.Message;
+import account.fpoly.s_shop_client.Modal.ProductModal;
+import account.fpoly.s_shop_client.MuaProduct;
+import account.fpoly.s_shop_client.R;
+import account.fpoly.s_shop_client.Service.ServiceProduct;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChitietProduct extends AppCompatActivity {
 
     LinearLayout clickmua,chat;
     ImageView back;
+    private String url = "http://192.168.1.10:3000";
     private  int sol = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chitiet_product);
+
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("id");
+        String tenProduct = intent.getStringExtra("tenProduct");
+        String giaProduct = intent.getStringExtra("giaProduct");
+        String anhProduct = intent.getStringExtra("anhProduct");
+
+        getListThongTinProduct(id);
 
         clickmua = findViewById(R.id.clickmua);
         back = findViewById(R.id.back);
@@ -53,11 +77,23 @@ public class ChitietProduct extends AppCompatActivity {
                 View bottomView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_dialog,
                         (LinearLayout)findViewById(R.id.bottomSheetDialog));
 
+                getListThongTinProduct(id);
+
                 RadioButton checkBoxSize40 = bottomView.findViewById(R.id.checkBoxSize40);
                 RadioButton checkBoxSize41 = bottomView.findViewById(R.id.checkBoxSize41);
                 TextView buttonMinus = bottomView.findViewById(R.id.buttonMinus );
                 TextView buttonPlus = bottomView.findViewById(R.id.buttonPlus);
                 EditText edsoluong = bottomView.findViewById(R.id.numberPickerQuantity);
+
+                ImageView checkboxImgProduct = bottomView.findViewById(R.id.checkbox_ImageProduct);
+                TextView checkboxPriceProduct = bottomView.findViewById(R.id.checkbox_PriceProduct);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
+                String priceProduct = sharedPreferences.getString("giaProduct", null);
+                checkboxPriceProduct.setText(priceProduct);
+
+                String imageProduct = sharedPreferences.getString("anhProduct", null);
+                Glide.with(getApplicationContext()).load(imageProduct).into(checkboxImgProduct);
 
 
 //                numberPicker.setText(String.valueOf(sol)); // Giá trị mặc định
@@ -128,6 +164,37 @@ public class ChitietProduct extends AppCompatActivity {
                 });
                 bottomSheetDialog.setContentView(bottomView);
                 bottomSheetDialog.show();
+            }
+        });
+    }
+
+    private void getListThongTinProduct(String id) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ServiceProduct serviceProduct = retrofit.create(ServiceProduct.class);
+        Call<ProductModal> call = serviceProduct.getThongTinProduct(id);
+        call.enqueue(new Callback<ProductModal>() {
+            @Override
+            public void onResponse(Call<ProductModal> call, Response<ProductModal> response) {
+                ProductModal productModal = response.body();
+
+                ImageView chitietImageProduct = findViewById(R.id.chitiet_imgProduct);
+                TextView chitietTenProduct = findViewById(R.id.chitiet_tenProduct);
+                TextView chitietGiaProduct= findViewById(R.id.chitiet_giaProduct);
+                TextView chitietDescription = findViewById(R.id.chitiet_description);
+
+                Picasso.get().load(productModal.getImage()).into(chitietImageProduct);
+                chitietTenProduct.setText(productModal.getName());
+                chitietGiaProduct.setText(productModal.getPrice());
+                chitietDescription.setText(productModal.getDescription());
+            }
+
+            @Override
+            public void onFailure(Call<ProductModal> call, Throwable t) {
+
             }
         });
     }

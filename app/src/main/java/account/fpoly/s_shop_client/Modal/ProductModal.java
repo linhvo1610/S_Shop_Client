@@ -1,12 +1,15 @@
 package account.fpoly.s_shop_client.Modal;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.sql.Array;
 
 public class ProductModal {
+    @SerializedName("_id")
     private String id;
     private String name;
     private  String trademark;
-    private  int price;
+    private  String price;
     private  String description;
     private SizeProduct sizeProduct;
     private  String id_cat;
@@ -36,11 +39,11 @@ public class ProductModal {
         this.trademark = trademark;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
