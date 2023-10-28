@@ -19,7 +19,6 @@ import java.util.List;
 
 import account.fpoly.s_shop_client.GiaoDien.ChitietProduct;
 import account.fpoly.s_shop_client.API.API;
-import account.fpoly.s_shop_client.ChitietProduct;
 import account.fpoly.s_shop_client.Modal.ProductModal;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.IClickItemListener;
@@ -81,6 +80,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             }
         });
 
+
+        int totalQuantity = 0;
+        for (ProductModal.Size size : productModal.getSizes()) {
+            totalQuantity += size.getQuantity();
+        }
+        StringBuilder sizesBuilder = new StringBuilder();
+        for (ProductModal.Size size : productModal.getSizes()) {
+            sizesBuilder.append(size.getSize()).append(", ");
+        }
+        String sizes = sizesBuilder.toString();
+        if (sizes.length() > 0) {
+            sizes = sizes.substring(0, sizes.length() - 2); // Loại bỏ dấu phẩy cuối cùng
+        }
+        holder.sizePro.setText(String.valueOf(sizes));
+
+        holder.totalQuantity.setText(String.valueOf(totalQuantity));
     }
 
     @Override
@@ -89,7 +104,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     public class ProductViewHoder extends RecyclerView.ViewHolder {
-        private TextView NameProduct, PriceProduct, Description;
+        private TextView NameProduct, PriceProduct,totalQuantity,sizePro,Description;
         private ImageView ImageProduct;
 
 
@@ -97,7 +112,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             super(itemView);
             NameProduct=itemView.findViewById(R.id.txt_nameproduct);
             PriceProduct=itemView.findViewById(R.id.txt_price_product);
+            totalQuantity=itemView.findViewById(R.id.totalQuantity);
             ImageProduct=itemView.findViewById(R.id.img_product);
+            sizePro=itemView.findViewById(R.id.sizePro);
             Description=itemView.findViewById(R.id.chitiet_description);
         }
     }
