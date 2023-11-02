@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_Product;
 import account.fpoly.s_shop_client.Message;
 import account.fpoly.s_shop_client.Modal.ProductModal;
@@ -50,7 +51,7 @@ public class ChitietProduct extends AppCompatActivity {
     LinearLayout clickmua,chat;
     ImageView back;
     TextView chitiet_tenProduct,chitiet_giaProduct,chitiet_description;
-    private String url = "http://192.168.1.10:3000";
+
     private  int sol = 1;
     ProductModal productModal;
     @Override
@@ -236,34 +237,5 @@ public class ChitietProduct extends AppCompatActivity {
         });
     }
 
-    private void getListThongTinProduct(String id) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        ServiceProduct serviceProduct = retrofit.create(ServiceProduct.class);
-        Call<ProductModal> call = serviceProduct.getThongTinProduct(id);
-        call.enqueue(new Callback<ProductModal>() {
-            @Override
-            public void onResponse(Call<ProductModal> call, Response<ProductModal> response) {
-                ProductModal productModal = response.body();
-
-                ImageView chitietImageProduct = findViewById(R.id.chitiet_imgProduct);
-                TextView chitietTenProduct = findViewById(R.id.chitiet_tenProduct);
-                TextView chitietGiaProduct= findViewById(R.id.chitiet_giaProduct);
-                TextView chitietDescription = findViewById(R.id.chitiet_description);
-
-                Picasso.get().load(productModal.getImage()).into(chitietImageProduct);
-                chitietTenProduct.setText(productModal.getName());
-                chitietGiaProduct.setText(productModal.getPrice());
-                chitietDescription.setText(productModal.getDescription());
-            }
-
-            @Override
-            public void onFailure(Call<ProductModal> call, Throwable t) {
-
-            }
-        });
-    }
 }
