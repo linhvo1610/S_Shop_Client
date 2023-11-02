@@ -147,6 +147,7 @@
                     android:orientation="vertical"
                     >
                     <TextView
+                        android:id="@+id/namePro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Áo Khoác Blazer Dáng Rộng Thời Trang Xuân Hè"
@@ -166,6 +167,7 @@
                             android:textColor="#919090"
                             />
                         <TextView
+                            android:id="@+id/sizePro"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Be, L"
@@ -178,15 +180,18 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         >
+
                         <TextView
+                            android:id="@+id/pricePro"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
-                            android:text="39.887"
                             android:layout_marginLeft="10dp"
+                            android:text="39.887"
                             android:textColor="#919090"
-                            android:textSize="16dp"
-                            />
+                            android:textSize="16dp" />
+
                         <TextView
+                            android:id="@+id/quantityPro"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="x1"
@@ -331,6 +336,7 @@
                         android:textColor="@color/black"
                         />
                     <TextView
+                        android:id="@+id/totalQuantity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1 "
@@ -341,13 +347,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="sản phẩm):"
+                        android:text=" sản phẩm):"
                         android:textSize="15dp"
                         android:layout_gravity="center"
                         android:textColor="@color/black"
                         />
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/thanhtien"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="đ39.887"
@@ -461,6 +468,7 @@
                         android:textSize="15dp" />
 
                     <TextView
+                        android:id="@+id/totalPrice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -501,6 +509,7 @@
                         android:textSize="19dp" />
 
                     <TextView
+                        android:id="@+id/thanhtoan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -561,6 +570,7 @@
                 android:text="Tổng thanh toán" />
 
             <TextView
+                android:id="@+id/tongPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"

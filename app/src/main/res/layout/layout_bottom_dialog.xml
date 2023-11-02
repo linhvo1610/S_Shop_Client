@@ -80,13 +80,13 @@
         android:background="#AAA8A8"
         android:layout_marginTop="20dp"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Màu Sắc"
-        android:padding="10dp"
-        android:textSize="18dp"
-        />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Màu Sắc"-->
+<!--        android:padding="10dp"-->
+<!--        android:textSize="18dp"-->
+<!--        />-->
 
     <LinearLayout
         android:layout_margin="10dp"
@@ -95,39 +95,41 @@
         android:layout_height="wrap_content"
         >
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="Size"
             android:textSize="16dp"
             android:layout_gravity="center"
             />
         <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <RadioButton
-            android:id="@+id/checkBoxSize40"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:text="40"
-            android:textSize="15sp"
-            android:layout_marginLeft="20dp"
-            android:button="@drawable/custom_checkbox"
-            android:gravity="center"
-            android:background="#EAEAEA"
-            />
+            android:orientation="horizontal"
+            >
+<!--        <RadioButton-->
+<!--            android:id="@+id/checkBoxSize40"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:text="40"-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:button="@drawable/custom_checkbox"-->
+<!--            android:gravity="center"-->
+<!--            android:background="#EAEAEA"-->
+<!--            />-->
 
-        <RadioButton
-            android:id="@+id/checkBoxSize41"
-            android:layout_width="65dp"
-            android:layout_height="30dp"
-            android:text="41"
-            android:textSize="15sp"
-            android:layout_marginLeft="10dp"
-            android:button="@drawable/custom_checkbox"
-            android:gravity="center"
-            android:background="#EAEAEA"
-            />
+<!--        <RadioButton-->
+<!--            android:id="@+id/checkBoxSize41"-->
+<!--            android:layout_width="65dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:text="41"-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:button="@drawable/custom_checkbox"-->
+<!--            android:gravity="center"-->
+<!--            android:background="#EAEAEA"-->
+<!--            />-->
         </RadioGroup>
 
 
@@ -139,7 +141,9 @@
         android:id="@+id/checkboxLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:button="@drawable/custom_checkbox"
+        android:orientation="horizontal"
+        android:background="#EAEAEA">
     </LinearLayout>
 
 
@@ -151,6 +155,7 @@
         android:layout_marginTop="20dp"
         />
     <LinearLayout
+        android:id="@+id/layoutQuantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
