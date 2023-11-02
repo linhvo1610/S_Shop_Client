@@ -3,6 +3,7 @@ package account.fpoly.s_shop_client.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -56,9 +58,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHoder holder, int position) {
         ProductViewHoder productViewHoder = holder;
         ProductModal productModal = list.get(position);
-
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
         productViewHoder.NameProduct.setText("" + productModal.getName());
         productViewHoder.PriceProduct.setText("" + productModal.getPrice());
+
+
+
+        int priceFormat = Integer.parseInt(productModal.getPrice());
+        String Price = decimalFormat.format(priceFormat);
+        productViewHoder.PriceProduct.setText(Price);
 
 
         Picasso.get().load(API.api_reg + productModal.getImage()).into(holder.ImageProduct);
@@ -68,57 +76,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             totalQuantity += size.getQuantity();
         }
 
-//        StringBuilder sizesBuilder = new StringBuilder();
-//        String sizeLog = null;
-//        for (ProductModal.Size size : productModal.getSizes()) {
-//            sizesBuilder.append(size.getSize()).append(", ");
-//            sizeLog = String.valueOf(size.getSize());
-//        }
-//        String sizes = sizesBuilder.toString();
-//        if (sizes.length() > 0) {
-//            sizes = sizes.substring(0, sizes.length() - 2); // Loại bỏ dấu phẩy cuối cùng
-//        }
-//-------------
-        StringBuilder sizesBuilder = new StringBuilder();
-        for (ProductModal.Size size : productModal.getSizes()) {
-            sizesBuilder.append(size.getSize()).append(", ");
-            CheckBox checkBox = new CheckBox(context);
-            checkBox.setText(String.valueOf(size.getSize()));
-
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        // Kích thước đã được chọn
-                        String selectedSize = buttonView.getText().toString();
-                        Toast.makeText(context, "Đã chọn kích thước: " + selectedSize, Toast.LENGTH_SHORT).show();
-                    } else {
-                        // Kích thước đã bị bỏ chọn
-                        String deselectedSize = buttonView.getText().toString();
-                        Toast.makeText(context, "Đã bỏ chọn kích thước: " + deselectedSize, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-            holder.checkboxLayout.addView(checkBox);
-        }
-        String sizes = sizesBuilder.toString();
-        if (sizes.length() > 0) {
-            sizes = sizes.substring(0, sizes.length() - 2); // Loại bỏ dấu phẩy cuối cùng
-        }
-//--    -------
-
-        holder.sizePro.setText(String.valueOf(sizes));
-
         holder.totalQuantity.setText(String.valueOf(totalQuantity));
 
         String id = productModal.getId();
         String sluong = String.valueOf(totalQuantity);
         String description = productModal.getDescription();
-        String sizePro = String.valueOf(sizes);
 
-        Log.d("TAG", "sizeeeee: "+ sizePro);
-        String finalSizes = sizes;
         productViewHoder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,16 +95,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 editor.putString("anhProduct", productModal.getImage());
                 editor.putString("quantityPro", sluong);
                 editor.putString("descriptionPro", description);
-                editor.putString("sizeProPro", sizePro);
-
-
-                for (ProductModal.Size size : productModal.getSizes()) {
-                    String sizeKey = "size_" + size.getSize();
-                    editor.putBoolean(sizeKey, true);
-                    Log.d("TAG", "sizeeeee: "+ sizeKey);
-//                    editor.putString ("size_", sizeKey);
-
-                }
 
 
                 editor.apply();
@@ -151,26 +104,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
         holder.NameProduct.setText(""+sp.getName());
         holder.PriceProduct.setText(""+sp.getPrice());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ChitietProduct.class);
-                ArrayList<String> selectedSizes = new ArrayList<>();
 
-                for (ProductModal.Size size : productModal.getSizes()) {
-                    String sizeKey = "size_" + size.getSize();
-                    editor.putBoolean(sizeKey, true);
-                    Log.d("TAG", "sizeeeee: "+ sizeKey);
-                    selectedSizes.add(sizeKey);
-                    Log.d("TAG", "sele[]"+ selectedSizes );
-
-                }
-                intent.putStringArrayListExtra("selectedSizes",  selectedSizes);
-
-                context.startActivity(intent);
-
-            }
-        });
 
                 iClickItemListener.onCLickItemProduct(productModal);
             }
@@ -184,9 +118,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     public class ProductViewHoder extends RecyclerView.ViewHolder {
-        private TextView NameProduct, PriceProduct,totalQuantity,sizePro,Description;
+        private TextView NameProduct, PriceProduct,totalQuantity,Description;
         private ImageView ImageProduct;
-        LinearLayout checkboxLayout;
 
         public ProductViewHoder(@NonNull View itemView) {
             super(itemView);
@@ -194,9 +127,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             PriceProduct=itemView.findViewById(R.id.txt_price_product);
             totalQuantity=itemView.findViewById(R.id.totalQuantity);
             ImageProduct=itemView.findViewById(R.id.img_product);
-            sizePro=itemView.findViewById(R.id.sizePro);
             Description=itemView.findViewById(R.id.chitiet_description);
-            checkboxLayout=itemView.findViewById(R.id.checkboxLayout);
         }
     }
 }
