@@ -192,11 +192,13 @@ public class InfoUserActivity extends AppCompatActivity {
         genderSpinner.setSelection(position);
     }
     public void logout() {
+        Intent intent = new Intent(InfoUserActivity.this, DangNhapActivity.class);
         SharedPreferences preferences= getSharedPreferences("infoUser", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferences.edit();
         editor.remove("token");
         editor.apply();
-        startActivity(new Intent(InfoUserActivity.this, DangNhapActivity.class));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
         finish();
     }
     private void hienthiInfomationUser(){

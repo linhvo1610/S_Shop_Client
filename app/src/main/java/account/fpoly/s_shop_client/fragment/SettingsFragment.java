@@ -25,13 +25,14 @@ public class SettingsFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_setting_user, container, false);
-        imghistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), HistoryOrderClient.class));
-            }
-        });
+//        imghistory.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getContext(), HistoryOrderClient.class));
+//            }
+//        });
 
+        imginfo = view.findViewById(R.id.imginfo);
         imginfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
