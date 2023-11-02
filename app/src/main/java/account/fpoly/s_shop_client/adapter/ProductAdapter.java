@@ -163,8 +163,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     Log.d("TAG", "sizeeeee: "+ sizeKey);
                     selectedSizes.add(sizeKey);
                     Log.d("TAG", "sele[]"+ selectedSizes );
+
                 }
-//                intent.putStringArrayListExtra("selectedSizes", new ArrayList<>(productModal.getSizes()));
+                intent.putStringArrayListExtra("selectedSizes",  selectedSizes);
 
                 context.startActivity(intent);
 
