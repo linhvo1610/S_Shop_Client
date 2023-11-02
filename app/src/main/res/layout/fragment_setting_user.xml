@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/imginfo"
                 android:src="@drawable/user2"
                 android:layout_width="70dp"
                 android:layout_height="70dp"/>
@@ -88,10 +89,13 @@
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
             <ImageView
-                android:src="@drawable/next"
-                android:layout_width="30dp"
-                android:layout_height="30dp"/>
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/next" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <TextView
@@ -205,8 +209,9 @@
                     android:layout_height="wrap_content"/>
                 <ImageView
                     android:src="@drawable/next"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"/>
+                    android:layout_width="15dp"
+                    android:layout_gravity="center"
+                    android:layout_height="15dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <TextView
@@ -234,9 +239,10 @@
                     android:layout_weight="@integer/material_motion_duration_long_1"
                     android:layout_height="wrap_content"/>
                 <ImageView
+                    android:layout_gravity="center"
                     android:src="@drawable/next"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"/>
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
