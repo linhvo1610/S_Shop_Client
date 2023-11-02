@@ -370,6 +370,7 @@ Return Policy 🔄
         android:layout_height="57dp"
         android:background="#55B159"
         android:orientation="horizontal"
+        android:layout_gravity="bottom"
         >
         <LinearLayout
             android:layout_width="130dp"

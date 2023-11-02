@@ -5,6 +5,7 @@ import android.util.Size;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductModal {
@@ -15,7 +16,6 @@ public class ProductModal {
     private  String price;
     private  String description;
     private List<Size> sizes;
-
     private  String id_cat;
     private String image;
 
