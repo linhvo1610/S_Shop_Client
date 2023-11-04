@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">S_Shop_Client</string>
+    <string name="title_uppdate_address">Sửa địa chỉ</string>
+    <string name="title_add_address">Thêm địa chỉ mới</string>
+    <string name="title_choose_address">Chọn vị trí</string>
+    <string name="title_address">Cập nhật địa chỉ</string>
+    <string name="title_choose_address_pay">Chọn địa chỉ giao hàng</string>
 </resources>

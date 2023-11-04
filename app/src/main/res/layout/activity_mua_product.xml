@@ -120,6 +120,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/btn_listAdd"
                     android:layout_width="20dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center"
