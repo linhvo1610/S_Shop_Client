@@ -1,5 +1,7 @@
 package account.fpoly.s_shop_client.GiaoDien;
 
+import static java.lang.String.valueOf;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,6 +44,7 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -155,28 +158,51 @@ public class ChitietProduct extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-                                    JSONArray dataArray  = response.getJSONArray("data");
+//                                    JSONArray dataArray  = response.getJSONArray("data");
+//                                    for (int i = 0; i < dataArray.length(); i++) {
+//                                        JSONObject item = dataArray.getJSONObject(i);
+//
+//                                        HashSet<Integer> sizeSet = new HashSet<>();
+//                                        JSONArray sizesArray = item.getJSONArray("sizes");
+//                                        for (int j = 0; j < sizesArray.length(); j++) {
+//                                            JSONObject sizeItem = sizesArray.getJSONObject(j);
+//                                            int size = sizeItem.getInt("size");
+//                                            if (!sizeSet.contains(size)) {
+//                                                sizeSet.add(size);
+//                                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                                                        LinearLayout.LayoutParams.WRAP_CONTENT,
+//                                                        LinearLayout.LayoutParams.WRAP_CONTENT
+//                                                );
+                                    JSONArray dataArray = response.getJSONArray("data");
                                     for (int i = 0; i < dataArray.length(); i++) {
                                         JSONObject item = dataArray.getJSONObject(i);
 
-                                        HashSet<Integer> sizeSet = new HashSet<>();
+                                        List<Integer> sizeList = new ArrayList<>(); // Sử dụng List để lưu trữ các size
+
                                         JSONArray sizesArray = item.getJSONArray("sizes");
                                         for (int j = 0; j < sizesArray.length(); j++) {
                                             JSONObject sizeItem = sizesArray.getJSONObject(j);
                                             int size = sizeItem.getInt("size");
+                                            if (!sizeList.contains(size)) {
+                                                sizeList.add(size); // Thêm size vào danh sách
+                                            }
+                                        }
 
-                                            if (!sizeSet.contains(size)) {
-                                                sizeSet.add(size);
+                                        // Sắp xếp danh sách size từ thấp đến cao
+                                        Collections.sort(sizeList);
 
-                                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                        LinearLayout.LayoutParams.WRAP_CONTENT
-                                                );
+                                        for (int k = 0; k < sizeList.size(); k++) {
+                                            int size = sizeList.get(k);
+
+                                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                                            );
                                                 params.setMargins(10, 0, 0, 0);
 
                                                 RadioButton radioButton = new RadioButton(getBaseContext());
                                                 radioButton.setId(View.generateViewId()); // Tạo ID duy nhất cho RadioButton
-                                                radioButton.setText(String.valueOf(size));
+                                                radioButton.setText(valueOf(size));
                                                 radioButton.setButtonDrawable(null);
                                                 radioButton.setHeight(90);
                                                 radioButton.setWidth(160);
@@ -197,10 +223,15 @@ public class ChitietProduct extends AppCompatActivity {
 //   SharedPreferences (size)
                                                             SharedPreferences sharedPreferences = getSharedPreferences("size", MODE_PRIVATE);
                                                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                            editor.putString("size", String.valueOf(size));
+                                                            editor.putString("size", valueOf(size));
+                                                            Toast.makeText(ChitietProduct.this, "size: "+ size, Toast.LENGTH_SHORT).show();
                                                             editor.apply();
                                                             buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_checkbox));
                                                         } else {
+//                                                            if (!isRadioButtonSelected){
+//                                                                Toast.makeText(getBaseContext(), "Vui lòng chọn một kích cỡ !!!", Toast.LENGTH_SHORT).show();
+//                                                                return;
+//                                                            }
                                                             radioButton.setLayoutParams(params);
                                                             buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_canlecheckbox)); // Hình ảnh cho trạng thái chưa chọn
                                                         }
@@ -210,8 +241,7 @@ public class ChitietProduct extends AppCompatActivity {
                                                 radioGroup.addView(radioButton);
                                             }
                                         }
-                                    }
-                                } catch (JSONException e) {
+                            } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -230,7 +260,7 @@ public class ChitietProduct extends AppCompatActivity {
                     public void onClick(View v) {
                         currentValue = Integer.parseInt(edsoluong.getText().toString());
                         if (currentValue > 1) {
-                            edsoluong.setText(String.valueOf(currentValue - 1));
+                            edsoluong.setText(valueOf(currentValue - 1));
                             newValue = currentValue - 1;
                             saveValueToSharedPreferences(newValue);
                         }
@@ -242,7 +272,7 @@ public class ChitietProduct extends AppCompatActivity {
                     public void onClick(View v) {
                         currentValue = Integer.parseInt(edsoluong.getText().toString());
                         newValue = currentValue + 1;
-                        edsoluong.setText(String.valueOf(currentValue + 1));
+                        edsoluong.setText(valueOf(currentValue + 1));
                         saveValueToSharedPreferences(newValue);                    }
                 });
 
@@ -270,30 +300,31 @@ public class ChitietProduct extends AppCompatActivity {
                 bottomView.findViewById(R.id.muasp).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!isRadioButtonSelected){
-                            Toast.makeText(getBaseContext(), "Vui lòng chọn một kích cỡ !!!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
+//                        if (!isRadioButtonSelected){
+//                            Toast.makeText(getBaseContext(), "Vui lòng chọn một kích cỡ !!!", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
                         startActivity(new Intent(getBaseContext(), MuaProduct.class));
+                        bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
+                        isDialogOpen = false;
                     }
                 });
                 bottomSheetDialog.setContentView(bottomView);
                 bottomSheetDialog.show();
                 isDialogOpen = true;
             }
-
-
             private void saveValueToSharedPreferences(int value) {
 // SharedPreferences ( quantityProduct )
                 SharedPreferences sharedPreferences = getSharedPreferences("quantityProduct", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("quantity", String.valueOf(value));
+                editor.putString("quantity", valueOf(value));
                 editor.apply();
             }
 
 
         });
     }
+
 
 
 }

@@ -44,7 +44,8 @@ public class MuaProduct extends AppCompatActivity {
         comeback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getBaseContext(), ChitietProduct.class));
+//                startActivity(new Intent(getBaseContext(), ChitietProduct.class));
+                onBackPressed();
             }
         });
         oder.setOnClickListener(new View.OnClickListener() {
@@ -118,10 +119,7 @@ public class MuaProduct extends AppCompatActivity {
             thanhtoan.setText( "đ" + formattedPrice);
             tongPrice.setText( "đ" + formattedPrice);
         }
-
-
     }
-
     private void anhxa() {
         oder = findViewById(R.id.oder);
         comeback = findViewById(R.id.comeback);
@@ -136,4 +134,5 @@ public class MuaProduct extends AppCompatActivity {
         tongPrice = findViewById(R.id.tongPrice);
 
     }
+
 }
