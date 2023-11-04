@@ -18,4 +18,28 @@
     <color name="card_2">#F9E79F</color>
     <color name="card_3">#D7BDE2</color>
     <color name="card_4">#D2C3D8</color>
+
+
+
+
+
+    <color name="statusbar">#ef6534</color>
+
+    <color name="green">#67e784</color>
+
+    <color name="white1">#A6FFFFFF</color>
+    <color name="colormain">#209de0</color>
+    <color name="category">#0078D7</color>
+    <color name="product">#808080</color>
+    <color name="red">#FB0D0D</color>
+    <color name="sale">#AB000000</color>
+    <color name="yellow">#ffe21e</color>
+    <color name="gray">#80DAD5D5</color>
+    <color name="grey">#DB5555</color>
+    <color name="pink">#ECBCBC</color>
+    <color name="title">#11599C</color>
+    <color name="ms0">#40FF0000</color>
+    <color name="ms1">#4000FF00</color>
+    <color name="ms2">#40FF9900</color>
+    <color name="gray2">#626262</color>
 </resources>

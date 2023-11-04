@@ -16,6 +16,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AddressActivity"
+            android:exported="true"
+            >
+
+        </activity>
+        <activity
+            android:name=".AddAddressActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".ChooseAddressActivity"
+            android:exported="false" />
+        <activity
             android:name=".InfoUserActivity"
             android:exported="false" />
         <activity
@@ -27,7 +39,6 @@
         <activity
             android:name=".HistoryOrderClient"
             android:exported="false" />
-
         <activity
             android:name=".Message"
             android:exported="false" />
@@ -42,8 +53,8 @@
             android:exported="false" />
         <activity
             android:name=".Tab_Giaodien_Activity"
-            android:windowSoftInputMode="adjustNothing"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".GiaoDien.DangKyActivity"
             android:exported="false" />
@@ -61,7 +72,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
