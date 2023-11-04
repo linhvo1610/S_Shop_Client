@@ -110,7 +110,11 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ReceProduct> call, Throwable t) {
-
+                try {
+                    throw t;
+                } catch (Throwable e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
