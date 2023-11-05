@@ -3,6 +3,7 @@ package account.fpoly.s_shop_client;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,13 +19,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import account.fpoly.s_shop_client.API.API_Bill;
 import account.fpoly.s_shop_client.Modal.Address;
+import account.fpoly.s_shop_client.Modal.Bill;
 import account.fpoly.s_shop_client.Tools.ADDRESS;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class MuaProduct extends AppCompatActivity {
 
@@ -32,6 +42,8 @@ public class MuaProduct extends AppCompatActivity {
     ImageView comeback;
     TextView tv_name, tv_phonenumber, tv_address;
 
+    String name,price,quantity,size,fullname,phone,addressU,iduser,idPro;
+    TextView namePro,pricePro,quantityPro,sizePro,totalQuantity,thanhtien,totalprice,thanhtoan,tongPrice;
     ImageView listAdd;
     private Address address;
     private final int REQUESR_ADDRESS_CHOOSE = 777;
@@ -48,9 +60,21 @@ public class MuaProduct extends AppCompatActivity {
         tv_phonenumber = findViewById(R.id.tv_phonenumber);
         tv_address = findViewById(R.id.tv_address);
 
+        pricePro = findViewById(R.id.pricePro);
+        quantityPro = findViewById(R.id.quantityPro);
+        namePro = findViewById(R.id.namePro);
+        sizePro = findViewById(R.id.sizePro);
+        totalQuantity = findViewById(R.id.totalQuantity);
+        thanhtien = findViewById(R.id.thanhtien);
+        totalprice = findViewById(R.id.totalPrice);
+        thanhtoan = findViewById(R.id.thanhtoan);
+        tongPrice = findViewById(R.id.tongPrice);
+
+
+
         showAddress();
         chooseAddress();
-
+        layDulieu();
         comeback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +84,9 @@ public class MuaProduct extends AppCompatActivity {
         oder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                postBill();
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_thongbao, null);
                 builder.setView(view);
@@ -86,6 +113,92 @@ public class MuaProduct extends AppCompatActivity {
 
             }
         });
+        Toast.makeText(this, "idProduct: "+ idPro, Toast.LENGTH_SHORT).show();
+    }
+    private SharedPreferences sharedPreferences;
+    private void postBill() {
+        sharedPreferences = getSharedPreferences("address", MODE_PRIVATE);
+        String idAddress = sharedPreferences.getString("idAddress", null);
+
+        String staTer = "Dang duyet";
+        String iddiachi = address.get_id();
+
+
+        // Tạo một danh sách các id_product
+        List<String> product = new ArrayList<>();
+// Số lượng sản phẩm muốn mua
+        int numberOfProducts = 1;
+// Vòng lặp để tự động tăng số lượng sản phẩm
+        for (int i = 1; i <= numberOfProducts; i++) {
+            String idProduct = idPro;
+            product.add(idProduct);
+        }
+
+        API_Bill.apiBill.addBill(new Bill(staTer,iduser,product,iddiachi)).enqueue(new Callback<Bill>() {
+            @Override
+            public void onResponse(Call<Bill> call, retrofit2.Response<Bill> response) {
+                Toast.makeText(getBaseContext(), "Them thanh cong", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Bill> call, Throwable t) {
+                Toast.makeText(getBaseContext(), "Them that bai", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Thực hiện cập nhật dữ liệu ở đây
+        layDulieu();
+    }
+    private void layDulieu() {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
+        SharedPreferences sharedPreferencesSize = getSharedPreferences("size", MODE_PRIVATE);
+        SharedPreferences sharedPreferencesQuantity = getSharedPreferences("quantityProduct", MODE_PRIVATE);
+        SharedPreferences preferencesUser = getSharedPreferences("infoUser",MODE_PRIVATE);
+        iduser = preferencesUser.getString("iduser",null);
+
+        fullname = preferencesUser.getString("fullname",null);
+        phone = preferencesUser.getString("phone",null);
+        addressU = preferencesUser.getString("addressUser",null);
+//        tv_fullname.setText(fullname);
+//        tv_phone.setText(phone);
+//        tv_address.setText(address);
+
+        idPro = sharedPreferences.getString("idProduct",null);
+
+        name = sharedPreferences.getString("tenProduct", null);
+        price = sharedPreferences.getString("giaProduct", null);
+        size = sharedPreferencesSize.getString("size", null);
+        quantity = sharedPreferencesQuantity.getString("quantity", null);
+        quantityPro.setText("x"+ quantity);
+        totalQuantity.setText(quantity);
+        sizePro.setText(" " + size);
+        namePro.setText(name);
+        int priceFormat = Integer.parseInt(price);
+        String Price = decimalFormat.format(priceFormat);
+        pricePro.setText("đ" + Price);
+
+        if (price != null && quantity != null) {
+            int priceValue = Integer.parseInt(price);
+            int quantityValue = Integer.parseInt(quantity);
+            int totalPrice = priceValue * quantityValue;
+//thành tiền
+            String formattedthanhtienPrice = decimalFormat.format(totalPrice);
+            thanhtien.setText( "đ" + formattedthanhtienPrice);
+            totalprice.setText( "đ" + formattedthanhtienPrice);
+// tổng thanh toán
+            int shipValue = Integer.parseInt("23400");
+            int totalThanhtoan = totalPrice + shipValue;
+            String formattedPrice = decimalFormat.format(totalThanhtoan);
+            thanhtoan.setText( "đ" + formattedPrice);
+            tongPrice.setText( "đ" + formattedPrice);
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -94,6 +207,11 @@ public class MuaProduct extends AppCompatActivity {
         if (address != null) {
             tv_name.setText(address.getFullname());
             tv_phonenumber.setText(address.getNumberphone());
+
+            SharedPreferences sharedPreferencesAddress = getSharedPreferences("idAddress", MODE_PRIVATE);
+            sharedPreferencesAddress.getString("idAddress", address.get_id());
+            SharedPreferences.Editor editor = sharedPreferencesAddress.edit();
+            editor.apply();
 
             tv_address.setText(address.getAddress()+", "+address.getWards() + ", " + address.getDistrict() + ", " + address.getProvince());
         }

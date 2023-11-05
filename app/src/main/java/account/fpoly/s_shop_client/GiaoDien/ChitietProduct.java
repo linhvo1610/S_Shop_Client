@@ -255,10 +255,14 @@ public class ChitietProduct extends AppCompatActivity {
 
 //                numberPicker.setText(String.valueOf(sol)); // Giá trị mặc định
 
+                String soluong = edsoluong.getText().toString();
+                if (soluong.isEmpty()) {
+                    currentValue = 1; // Đặt giá trị mặc định là 1 nếu không có số được nhập vào
+                }
                 buttonMinus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        currentValue = Integer.parseInt(edsoluong.getText().toString());
+
                         if (currentValue > 1) {
                             edsoluong.setText(valueOf(currentValue - 1));
                             newValue = currentValue - 1;
@@ -270,6 +274,7 @@ public class ChitietProduct extends AppCompatActivity {
                 buttonPlus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         currentValue = Integer.parseInt(edsoluong.getText().toString());
                         newValue = currentValue + 1;
                         edsoluong.setText(valueOf(currentValue + 1));
@@ -300,13 +305,9 @@ public class ChitietProduct extends AppCompatActivity {
                 bottomView.findViewById(R.id.muasp).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        if (!isRadioButtonSelected){
-//                            Toast.makeText(getBaseContext(), "Vui lòng chọn một kích cỡ !!!", Toast.LENGTH_SHORT).show();
-//                            return;
-//                        }
-                        startActivity(new Intent(getBaseContext(), MuaProduct.class));
-                        bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
-                        isDialogOpen = false;
+                            startActivity(new Intent(getBaseContext(), MuaProduct.class));
+                            bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
+                            isDialogOpen = false;
                     }
                 });
                 bottomSheetDialog.setContentView(bottomView);
