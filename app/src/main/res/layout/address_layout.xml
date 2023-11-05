@@ -60,6 +60,14 @@
             android:textSize="16sp" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt"
+            android:text="Dang dung"
+            android:visibility="gone"
+            android:textColor="@color/red"/>
+
+        <TextView
             android:id="@+id/tv_default"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,8 +80,8 @@
     <CheckBox
         android:visibility="visible"
         android:id="@+id/btn_choose_address"
-        android:scaleY="1.5"
-        android:scaleX="1.5"
+        android:scaleY="1"
+        android:scaleX="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

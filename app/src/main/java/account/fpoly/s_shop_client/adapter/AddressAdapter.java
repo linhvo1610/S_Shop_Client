@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +29,6 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Addressv
     private final Context context;
     private List<Address> list;
     private final boolean choose;
-
 
     public AddressAdapter(Context context, boolean choose) {
         this.context = context;
@@ -68,6 +69,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Addressv
             }
 
             holder.btn_choose_address.setOnClickListener(v -> {
+
                 Toast.makeText(context, "Chọn địa chỉ thành công", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
                 intent.putExtra("address", address);
@@ -105,6 +107,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Addressv
         private final TextView tv_default;
         private final LinearLayout ln_address;
         private final CheckBox btn_choose_address;
+        TextView txt;
 
         public AddressviewHolder(@NonNull View itemView) {
             super(itemView);
@@ -115,6 +118,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Addressv
             tv_address = itemView.findViewById(R.id.tv_address);
             tv_default = itemView.findViewById(R.id.tv_default);
             ln_address = itemView.findViewById(R.id.ln_address);
+            txt = itemView.findViewById(R.id.txt);
+
         }
     }
 

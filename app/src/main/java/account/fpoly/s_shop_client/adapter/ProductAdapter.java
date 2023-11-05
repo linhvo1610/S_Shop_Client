@@ -96,7 +96,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 editor.putString("quantityPro", sluong);
                 editor.putString("descriptionPro", description);
 
-
                 editor.apply();
         ProductModal sp = list.get(position);
         if (sp == null){
