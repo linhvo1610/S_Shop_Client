@@ -1,5 +1,6 @@
 package account.fpoly.s_shop_client.GiaoDien;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,10 +18,14 @@ import java.util.List;
 
 import account.fpoly.s_shop_client.API.API_User;
 import account.fpoly.s_shop_client.MainActivity;
+import account.fpoly.s_shop_client.Modal.Address;
 import account.fpoly.s_shop_client.Modal.UserModal;
 import account.fpoly.s_shop_client.R;
+import account.fpoly.s_shop_client.Service.ApiService;
 import account.fpoly.s_shop_client.Service.ServiceUser;
 import account.fpoly.s_shop_client.Tab_Giaodien_Activity;
+import account.fpoly.s_shop_client.Tools.ACCOUNT;
+import account.fpoly.s_shop_client.Tools.LIST;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,6 +90,7 @@ public class DangNhapActivity extends AppCompatActivity {
             public void onResponse(Call<UserModal> call, Response<UserModal> response) {
                 if (response.isSuccessful()){
                     UserModal userModal1 = response.body();
+                    ACCOUNT.user = userModal1;
                     SharedPreferences preferences = getSharedPreferences("infoUser",MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("fullname", userModal1.getFullname());
@@ -104,6 +110,24 @@ public class DangNhapActivity extends AppCompatActivity {
                     }else if (userModal1.getRole().equalsIgnoreCase("Admin")){
                         Toast.makeText(DangNhapActivity.this, "App danh cho User", Toast.LENGTH_SHORT).show();
                     }
+
+                    ApiService.apiService.getAddress(userModal1.get_id()).enqueue(new Callback<List<Address>>() {
+                        @Override
+                        public void onResponse(@NonNull Call<List<Address>> call, @NonNull Response<List<Address>> response) {
+                            if (response.isSuccessful()) {
+                                if (response.body() != null) {
+                                    LIST.listAddress = response.body();
+                                }
+                            }
+//                            gotoSettings();
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<List<Address>> call, @NonNull Throwable t) {
+//                            gotoSettings();
+                        }
+                    });
+
                 }else {
                     Toast.makeText(DangNhapActivity.this, "Vui lòng kiếm tra lại tài khoản!!!", Toast.LENGTH_SHORT).show();
                 }

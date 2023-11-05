@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import account.fpoly.s_shop_client.R;
 
 public class TOOLS {
-    public static final String doMainDevice = "http://10.24.1.82:3000";
+    public static final String doMainDevice = "http://192.168.1.7:3000";
     public static final String  USER= "USER";
     public static final String  DEFAULT_ADDRESS= "DEFAULT_ADDRESS";
     public static final String  TOKEN= "TOKEN";

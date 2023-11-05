@@ -99,12 +99,14 @@
                         android:orientation="horizontal"
                         >
                         <TextView
+                            android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Nguyen Van Hai"
                             android:layout_marginLeft="10dp"
                             />
                         <TextView
+                            android:id="@+id/tv_phonenumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0962431044"
@@ -112,11 +114,13 @@
                             />
                     </LinearLayout>
                     <TextView
+                        android:id="@+id/tv_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tan Hoi Dan Phuong Ha Noi"
                         android:layout_marginLeft="10dp"
                         />
+
                 </LinearLayout>
 
                 <ImageView

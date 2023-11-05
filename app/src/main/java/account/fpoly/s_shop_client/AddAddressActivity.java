@@ -188,16 +188,14 @@ public class AddAddressActivity extends AppCompatActivity {
                 return;
             }
             Address address = new Address();
-            SharedPreferences sharedPreferences = getSharedPreferences("infoUser", MODE_PRIVATE);
-            String idUser = sharedPreferences.getString("iduser", null);
-            address.setId_user(idUser);
+            address.setId_user(ACCOUNT.user.get_id());
             address.setFullname(edt_fullname_adr.getText().toString().trim());
             address.setNumberphone(edt_numberphone_adr.getText().toString().trim());
             address.setProvince(ADDRESS.province.getName());
             address.setDistrict(ADDRESS.district.getName());
             address.setWards(ADDRESS.ward.getName());
             address.setAddress(edt_name_address_adr.getText().toString());
-            ApiService.apiService.saveNewAddress(idUser, address).enqueue(new Callback<Address>() {
+            ApiService.apiService.saveNewAddress(ACCOUNT.user.get_id(), address).enqueue(new Callback<Address>() {
                 @Override
                 public void onResponse(@NonNull Call<Address> call, @NonNull Response<Address> response) {
                     if (response.isSuccessful()) {
