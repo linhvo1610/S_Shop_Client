@@ -104,6 +104,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
         holder.NameProduct.setText(""+sp.getName());
         holder.PriceProduct.setText(""+sp.getPrice());
+        String urlImage = API.api+sp.getImage();
+        Glide.with(holder.itemView).load(urlImage).into(holder.ImageProduct);
 
 
                 iClickItemListener.onCLickItemProduct(productModal);
