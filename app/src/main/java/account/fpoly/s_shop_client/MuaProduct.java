@@ -25,10 +25,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.squareup.picasso.Picasso;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_Bill;
 import account.fpoly.s_shop_client.Modal.Address;
 import account.fpoly.s_shop_client.Modal.Bill;
@@ -42,10 +45,12 @@ public class MuaProduct extends AppCompatActivity {
     ImageView comeback;
     TextView tv_name, tv_phonenumber, tv_address;
 
-    String name,price,quantity,size,fullname,phone,addressU,iduser,idPro;
+    String name,price,quantity,size,fullname,phone,addressU,iduser,idPro,imagePro;
     TextView namePro,pricePro,quantityPro,sizePro,totalQuantity,thanhtien,totalprice,thanhtoan,tongPrice;
     ImageView listAdd;
+    ImageView imageProduct;
     private Address address;
+    LinearLayout btn_listAdd;
     private final int REQUESR_ADDRESS_CHOOSE = 777;
 
     @Override
@@ -55,7 +60,7 @@ public class MuaProduct extends AppCompatActivity {
 
         oder = findViewById(R.id.oder);
         comeback = findViewById(R.id.comeback);
-        listAdd = findViewById(R.id.btn_listAdd);
+        btn_listAdd = findViewById(R.id.btn_listAdd);
         tv_name = findViewById(R.id.tv_name);
         tv_phonenumber = findViewById(R.id.tv_phonenumber);
         tv_address = findViewById(R.id.tv_address);
@@ -69,6 +74,7 @@ public class MuaProduct extends AppCompatActivity {
         totalprice = findViewById(R.id.totalPrice);
         thanhtoan = findViewById(R.id.thanhtoan);
         tongPrice = findViewById(R.id.tongPrice);
+        imageProduct = findViewById(R.id.imagePro);
 
 
 
@@ -162,6 +168,9 @@ public class MuaProduct extends AppCompatActivity {
         SharedPreferences sharedPreferencesQuantity = getSharedPreferences("quantityProduct", MODE_PRIVATE);
         SharedPreferences preferencesUser = getSharedPreferences("infoUser",MODE_PRIVATE);
         iduser = preferencesUser.getString("iduser",null);
+        imagePro = sharedPreferences.getString("image", null);
+        Picasso.get().load(API.api_image + imagePro).into(imageProduct);
+
 
         fullname = preferencesUser.getString("fullname",null);
         phone = preferencesUser.getString("phone",null);
@@ -217,7 +226,7 @@ public class MuaProduct extends AppCompatActivity {
         }
     }
     private void chooseAddress() {
-        listAdd.setOnClickListener(v -> {
+        btn_listAdd.setOnClickListener(v -> {
             Intent intent = new Intent(MuaProduct.this, AddressActivity.class);
             intent.putExtra("choose", true);
             startActivityForResult(intent, REQUESR_ADDRESS_CHOOSE);
