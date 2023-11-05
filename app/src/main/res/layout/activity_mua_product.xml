@@ -70,6 +70,7 @@
             >
             <!--            dia chi-->
             <LinearLayout
+                android:id="@+id/btn_listAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -124,7 +125,6 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/btn_listAdd"
                     android:layout_width="20dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center"
@@ -141,6 +141,7 @@
                 android:layout_marginTop="4dp"
                 >
                 <ImageView
+                    android:id="@+id/imagePro"
                     android:layout_width="90dp"
                     android:layout_height="85dp"
                     android:src="@drawable/girl"

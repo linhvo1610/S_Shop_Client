@@ -66,9 +66,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ChitietProduct extends AppCompatActivity {
 
     LinearLayout clickmua,chat;
-    ImageView back;
+    ImageView back,chitiet_imgProduct;
     TextView chitiet_tenProduct,chitiet_giaProduct,chitiet_description;
     String idProduct;
+    String imagePro;
 
     private  int sol = 1;
     int currentValue;
@@ -90,6 +91,9 @@ public class ChitietProduct extends AppCompatActivity {
         chitiet_giaProduct = findViewById(R.id.chitiet_giaProduct);
         chitiet_tenProduct = findViewById(R.id.chitiet_tenProduct);
         chitiet_description = findViewById(R.id.chitiet_description);
+        chitiet_imgProduct = findViewById(R.id.chitiet_imgProduct);
+
+
 
 
         String priceProduct = sharedPreferences.getString("giaProduct", null);
@@ -103,6 +107,9 @@ public class ChitietProduct extends AppCompatActivity {
         chitiet_tenProduct.setText(tenProduct);
         String chitietProduct = sharedPreferences.getString("descriptionPro", null);
         chitiet_description.setText(chitietProduct);
+        imagePro = sharedPreferences.getString("image", null);
+
+        Picasso.get().load(API.api_image + imagePro).into(chitiet_imgProduct);
 
 
         chat.setOnClickListener(new View.OnClickListener() {
@@ -132,9 +139,13 @@ public class ChitietProduct extends AppCompatActivity {
                 LinearLayout checkboxLayout = bottomView.findViewById(R.id.checkboxLayout);
                 RadioGroup radioGroup = bottomView.findViewById(R.id.radioGroup);
                 LinearLayout layoutQuantity = bottomView.findViewById(R.id.layoutQuantity);
+                ImageView imageBotom = bottomView.findViewById(R.id.checkbox_ImageProduct);
 
                 ImageView checkboxImgProduct = bottomView.findViewById(R.id.checkbox_ImageProduct);
                 TextView checkboxPriceProduct = bottomView.findViewById(R.id.checkbox_PriceProduct);
+
+                Picasso.get().load(API.api_image + imagePro).into(imageBotom);
+
 
                 String priceProduct = sharedPreferences.getString("giaProduct", null);
                 int priceFormat = Integer.parseInt(priceProduct);
@@ -149,8 +160,8 @@ public class ChitietProduct extends AppCompatActivity {
 
 
 
-                String imageProduct = sharedPreferences.getString("anhProduct", null);
-                Glide.with(getApplicationContext()).load(imageProduct).into(checkboxImgProduct);
+//                String imageProduct = sharedPreferences.getString("anhProduct", null);
+//                Glide.with(getApplicationContext()).load(imageProduct).into(checkboxImgProduct);
 
                 RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api +"product?_id="+ idProduct, null,
