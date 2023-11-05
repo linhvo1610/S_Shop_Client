@@ -127,4 +127,10 @@ public class HomeFragment extends Fragment {
         intent.putExtra("anhProduct", anhProduct);
         startActivity(intent);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        callApiSeviceListProduct();
+    }
 }
