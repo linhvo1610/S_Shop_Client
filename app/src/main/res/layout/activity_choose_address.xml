@@ -77,7 +77,7 @@
         android:text="Xác nhận"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colormain"/>
+        android:background="@color/colorAccrnt"/>
 
 
 
