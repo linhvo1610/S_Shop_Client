@@ -168,7 +168,7 @@
                         android:id="@+id/chuyen"
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
-                        android:text="Gợi ý cho bạn ( click chuyen ow day )"
+                        android:text="Gợi ý cho bạn "
                         android:layout_marginLeft="8dp"
                         android:gravity="center"
                         android:textColor="@color/colorAccrnt"

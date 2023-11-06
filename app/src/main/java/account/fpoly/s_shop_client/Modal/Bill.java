@@ -9,6 +9,9 @@ public class Bill {
     private String id_user;
     private List<String> product;
     private String id_address;
+    private int totalQuantity;
+    private double totalPrice;
+    private int size;
 
     public Bill() {
     }
@@ -21,11 +24,14 @@ public class Bill {
         this.id_address = id_address;
     }
 
-    public Bill(String status, String id_user, List<String> product, String id_address) {
+    public Bill(String status, String id_user, List<String> product, String id_address, int totalQuantity, double totalPrice, int size) {
         this.status = status;
         this.id_user = id_user;
         this.product = product;
         this.id_address = id_address;
+        this.totalQuantity = totalQuantity;
+        this.totalPrice = totalPrice;
+        this.size = size;
     }
 
     public static class Product {
