@@ -51,6 +51,7 @@ import java.util.Set;
 
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_Product;
+import account.fpoly.s_shop_client.CommentActivity;
 import account.fpoly.s_shop_client.Message;
 import account.fpoly.s_shop_client.Modal.ProductModal;
 import account.fpoly.s_shop_client.Modal.UserModal;
@@ -82,6 +83,7 @@ public class ChitietProduct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chitiet_product);
 
+
         SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
         decimalFormat = new DecimalFormat("#,###");
 
@@ -92,6 +94,7 @@ public class ChitietProduct extends AppCompatActivity {
         chitiet_tenProduct = findViewById(R.id.chitiet_tenProduct);
         chitiet_description = findViewById(R.id.chitiet_description);
         chitiet_imgProduct = findViewById(R.id.chitiet_imgProduct);
+        LinearLayout linearLayout= findViewById(R.id.Ln_danhgia);
 
 
 
@@ -334,6 +337,13 @@ public class ChitietProduct extends AppCompatActivity {
             }
 
 
+        });
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChitietProduct.this, CommentActivity.class);
+                startActivity(intent);
+            }
         });
     }
 

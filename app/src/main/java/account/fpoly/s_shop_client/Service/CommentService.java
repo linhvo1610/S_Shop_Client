@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_Product;
+import account.fpoly.s_shop_client.Modal.CommentModal;
+import account.fpoly.s_shop_client.Modal.ReceComment;
 import account.fpoly.s_shop_client.Modal.ReceProduct;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -22,6 +24,6 @@ public interface CommentService {
     //    @FormUrlEncoded
 
     @GET("comment")
-    Call<ReceProduct> listcomment();
+    Call<ReceComment> listcomment();
 }
 
