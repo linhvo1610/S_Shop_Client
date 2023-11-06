@@ -83,12 +83,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        chuyen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), ChitietProduct.class));
-            }
-        });
 
 
         return view;

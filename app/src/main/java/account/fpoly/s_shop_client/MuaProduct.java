@@ -52,6 +52,8 @@ public class MuaProduct extends AppCompatActivity {
     private Address address;
     LinearLayout btn_listAdd;
     private final int REQUESR_ADDRESS_CHOOSE = 777;
+    int totalPrice;
+    String formattedthanhtienPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +121,6 @@ public class MuaProduct extends AppCompatActivity {
 
             }
         });
-        Toast.makeText(this, "idProduct: "+ idPro, Toast.LENGTH_SHORT).show();
     }
     private SharedPreferences sharedPreferences;
     private void postBill() {
@@ -139,8 +140,11 @@ public class MuaProduct extends AppCompatActivity {
             String idProduct = idPro;
             product.add(idProduct);
         }
+        int quntity = Integer.parseInt(quantity);
+        int sizebill = Integer.parseInt(size);
+        double pricebill = Double.parseDouble(String.valueOf(totalPrice));
 
-        API_Bill.apiBill.addBill(new Bill(staTer,iduser,product,iddiachi)).enqueue(new Callback<Bill>() {
+        API_Bill.apiBill.addBill(new Bill(staTer,iduser,product,iddiachi,quntity,pricebill,sizebill)).enqueue(new Callback<Bill>() {
             @Override
             public void onResponse(Call<Bill> call, retrofit2.Response<Bill> response) {
                 Toast.makeText(getBaseContext(), "Them thanh cong", Toast.LENGTH_SHORT).show();
@@ -196,9 +200,9 @@ public class MuaProduct extends AppCompatActivity {
         if (price != null && quantity != null) {
             int priceValue = Integer.parseInt(price);
             int quantityValue = Integer.parseInt(quantity);
-            int totalPrice = priceValue * quantityValue;
+            totalPrice = priceValue * quantityValue;
 //thành tiền
-            String formattedthanhtienPrice = decimalFormat.format(totalPrice);
+            formattedthanhtienPrice = decimalFormat.format(totalPrice);
             thanhtien.setText( "đ" + formattedthanhtienPrice);
             totalprice.setText( "đ" + formattedthanhtienPrice);
 // tổng thanh toán
