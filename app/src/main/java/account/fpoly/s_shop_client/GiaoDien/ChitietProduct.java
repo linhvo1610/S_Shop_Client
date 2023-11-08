@@ -78,6 +78,8 @@ public class ChitietProduct extends AppCompatActivity {
     private boolean isDialogOpen = false;
     private boolean isRadioButtonSelected = false;
     DecimalFormat decimalFormat;
+    TextView sluongMuaText;
+    String sluongMuaSP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +87,8 @@ public class ChitietProduct extends AppCompatActivity {
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
+        SharedPreferences sharedPreferencesSluong = getSharedPreferences("billPro", MODE_PRIVATE);
+        sluongMuaSP = sharedPreferencesSluong.getString("sluongMua",null);
         decimalFormat = new DecimalFormat("#,###");
 
         clickmua = findViewById(R.id.clickmua);
@@ -95,9 +99,16 @@ public class ChitietProduct extends AppCompatActivity {
         chitiet_description = findViewById(R.id.chitiet_description);
         chitiet_imgProduct = findViewById(R.id.chitiet_imgProduct);
         LinearLayout linearLayout= findViewById(R.id.Ln_danhgia);
+        sluongMuaText = findViewById(R.id.sluongMua);
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChitietProduct.this, CommentActivity.class);
+                startActivity(intent);
+            }
+        });
 
-
-
+        listQuantity();
 
         String priceProduct = sharedPreferences.getString("giaProduct", null);
         idProduct = sharedPreferences.getString("idProduct", null);
@@ -172,21 +183,6 @@ public class ChitietProduct extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-//                                    JSONArray dataArray  = response.getJSONArray("data");
-//                                    for (int i = 0; i < dataArray.length(); i++) {
-//                                        JSONObject item = dataArray.getJSONObject(i);
-//
-//                                        HashSet<Integer> sizeSet = new HashSet<>();
-//                                        JSONArray sizesArray = item.getJSONArray("sizes");
-//                                        for (int j = 0; j < sizesArray.length(); j++) {
-//                                            JSONObject sizeItem = sizesArray.getJSONObject(j);
-//                                            int size = sizeItem.getInt("size");
-//                                            if (!sizeSet.contains(size)) {
-//                                                sizeSet.add(size);
-//                                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//                                                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                                                        LinearLayout.LayoutParams.WRAP_CONTENT
-//                                                );
                                     JSONArray dataArray = response.getJSONArray("data");
                                     for (int i = 0; i < dataArray.length(); i++) {
                                         JSONObject item = dataArray.getJSONObject(i);
@@ -212,50 +208,50 @@ public class ChitietProduct extends AppCompatActivity {
                                                     LinearLayout.LayoutParams.WRAP_CONTENT,
                                                     LinearLayout.LayoutParams.WRAP_CONTENT
                                             );
-                                                params.setMargins(10, 0, 0, 0);
+                                            params.setMargins(10, 0, 0, 0);
 
-                                                RadioButton radioButton = new RadioButton(getBaseContext());
-                                                radioButton.setId(View.generateViewId()); // Tạo ID duy nhất cho RadioButton
-                                                radioButton.setText(valueOf(size));
-                                                radioButton.setButtonDrawable(null);
-                                                radioButton.setHeight(90);
-                                                radioButton.setWidth(160);
-                                                radioButton.setBackgroundResource(R.color.light_white);
-                                                radioButton.setLayoutParams(params);
-                                                radioButton.setTextSize(15);
-                                                radioButton.setGravity(Gravity.CENTER);
-                                                radioButton.setButtonTintList(ColorStateList.valueOf(Color.GRAY));
-                                                // Thêm RadioButton vào RadioGroup hoặc ViewGroup tương ứng
-                                                // Ví dụ: radioGroup.addView(radioButton);
+                                            RadioButton radioButton = new RadioButton(getBaseContext());
+                                            radioButton.setId(View.generateViewId()); // Tạo ID duy nhất cho RadioButton
+                                            radioButton.setText(valueOf(size));
+                                            radioButton.setButtonDrawable(null);
+                                            radioButton.setHeight(90);
+                                            radioButton.setWidth(160);
+                                            radioButton.setBackgroundResource(R.color.light_white);
+                                            radioButton.setLayoutParams(params);
+                                            radioButton.setTextSize(15);
+                                            radioButton.setGravity(Gravity.CENTER);
+                                            radioButton.setButtonTintList(ColorStateList.valueOf(Color.GRAY));
+                                            // Thêm RadioButton vào RadioGroup hoặc ViewGroup tương ứng
+                                            // Ví dụ: radioGroup.addView(radioButton);
 
 
-                                                radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                                    @Override
-                                                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                                        isRadioButtonSelected = isChecked;
-                                                        if (isChecked) {
+                                            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                                @Override
+                                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                                    isRadioButtonSelected = isChecked;
+                                                    if (isChecked) {
 //   SharedPreferences (size)
-                                                            SharedPreferences sharedPreferences = getSharedPreferences("size", MODE_PRIVATE);
-                                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                            editor.putString("size", valueOf(size));
-                                                            Toast.makeText(ChitietProduct.this, "size: "+ size, Toast.LENGTH_SHORT).show();
-                                                            editor.apply();
-                                                            buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_checkbox));
-                                                        } else {
+                                                        SharedPreferences sharedPreferences = getSharedPreferences("size", MODE_PRIVATE);
+                                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                        editor.putString("size", valueOf(size));
+                                                        Toast.makeText(ChitietProduct.this, "size: "+ size, Toast.LENGTH_SHORT).show();
+                                                        editor.apply();
+                                                        buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_checkbox));
+                                                    } else {
 //                                                            if (!isRadioButtonSelected){
 //                                                                Toast.makeText(getBaseContext(), "Vui lòng chọn một kích cỡ !!!", Toast.LENGTH_SHORT).show();
 //                                                                return;
 //                                                            }
-                                                            radioButton.setLayoutParams(params);
-                                                            buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_canlecheckbox)); // Hình ảnh cho trạng thái chưa chọn
-                                                        }
+                                                        radioButton.setLayoutParams(params);
+                                                        buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_canlecheckbox)); // Hình ảnh cho trạng thái chưa chọn
                                                     }
-                                                });
+                                                }
+                                            });
 
-                                                radioGroup.addView(radioButton);
-                                            }
+                                            radioGroup.addView(radioButton);
                                         }
-                            } catch (JSONException e) {
+                                    }
+                                } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -319,9 +315,9 @@ public class ChitietProduct extends AppCompatActivity {
                 bottomView.findViewById(R.id.muasp).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                            startActivity(new Intent(getBaseContext(), MuaProduct.class));
-                            bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
-                            isDialogOpen = false;
+                        startActivity(new Intent(getBaseContext(), MuaProduct.class));
+                        bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
+                        isDialogOpen = false;
                     }
                 });
                 bottomSheetDialog.setContentView(bottomView);
@@ -338,15 +334,48 @@ public class ChitietProduct extends AppCompatActivity {
 
 
         });
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChitietProduct.this, CommentActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
+    int totalQuantityBill;
+    private void listQuantity() {
+
+        SharedPreferences sharedPreferencesBill = getSharedPreferences("product", MODE_PRIVATE);
+        String idProbill = sharedPreferencesBill.getString("idProduct",null);
+        RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?status=Xác nhận&id_product=" + idProbill, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        totalQuantityBill = 0;
+                        // Lặp qua từng đối tượng trong JSONArray
+                        for (int j = 0; j < jsonArray.length(); j++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(j);
+
+                            // Lấy giá trị của totalQuantity từ mỗi đối tượng
+                            int quantity = jsonObject.getInt("totalQuantity");
+
+                            // Cộng dồn vào tổng quantity
+                            totalQuantityBill += quantity;
+
+                        }
+                        sluongMuaText.setText(" "+totalQuantityBill);
+                    }
 
 
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getBaseContext(), "Call API Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
+    }
 }
