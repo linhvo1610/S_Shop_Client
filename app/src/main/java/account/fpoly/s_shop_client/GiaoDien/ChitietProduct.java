@@ -77,12 +77,16 @@ public class ChitietProduct extends AppCompatActivity {
     private boolean isDialogOpen = false;
     private boolean isRadioButtonSelected = false;
     DecimalFormat decimalFormat;
+    TextView sluongMuaText;
+    String sluongMuaSP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chitiet_product);
 
         SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
+        SharedPreferences sharedPreferencesSluong = getSharedPreferences("billPro", MODE_PRIVATE);
+        sluongMuaSP = sharedPreferencesSluong.getString("sluongMua",null);
         decimalFormat = new DecimalFormat("#,###");
 
         clickmua = findViewById(R.id.clickmua);
@@ -92,10 +96,11 @@ public class ChitietProduct extends AppCompatActivity {
         chitiet_tenProduct = findViewById(R.id.chitiet_tenProduct);
         chitiet_description = findViewById(R.id.chitiet_description);
         chitiet_imgProduct = findViewById(R.id.chitiet_imgProduct);
+        sluongMuaText = findViewById(R.id.sluongMua);
 
 
 
-
+        sluongMuaText.setText(sluongMuaSP);
         String priceProduct = sharedPreferences.getString("giaProduct", null);
         idProduct = sharedPreferences.getString("idProduct", null);
 //        chitiet_giaProduct.setText(priceProduct);
@@ -169,21 +174,6 @@ public class ChitietProduct extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-//                                    JSONArray dataArray  = response.getJSONArray("data");
-//                                    for (int i = 0; i < dataArray.length(); i++) {
-//                                        JSONObject item = dataArray.getJSONObject(i);
-//
-//                                        HashSet<Integer> sizeSet = new HashSet<>();
-//                                        JSONArray sizesArray = item.getJSONArray("sizes");
-//                                        for (int j = 0; j < sizesArray.length(); j++) {
-//                                            JSONObject sizeItem = sizesArray.getJSONObject(j);
-//                                            int size = sizeItem.getInt("size");
-//                                            if (!sizeSet.contains(size)) {
-//                                                sizeSet.add(size);
-//                                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//                                                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                                                        LinearLayout.LayoutParams.WRAP_CONTENT
-//                                                );
                                     JSONArray dataArray = response.getJSONArray("data");
                                     for (int i = 0; i < dataArray.length(); i++) {
                                         JSONObject item = dataArray.getJSONObject(i);

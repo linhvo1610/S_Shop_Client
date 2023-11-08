@@ -18,8 +18,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -39,6 +49,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     List<ProductModal.Size> listSize;
     private final Context context;
     private final IClickItemListener iClickItemListener;
+    String iduser;
+    int totalQuantityBill;
     public ProductAdapter(List<ProductModal> list, Context context, IClickItemListener iClickItemListener) {
         this.list = list;
         this.context=context;
@@ -76,11 +88,59 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             totalQuantity += size.getQuantity();
         }
 
-        holder.totalQuantity.setText(String.valueOf(totalQuantity));
+        SharedPreferences preferencesbill = context.getSharedPreferences("billPro",context.MODE_PRIVATE);
+        String sluongMua = preferencesbill.getString("sluongMua",null);
+
+//        holder.totalQuantity.setText(String.valueOf(totalQuantity));
+//        holder.totalQuantity.setText(String.valueOf(sluongMua));
 
         String id = productModal.getId();
         String sluong = String.valueOf(totalQuantity);
         String description = productModal.getDescription();
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        SharedPreferences preferences = context.getSharedPreferences("infoUser",context.MODE_PRIVATE);
+        iduser = preferences.getString("iduser", null);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?" +"&status=Xác nhận&id_product=" + id, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        totalQuantityBill = 0;
+                        // Lặp qua từng đối tượng trong JSONArray
+                        for (int j = 0; j < jsonArray.length(); j++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(j);
+
+                            // Lấy giá trị của totalQuantity từ mỗi đối tượng
+                            int quantity = jsonObject.getInt("totalQuantity");
+
+                            // Cộng dồn vào tổng quantity
+                            totalQuantityBill += quantity;
+
+                        }
+                        SharedPreferences sharedPreferences = context.getSharedPreferences("billPro", context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("sluongMua", String.valueOf(totalQuantityBill));
+                        editor.apply();
+                        holder.totalQuantity.setText(totalQuantityBill+"");
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Call API Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
+
 
         productViewHoder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
