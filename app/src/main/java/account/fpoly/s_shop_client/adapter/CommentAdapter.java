@@ -33,7 +33,7 @@ Context context;
     @Override
     public void onBindViewHolder(@NonNull CommentViewHoder holder, int position) {
         CommentModal commentModal =list.get(position);
-        holder.tv_Username.setText(commentModal.getId_user().getUsername());
+        holder.tv_Username.setText(commentModal.getId_user().getFullname());
         holder.tv_productName.setText((commentModal.getId_product().getName()));
         holder.tv_comment.setText(commentModal.getComment());
 
