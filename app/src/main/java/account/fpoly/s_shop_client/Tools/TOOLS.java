@@ -11,16 +11,39 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
-import account.fpoly.s_shop_client.API.API;
+import java.text.DecimalFormat;
+
+import account.fpoly.s_shop_client.Modal.UserModal;
 import account.fpoly.s_shop_client.R;
 
 public class TOOLS {
-    public static final String doMainDevice = API.TOOl;
+    public static final String doMainDevice = "http://192.168.131.103:3000";
     public static final String  USER= "USER";
     public static final String  DEFAULT_ADDRESS= "DEFAULT_ADDRESS";
     public static final String  TOKEN= "TOKEN";
 
     private static final Gson gson = new Gson();
+
+    public static String convertPrice(int price) {
+        DecimalFormat formatter = new DecimalFormat("###,###");
+        return formatter.format(price)+" ₫";
+    }
+
+    public static void saveUser(Context context, UserModal user) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(USER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String json = gson.toJson(user);
+        editor.putString(USER, json);
+        editor.apply();
+    }
+
+    public static boolean checkAllCarts;
+
+    public static UserModal getUser(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(USER, Context.MODE_PRIVATE);
+        String string = sharedPreferences.getString(USER,null);
+        return gson.fromJson(string, UserModal.class);
+    }
 
     public static String getDefaulAddress(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(DEFAULT_ADDRESS, Context.MODE_PRIVATE);
