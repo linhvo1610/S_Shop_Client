@@ -5,14 +5,25 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.Modal.CommentModal;
 import account.fpoly.s_shop_client.Modal.ReceComment;
 import account.fpoly.s_shop_client.Modal.ReceProduct;
@@ -26,7 +37,7 @@ public class CommentActivity extends AppCompatActivity {
    private List<CommentModal> list;
        CommentAdapter commentAdapter;
     private  RecyclerView recyclerView;
-
+    String idProduct;
 
 
     @Override
@@ -36,7 +47,12 @@ public class CommentActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.rcv_comment);
         ImageView img = findViewById(R.id.img_back_comment);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
+
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        idProduct = sharedPreferences.getString("idProduct", null);
+
         recyclerView.setLayoutManager(linearLayoutManager);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
@@ -51,6 +67,37 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public void callListVolley(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest =new JsonObjectRequest(Request.Method.GET, API.api + "comment?id_product=" + idProduct,
+                null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        CommentModal commentModal = new CommentModal();
+                        try {
+                            JSONArray jsonArrayUser = jsonObject.getJSONArray("id_user");
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
     }
     public  void  callListcomment(){
         CommentService.apiComment.listcomment().enqueue(new Callback<ReceComment>() {

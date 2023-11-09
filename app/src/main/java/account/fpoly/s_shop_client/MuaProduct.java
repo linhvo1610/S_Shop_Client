@@ -127,7 +127,7 @@ public class MuaProduct extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("address", MODE_PRIVATE);
         String idAddress = sharedPreferences.getString("idAddress", null);
 
-        String staTer = "Dang duyet";
+        String staTer = "Chờ xác nhận";
         String iddiachi = address.get_id();
 
 
