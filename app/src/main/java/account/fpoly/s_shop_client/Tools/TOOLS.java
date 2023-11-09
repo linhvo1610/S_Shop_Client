@@ -13,11 +13,12 @@ import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
 
+import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.Modal.UserModal;
 import account.fpoly.s_shop_client.R;
 
 public class TOOLS {
-    public static final String doMainDevice = "http://192.168.131.103:3000";
+    public static final String doMainDevice = API.TOOl;
     public static final String  USER= "USER";
     public static final String  DEFAULT_ADDRESS= "DEFAULT_ADDRESS";
     public static final String  TOKEN= "TOKEN";
