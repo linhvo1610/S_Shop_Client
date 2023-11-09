@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -30,12 +31,14 @@ import account.fpoly.s_shop_client.API.API_User;
 import account.fpoly.s_shop_client.HistoryOrderClient;
 import account.fpoly.s_shop_client.InfoUserActivity;
 import account.fpoly.s_shop_client.R;
+import account.fpoly.s_shop_client.Xacnhan_Bill;
 
 public class SettingsFragment extends Fragment {
     ImageView imginfo, imghistory;
     String image,curidUser,fullname;
     TextView txtfullname;
     API_User api_user;
+    LinearLayout linnerXacnhan;
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +48,13 @@ public class SettingsFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_setting_user, container, false);
         imginfo = view.findViewById(R.id.imginfo);
         txtfullname = view.findViewById(R.id.txtfullname);
+        linnerXacnhan = view.findViewById(R.id.linnerXacnhan);
+        linnerXacnhan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), Xacnhan_Bill.class));
+            }
+        });
         loadInfomation();
 //        imghistory.setOnClickListener(new View.OnClickListener() {
 //            @Override
