@@ -34,6 +34,8 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
+    public static final String TAG = HomeFragment.class.getName();
+
     ImageView chat_admin,notification;
     ProductAdapter productAdapter;
     private List<ProductModal> listproduct;

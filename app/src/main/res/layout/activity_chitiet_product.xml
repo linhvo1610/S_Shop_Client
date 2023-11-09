@@ -434,6 +434,7 @@ Return Policy 🔄
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/btn_add_detail"
             android:layout_width="130dp"
             android:layout_height="match_parent"
             android:background="#2BBCAE"

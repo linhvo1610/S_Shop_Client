@@ -26,6 +26,7 @@ import account.fpoly.s_shop_client.Service.ServiceUser;
 import account.fpoly.s_shop_client.Tab_Giaodien_Activity;
 import account.fpoly.s_shop_client.Tools.ACCOUNT;
 import account.fpoly.s_shop_client.Tools.LIST;
+import account.fpoly.s_shop_client.Tools.TOOLS;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -90,6 +91,7 @@ public class DangNhapActivity extends AppCompatActivity {
             public void onResponse(Call<UserModal> call, Response<UserModal> response) {
                 if (response.isSuccessful()){
                     UserModal userModal1 = response.body();
+                    TOOLS.saveUser(DangNhapActivity.this, userModal1);
                     ACCOUNT.user = userModal1;
                     SharedPreferences preferences = getSharedPreferences("infoUser",MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
