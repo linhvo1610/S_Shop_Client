@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Xacnhan_Bill">
+    tools:context=".HuyBill">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Danh sách chờ xác nhận"
+            android:text="Danh sách đơn đã hủy"
             android:textColor="@color/white"
             android:textSize="20dp" />
 
@@ -41,6 +41,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rcvHuyBill"/>
+        android:id="@+id/rcv"/>
 
 </LinearLayout>
