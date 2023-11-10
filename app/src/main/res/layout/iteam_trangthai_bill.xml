@@ -109,18 +109,51 @@
         android:layout_height="1dp"
         android:background="@color/gray"
         />
-    <TextView
-        android:id="@+id/statusPro"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dang xuyet"
-        android:gravity="center"
-        android:padding="5dp"
-        android:layout_gravity="right"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/borderrdio"
-        android:textColor="@color/white"
+        android:orientation="horizontal"
+        android:gravity="right"
+        >
+        <TextView
+            android:id="@+id/statusPro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dang duyet"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_marginRight="10dp"
+            android:textColor="#F44336"
 
-        />
+            />
+        <TextView
+            android:id="@+id/huydon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Huy don"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_gravity="right"
+            android:visibility="gone"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/borderrdio"
+            android:textColor="@color/white"
+
+            />
+        <TextView
+            android:id="@+id/xacnhanPro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Huy don"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_gravity="right"
+            android:visibility="gone"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/borderrdio"
+            android:textColor="@color/white"
+
+            />
+    </LinearLayout>
 
 </LinearLayout>

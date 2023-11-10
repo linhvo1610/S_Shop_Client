@@ -1,9 +1,12 @@
 package account.fpoly.s_shop_client.Modal;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Bill {
-    private String _id;
+    @SerializedName("_id")
+    private String id;
     private String date;
     private String status;
     private String id_user;
@@ -15,6 +18,15 @@ public class Bill {
 
     private String name;
     private String image;
+    private String _idPro;
+
+    public String get_idPro() {
+        return _idPro;
+    }
+
+    public void set_idPro(String _idPro) {
+        this._idPro = _idPro;
+    }
 
     public String getImage() {
         return image;
@@ -33,6 +45,17 @@ public class Bill {
     }
 
     public Bill() {
+    }
+
+    public Bill(String id, String status, String id_user, List<String> product, String id_address, int totalQuantity, double totalPrice, int size) {
+        this.id = id;
+        this.status = status;
+        this.id_user = id_user;
+        this.product = product;
+        this.id_address = id_address;
+        this.totalQuantity = totalQuantity;
+        this.totalPrice = totalPrice;
+        this.size = size;
     }
 
     public int getTotalQuantity() {
@@ -101,12 +124,12 @@ public class Bill {
         }
     }
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDate() {

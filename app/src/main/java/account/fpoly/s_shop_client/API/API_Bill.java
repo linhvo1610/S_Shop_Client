@@ -8,7 +8,10 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface API_Bill {
 
@@ -24,4 +27,10 @@ public interface API_Bill {
 
     @POST("bill")
     Call<Bill> addBill(@Body Bill bill);
+
+    @DELETE("bill/delete/{id}")
+    Call<Bill> huyOder(@Path("id") String id);
+
+    @PUT("bill/update/{id}")
+    Call<Bill> updateBill(@Path("id") String id, @Body Bill bill);
 }

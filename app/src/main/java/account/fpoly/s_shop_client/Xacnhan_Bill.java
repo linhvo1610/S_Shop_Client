@@ -75,6 +75,7 @@ public class Xacnhan_Bill extends AppCompatActivity {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         Bill bill = new Bill();
                         bill.setTotalPrice(jsonObject.getDouble("totalPrice"));
+                        bill.setId(jsonObject.getString("_id"));
                         bill.setTotalQuantity(jsonObject.getInt("totalQuantity"));
                         bill.setStatus(jsonObject.getString("status"));
                         bill.setSize(jsonObject.getInt("size"));
@@ -109,30 +110,4 @@ public class Xacnhan_Bill extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void getnamePro() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "product?_id=" + idpro,
-                null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String name = jsonObject.getString("name");
-                        Toast.makeText(Xacnhan_Bill.this, "name: "+ name, Toast.LENGTH_SHORT).show();
-                        title.setText(name);
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Xacnhan_Bill.this, "Fail", Toast.LENGTH_SHORT).show();
-            }
-        });
-        requestQueue.add(jsonObjectRequest);
-    }
 }

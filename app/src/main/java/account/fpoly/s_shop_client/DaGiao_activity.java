@@ -1,15 +1,13 @@
-package account.fpoly.s_shop_client.fragment;
+package account.fpoly.s_shop_client;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,35 +26,43 @@ import java.util.List;
 
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.Modal.Bill;
-import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.adapter.BillAdapter;
 
-
-public class LichsuFragment extends Fragment {
+public class DaGiao_activity extends AppCompatActivity {
+    ImageView img_back;
     RecyclerView rcv;
     List<Bill> list;
     BillAdapter adapter;String iduser;
-
+    TextView title;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_trangthaidon, container, false);
-        rcv=view.findViewById(R.id.rcv_lichsu);
-        SharedPreferences preferences = getActivity().getSharedPreferences("infoUser", Context.MODE_PRIVATE);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_da_giao);
+
+        anhxa();
+        SharedPreferences preferences = getSharedPreferences("infoUser",MODE_PRIVATE);
         iduser = preferences.getString("iduser", null);
-        list = new ArrayList<>();
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        rcv.setLayoutManager(manager);
         hienthiHistoty();
-
-        return view;
     }
+    private void anhxa() {
+        rcv = findViewById(R.id.rcv);
+        img_back = findViewById(R.id.img_back);
+        title = findViewById(R.id.title);
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
+        list = new ArrayList<>();
+        LinearLayoutManager manager = new LinearLayoutManager(getBaseContext());
+        rcv.setLayoutManager(manager);
+    }
     String idpro;
     private void hienthiHistoty() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billDanhan?id_user=" + iduser + "&status=Đã nhận", null, new Response.Listener<JSONObject>() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billDagiao?id_user=" + iduser + "&status=Đã giao", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -65,6 +71,9 @@ public class LichsuFragment extends Fragment {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         Bill bill = new Bill();
                         bill.setTotalPrice(jsonObject.getDouble("totalPrice"));
+                        bill.setId(jsonObject.getString("_id"));
+                        bill.setId_user(jsonObject.getString("id_user"));
+                        bill.setId_address(jsonObject.getString("id_address"));
                         bill.setTotalQuantity(jsonObject.getInt("totalQuantity"));
                         bill.setStatus(jsonObject.getString("status"));
                         bill.setSize(jsonObject.getInt("size"));
@@ -76,14 +85,14 @@ public class LichsuFragment extends Fragment {
                                 JSONObject idProductObject  = jsonObjectPro.getJSONObject("id_product");
                                 bill.setName(idProductObject .getString("name"));
                                 bill.setImage(idProductObject .getString("image"));
-
+                                bill.set_idPro(idProductObject .getString("_id"));
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
                         }
                         list.add(bill);
                     }
-                    adapter = new BillAdapter(getContext(),list);
+                    adapter = new BillAdapter(getBaseContext(),list);
                     rcv.setAdapter(adapter);
 
                 }catch (Exception e){
@@ -93,11 +102,9 @@ public class LichsuFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Call API Fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Call API Fail", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonObjectRequest);
     }
-
-
 }
