@@ -108,13 +108,14 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     >
+
                     <ImageView
+                        android:id="@+id/dialog"
                         android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/filtering"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
-                        />
+                        android:src="@drawable/filtering" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
