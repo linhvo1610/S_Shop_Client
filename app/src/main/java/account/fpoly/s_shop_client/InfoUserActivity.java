@@ -202,7 +202,7 @@ public class InfoUserActivity extends AppCompatActivity {
         finish();
     }
     private void hienthiInfomationUser(){
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "users?_id=" + curid, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

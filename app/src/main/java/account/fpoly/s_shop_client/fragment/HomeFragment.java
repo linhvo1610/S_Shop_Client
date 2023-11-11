@@ -3,9 +3,12 @@ package account.fpoly.s_shop_client.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,7 +38,7 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     public static final String TAG = HomeFragment.class.getName();
-
+    EditText etd_timkiem;
     ImageView chat_admin,notification;
     ProductAdapter productAdapter;
     private List<ProductModal> listproduct;
@@ -57,7 +60,7 @@ public class HomeFragment extends Fragment {
             anhProduct = bundle.getString("anhProduct");
         }
         //=====================================
-
+        etd_timkiem=view.findViewById(R.id.edt_timkiem);
         recyclerView=view.findViewById(R.id.rcv_product);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -99,6 +102,29 @@ public class HomeFragment extends Fragment {
                     }
                 });
                 recyclerView.setAdapter(productAdapter);
+                etd_timkiem.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        String keyword=etd_timkiem.getText().toString();
+                        List<ProductModal> serarchResult=searchProducts(keyword);
+                        productAdapter= new ProductAdapter(serarchResult, getContext(), new IClickItemListener() {
+                            @Override
+                            public void onCLickItemProduct(ProductModal productModal) {
+                                onClickGoToDetailProduct(productModal);
+                            }
+                        });
+                        recyclerView.setAdapter(productAdapter);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
 
             }
 
@@ -121,7 +147,15 @@ public class HomeFragment extends Fragment {
         intent.putExtra("anhProduct", anhProduct);
         startActivity(intent);
     }
-
+    private List<ProductModal> searchProducts(String keyword) {
+        List<ProductModal> filteredProducts = new ArrayList<>();
+        for (ProductModal product : listproduct) {
+            if (product.getName().contains(keyword)) {
+                filteredProducts.add(product);
+            }
+        }
+        return filteredProducts;
+    }
     @Override
     public void onResume() {
         super.onResume();
