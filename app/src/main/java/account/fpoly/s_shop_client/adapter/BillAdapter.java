@@ -152,7 +152,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
                 }
             });
         }
-        if (statusBill.equals("Đã giao")){
+        else if (statusBill.equals("Đã giao")){
             holder.xacnhanPro.setVisibility(View.VISIBLE);
             holder.xacnhanPro.setText("Xac nhan");
             holder.xacnhanPro.setOnClickListener(new View.OnClickListener() {

@@ -49,7 +49,7 @@ public class Xacnhan_Bill extends AppCompatActivity {
     }
 
     private void anhxa() {
-        rcv = findViewById(R.id.rcv);
+        rcv = findViewById(R.id.rcvHuyBill);
         img_back = findViewById(R.id.img_back);
         title = findViewById(R.id.title);
         img_back.setOnClickListener(new View.OnClickListener() {
