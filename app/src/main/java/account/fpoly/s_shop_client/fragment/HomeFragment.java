@@ -19,8 +19,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import account.fpoly.s_shop_client.API.API_Product;
 import account.fpoly.s_shop_client.GiaoDien.ChitietProduct;
@@ -109,7 +111,7 @@ public class HomeFragment extends Fragment {
                     }
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        String keyword=etd_timkiem.getText().toString();
+                        String keyword=removeVietnameseDiacritics(etd_timkiem.getText().toString());
                         List<ProductModal> serarchResult=searchProducts(keyword);
                         productAdapter= new ProductAdapter(serarchResult, getContext(), new IClickItemListener() {
                             @Override
@@ -149,8 +151,10 @@ public class HomeFragment extends Fragment {
     }
     private List<ProductModal> searchProducts(String keyword) {
         List<ProductModal> filteredProducts = new ArrayList<>();
+        String normalizedKeyword = removeVietnameseDiacritics(keyword);
         for (ProductModal product : listproduct) {
-            if (product.getName().contains(keyword)) {
+            String normalizedProductName = removeVietnameseDiacritics(product.getName());
+            if (normalizedProductName.contains(normalizedKeyword)) {
                 filteredProducts.add(product);
             }
         }
@@ -160,5 +164,10 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         callApiSeviceListProduct();
+    }
+    private String removeVietnameseDiacritics(String text) {
+        String normalizedText = Normalizer.normalize(text, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(normalizedText).replaceAll("").toLowerCase();
     }
 }
