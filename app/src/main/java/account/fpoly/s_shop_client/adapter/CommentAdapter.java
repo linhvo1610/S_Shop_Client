@@ -10,8 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
+import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.Modal.CommentModal;
 import account.fpoly.s_shop_client.R;
 
@@ -33,10 +36,11 @@ Context context;
     @Override
     public void onBindViewHolder(@NonNull CommentViewHoder holder, int position) {
         CommentModal commentModal =list.get(position);
-        holder.tv_Username.setText(commentModal.getId_user().getFullname());
-        holder.tv_productName.setText((commentModal.getId_product().getName()));
+        holder.tv_Username.setText(commentModal.getFullname());
         holder.tv_comment.setText(commentModal.getComment());
+        holder.tv_productname_comment.setText(commentModal.getName());
 
+        Glide.with(holder.itemView).load(API.api_image + commentModal.getImage()).into(holder.imageUser);
 
     }
 
@@ -46,7 +50,7 @@ Context context;
     }
 
     public  static class CommentViewHoder extends RecyclerView.ViewHolder {
-    TextView tv_Username, tv_comment, tv_productName;
+    TextView tv_Username, tv_comment, tv_productName,tv_productname_comment;
     ImageView imageUser;
 
         public CommentViewHoder(@NonNull View itemView) {
@@ -55,6 +59,7 @@ Context context;
             tv_productName= itemView.findViewById(R.id.tv_productname_comment);
             tv_comment= itemView.findViewById(R.id.tv_decription_comment);
             imageUser= itemView.findViewById(R.id.img_user_comment);
+            tv_productname_comment= itemView.findViewById(R.id.tv_productname_comment);
         }
     }
 }

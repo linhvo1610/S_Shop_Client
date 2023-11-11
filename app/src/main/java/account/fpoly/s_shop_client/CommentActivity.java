@@ -57,7 +57,8 @@ public class CommentActivity extends AppCompatActivity {
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
         list = new ArrayList<>();
-        callListcomment();
+//        callListcomment();
+        callListVolley();
 
 
         img.setOnClickListener(new View.OnClickListener() {
@@ -80,13 +81,25 @@ public class CommentActivity extends AppCompatActivity {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         CommentModal commentModal = new CommentModal();
-                        try {
-                            JSONArray jsonArrayUser = jsonObject.getJSONArray("id_user");
+                        commentModal.setComment(jsonObject.getString("comment"));
 
+                        JSONObject jsonObjectUser = jsonObject.getJSONObject("id_user");
+                        try {
+                            commentModal.setFullname(jsonObjectUser.getString("fullname"));
+                            commentModal.setImage(jsonObjectUser.getString("image"));
                         }catch (Exception e){
                             e.printStackTrace();
                         }
+                        JSONObject jsonObjectPro = jsonObject.getJSONObject("id_product");
+                        try {
+                            commentModal.setName(jsonObjectPro.getString("name"));
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        list.add(commentModal);
                     }
+                    commentAdapter = new CommentAdapter(list,getBaseContext());
+                    recyclerView.setAdapter(commentAdapter);
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -98,6 +111,7 @@ public class CommentActivity extends AppCompatActivity {
 
             }
         });
+        requestQueue.add(jsonObjectRequest);
     }
     public  void  callListcomment(){
         CommentService.apiComment.listcomment().enqueue(new Callback<ReceComment>() {
