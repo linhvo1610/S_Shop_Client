@@ -227,7 +227,7 @@
                             android:id="@+id/sluongMua"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text=" 349"
+                            android:text=" 0"
                             android:textSize="15dp"
                             />
                     </LinearLayout>

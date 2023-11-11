@@ -116,6 +116,8 @@ public class ChitietProduct extends AppCompatActivity {
 
         listQuantity();
 
+//        sluongMuaText.setText(sluongMuaSP+"");
+
         String priceProduct = sharedPreferences.getString("giaProduct", null);
         idProduct = sharedPreferences.getString("idProduct", null);
 //        chitiet_giaProduct.setText(priceProduct);
@@ -178,7 +180,7 @@ public class ChitietProduct extends AppCompatActivity {
         SharedPreferences sharedPreferencesBill = getSharedPreferences("product", MODE_PRIVATE);
         String idProbill = sharedPreferencesBill.getString("idProduct", null);
         RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?status=Xác nhận&id_product=" + idProbill, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?status=Đã nhận&id_product=" + idProbill, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {

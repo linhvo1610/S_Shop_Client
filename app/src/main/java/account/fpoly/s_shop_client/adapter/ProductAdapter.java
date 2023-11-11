@@ -74,6 +74,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         productViewHoder.NameProduct.setText("" + productModal.getName());
         productViewHoder.PriceProduct.setText("" + productModal.getPrice());
 
+        Glide.with(holder.itemView).load(API.api_image + productModal.getImage()).into(holder.ImageProduct);
 
 
         int priceFormat = Integer.parseInt(productModal.getPrice());
@@ -102,7 +103,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         SharedPreferences preferences = context.getSharedPreferences("infoUser",context.MODE_PRIVATE);
         iduser = preferences.getString("iduser", null);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?" +"&status=Xác nhận&id_product=" + id, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?" +"&status=Đã nhận&id_product=" + id, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -118,13 +119,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
                             // Cộng dồn vào tổng quantity
                             totalQuantityBill += quantity;
-
+                            productViewHoder.totalQuantity.setText(" "+totalQuantityBill);
                         }
                         SharedPreferences sharedPreferences = context.getSharedPreferences("billPro", context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("sluongMua", String.valueOf(totalQuantityBill));
                         editor.apply();
-                        holder.totalQuantity.setText(" "+totalQuantityBill);
+
                     }
 
 
@@ -140,8 +141,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         });
 
         requestQueue.add(jsonObjectRequest);
-
-
         productViewHoder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

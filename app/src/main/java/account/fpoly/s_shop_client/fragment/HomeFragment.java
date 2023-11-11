@@ -1,6 +1,7 @@
 package account.fpoly.s_shop_client.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -19,9 +21,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_Product;
 import account.fpoly.s_shop_client.GiaoDien.ChitietProduct;
 import account.fpoly.s_shop_client.Modal.ProductModal;
@@ -109,7 +121,7 @@ public class HomeFragment extends Fragment {
                     }
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        String keyword=etd_timkiem.getText().toString();
+                        String keyword=etd_timkiem.getText().toString().toLowerCase();
                         List<ProductModal> serarchResult=searchProducts(keyword);
                         productAdapter= new ProductAdapter(serarchResult, getContext(), new IClickItemListener() {
                             @Override
