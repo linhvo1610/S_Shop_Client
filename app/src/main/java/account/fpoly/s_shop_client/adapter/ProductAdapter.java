@@ -81,7 +81,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         productViewHoder.PriceProduct.setText(Price);
 
 
-//        Picasso.get().load(API.api_image + productModal.getImage()).into(holder.ImageProduct);
+        Picasso.get().load(API.api_image + productModal.getImage()).into(holder.ImageProduct);
 
         int totalQuantity = 0;
         for (ProductModal.Size size : productModal.getSizes()) {
