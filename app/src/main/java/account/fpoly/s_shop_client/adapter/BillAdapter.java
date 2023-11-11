@@ -1,5 +1,7 @@
 package account.fpoly.s_shop_client.adapter;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +37,10 @@ import java.util.List;
 
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_Bill;
+import account.fpoly.s_shop_client.AddCommentActivity;
+import account.fpoly.s_shop_client.GiaoDien.ChitietProduct;
 import account.fpoly.s_shop_client.Modal.Bill;
+import account.fpoly.s_shop_client.Modal.ProductModal;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Tab_Giaodien_Activity;
 import account.fpoly.s_shop_client.Xacnhan_Bill;
@@ -156,14 +161,23 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
             holder.xacnhanPro.setVisibility(View.VISIBLE);
             holder.xacnhanPro.setText("Xac nhan");
             holder.xacnhanPro.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
+                    Intent intent = new Intent(context, AddCommentActivity.class);
+                    intent.putExtra("id_product",idpro);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+
+
                     API_Bill.apiBill.updateBill(idBill, new Bill(status,iduser,product,address,quantity,price,size)).enqueue(new Callback<Bill>() {
                         @Override
                         public void onResponse(Call<Bill> call, Response<Bill> response) {
+
                             Toast.makeText(context, "Cap nhap thanh cong", Toast.LENGTH_SHORT).show();
                             list.set(holder.getAdapterPosition(), new Bill(idBill,status,iduser,product,address,quantity,price,size));
                             holder.xacnhanPro.setVisibility(View.GONE);
+
                             notifyDataSetChanged();
                         }
 
@@ -181,6 +195,9 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
         }
 
     }
+
+
+
 
     private void xacnhan() {
     }

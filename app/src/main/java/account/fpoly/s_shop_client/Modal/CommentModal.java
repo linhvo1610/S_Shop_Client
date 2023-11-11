@@ -10,6 +10,15 @@ public class CommentModal {
     String comment;
     String fullname,name,size,image;
 
+    public CommentModal(String id_user, String id_product, String comment) {
+        this.id_user = id_user;
+        this.id_product = id_product;
+        this.comment = comment;
+    }
+
+    public CommentModal() {
+    }
+
     public String getId() {
         return id;
     }
