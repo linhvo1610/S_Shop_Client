@@ -28,7 +28,10 @@ import java.util.Arrays;
 
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_User;
+import account.fpoly.s_shop_client.DaGiao_activity;
+import account.fpoly.s_shop_client.DangGiao_Activity;
 import account.fpoly.s_shop_client.HistoryOrderClient;
+import account.fpoly.s_shop_client.HuyBill;
 import account.fpoly.s_shop_client.InfoUserActivity;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Xacnhan_Bill;
@@ -38,7 +41,7 @@ public class SettingsFragment extends Fragment {
     String image,curidUser,fullname;
     TextView txtfullname;
     API_User api_user;
-    LinearLayout linnerXacnhan;
+    LinearLayout linnerXacnhan,linnerDanggiao,xacnhanPro,huyBill;
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,10 +52,31 @@ public class SettingsFragment extends Fragment {
         imginfo = view.findViewById(R.id.imginfo);
         txtfullname = view.findViewById(R.id.txtfullname);
         linnerXacnhan = view.findViewById(R.id.linnerXacnhan);
+        linnerDanggiao = view.findViewById(R.id.linnerDanggiao);
+        xacnhanPro = view.findViewById(R.id.xacnhanPro);
+        huyBill = view.findViewById(R.id.huyBill);
+        huyBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), HuyBill.class));
+            }
+        });
         linnerXacnhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), Xacnhan_Bill.class));
+            }
+        });
+        xacnhanPro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), DaGiao_activity.class));
+            }
+        });
+        linnerDanggiao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), DangGiao_Activity.class));
             }
         });
         loadInfomation();
