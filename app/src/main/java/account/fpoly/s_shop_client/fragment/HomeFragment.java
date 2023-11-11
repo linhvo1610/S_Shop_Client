@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 
 import account.fpoly.s_shop_client.API.API_Product;
 import account.fpoly.s_shop_client.GiaoDien.ChitietProduct;
+import account.fpoly.s_shop_client.GiaoDien.CustomDialog;
 import account.fpoly.s_shop_client.Modal.ProductModal;
 import account.fpoly.s_shop_client.Modal.ReceProduct;
 import account.fpoly.s_shop_client.Notification;
@@ -41,7 +42,7 @@ public class HomeFragment extends Fragment {
 
     public static final String TAG = HomeFragment.class.getName();
     EditText etd_timkiem;
-    ImageView chat_admin,notification;
+    ImageView chat_admin,notification,dialog;
     ProductAdapter productAdapter;
     private List<ProductModal> listproduct;
     TextView chuyen;
@@ -63,6 +64,14 @@ public class HomeFragment extends Fragment {
         }
         //=====================================
         etd_timkiem=view.findViewById(R.id.edt_timkiem);
+        dialog=view.findViewById(R.id.dialog);
+        dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomDialog dialog1=new CustomDialog(getContext());
+                dialog1.show();
+            }
+        });
         recyclerView=view.findViewById(R.id.rcv_product);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -111,7 +120,7 @@ public class HomeFragment extends Fragment {
                     }
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        String keyword=removeVietnameseDiacritics(etd_timkiem.getText().toString());
+                        String keyword=removeVietnameseDiacritics(etd_timkiem.getText().toString().trim());
                         List<ProductModal> serarchResult=searchProducts(keyword);
                         productAdapter= new ProductAdapter(serarchResult, getContext(), new IClickItemListener() {
                             @Override
@@ -121,13 +130,11 @@ public class HomeFragment extends Fragment {
                         });
                         recyclerView.setAdapter(productAdapter);
                     }
-
                     @Override
                     public void afterTextChanged(Editable editable) {
 
                     }
                 });
-
             }
 
             @Override
