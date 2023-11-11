@@ -19,7 +19,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -104,7 +103,7 @@ public class SettingsFragment extends Fragment {
             txtfullname.setText(fullname);
         }
 
-        Picasso.get().load(image).into(imginfo);
+        Glide.with(getContext()).load(image).into(imginfo);
 
 
         imginfo.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +133,7 @@ public class SettingsFragment extends Fragment {
 
                         String image = jsonObject.getString("image");
                         String name = jsonObject.getString("fullname");
-                        Picasso.get().load(image).into(imginfo);
+                        Glide.with(getContext()).load(image).load(imginfo);
 
                         if (name.equals("")) {
                             txtfullname.setText("Cập nhập tên bạn!!!");
@@ -163,5 +162,4 @@ public class SettingsFragment extends Fragment {
         });
         requestQueue.add(jsonObjectRequest);
     }
-
 }

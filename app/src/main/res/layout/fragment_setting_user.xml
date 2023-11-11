@@ -16,12 +16,14 @@
         android:background="#cf3067"
         android:padding="10dp"
         >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
             android:layout_height="wrap_content">
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/imginfo"
                 android:src="@drawable/user2"
                 android:layout_width="70dp"
@@ -35,7 +37,7 @@
                 <TextView
                     android:id="@+id/txtfullname"
                     android:textColor="@color/white"
-                    android:textSize="22dp"
+                    android:textSize="20dp"
                     android:textStyle="bold"
                     android:text="Vietntph26745"
                     android:layout_width="wrap_content"
@@ -50,7 +52,7 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:text="Thành viên"
-                        android:textSize="13dp"
+                        android:textSize="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </androidx.cardview.widget.CardView>
