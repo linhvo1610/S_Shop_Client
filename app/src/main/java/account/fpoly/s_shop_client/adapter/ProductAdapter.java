@@ -102,7 +102,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         SharedPreferences preferences = context.getSharedPreferences("infoUser",context.MODE_PRIVATE);
         iduser = preferences.getString("iduser", null);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?" +"&status=Xác nhận&id_product=" + id, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?" +"&status=Đã nhận&id_product=" + id, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {

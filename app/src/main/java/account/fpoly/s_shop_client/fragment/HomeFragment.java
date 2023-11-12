@@ -1,6 +1,7 @@
 package account.fpoly.s_shop_client.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -8,17 +9,23 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+
+import java.security.InvalidParameterException;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +56,12 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     private String anhProduct, tenProduct, giaProduct;
 
+    CustomDialog dialog1;
+    String minPrice = null;
+    String maxPrice = null;
+    EditText min,max;
+    Button locp;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,25 +78,91 @@ public class HomeFragment extends Fragment {
         //=====================================
         etd_timkiem=view.findViewById(R.id.edt_timkiem);
         dialog=view.findViewById(R.id.dialog);
-        dialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CustomDialog dialog1=new CustomDialog(getContext());
-                dialog1.show();
-            }
-        });
+
+
         recyclerView=view.findViewById(R.id.rcv_product);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-//        recyclerView.setLayoutManager(linearLayoutManager);
 
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
         listproduct= new ArrayList<>();
         callApiSeviceListProduct();
+        dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog1=new CustomDialog(getContext());
+                ImageView dimiss = dialog1.findViewById(R.id.dimiss);
+                dimiss.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog1.dismiss();
+                    }
+                });
+                ArrayList<String> spinnerData = new ArrayList<>();
+                spinnerData.add("Tìm kiếm sản phẩm");
+                spinnerData.add("All sản phẩm");
+                spinnerData.add("Dưới 200k");
+                spinnerData.add("200k - 500k");
+                spinnerData.add("500k - 1triệu");
+                spinnerData.add("1triệu - 3triệu");
+                spinnerData.add("3triệu - 5triệu");
+                spinnerData.add("Trên 5triệu");
+                Spinner spinner = dialog1.findViewById(R.id.spinner);
 
+                spinner.setBackgroundColor(Color.LTGRAY);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, spinnerData);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String selectedItem = spinnerData.get(position);
+
+                        // Xử lý sự kiện khi một mục được chọn trong Spinner
+                        if (selectedItem.equals("All sản phẩm")) {
+                            minPrice = null;
+                            maxPrice = null;
+                            callApiSeviceListProduct();
+                            dialog1.dismiss();
+                        }
+                        else if (selectedItem.equals("Dưới 200k")) {
+                            minPrice = null;
+                            filterByPrice(minPrice, "200000");
+                        } else if (selectedItem.equals("200k - 500k")) {
+                            maxPrice = "500000";
+                            minPrice = "200000";
+                        } else if (selectedItem.equals("500k - 1triệu")) {
+                            maxPrice = "1000000";
+                            minPrice = "500000";
+                        } else if (selectedItem.equals("1triệu - 3triệu")) {
+                            maxPrice = "3000000";
+                            minPrice = "1000000";
+                        } else if (selectedItem.equals("3triệu - 5triệu")) {
+                            maxPrice = "5000000";
+                            minPrice = "3000000";
+                        } else if (selectedItem.equals("Trên 5triệu")) {
+                            minPrice = "5000000";
+                            maxPrice = "";
+                        }
+                        filterByPrice(minPrice, maxPrice);
+                        minPrice = null;
+                        maxPrice = null;
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        // Xử lý sự kiện khi không có mục nào được chọn trong Spinner
+                    }
+                });
+
+
+
+                dialog1.show();
+            }
+        });
 
 
 //        chat_admin = view.findViewById(R.id.chat_admin);
@@ -93,14 +172,42 @@ public class HomeFragment extends Fragment {
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             startActivity(new Intent(getContext(), Notification.class));
+                startActivity(new Intent(getContext(), Notification.class));
             }
         });
 
 
-
         return view;
     }
+
+    private void filterByPrice(String minPrice, String maxPrice) {
+        API_Product.apiProduct.filterProducts(minPrice, maxPrice).enqueue(new Callback<List<ProductModal>>() {
+            @Override
+            public void onResponse(Call<List<ProductModal>> call, Response<List<ProductModal>> response) {
+                if (response.isSuccessful()) {
+                    listproduct.clear();
+                    listproduct.addAll(response.body());
+                    productAdapter.notifyDataSetChanged();
+                    dialog1.dismiss();
+
+
+                }else{
+                    Toast.makeText(getContext(), "Fail", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductModal>> call, Throwable t) {
+                if (t instanceof InvalidParameterException) {
+                    Toast.makeText(getContext(), "Invalid price range", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+
     private void callApiSeviceListProduct() {
         API_Product.apiProduct.listProduct().enqueue(new Callback<ReceProduct>() {
             @Override

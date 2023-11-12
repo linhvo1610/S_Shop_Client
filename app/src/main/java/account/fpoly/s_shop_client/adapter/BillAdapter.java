@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,8 +73,14 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
     @Override
     public void onBindViewHolder(@NonNull BillViewHolder holder, int position) {
         Bill bill = list.get(position);
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        double priceBill = bill.getTotalPrice();
+        int roundedPrice = (int) Math.floor(priceBill);
 
-        holder.totalPrice.setText("đ"+bill.getTotalPrice());
+        int priceFormat = Integer.parseInt(String.valueOf(roundedPrice));
+        String Price = decimalFormat.format(priceFormat);
+        holder.totalPrice.setText("đ"+Price);
+
         holder.totalQuantity.setText("x"+bill.getTotalQuantity());
         holder.statusPro.setText(bill.getStatus());
         holder.sizePro.setText("Size "+bill.getSize());
@@ -100,7 +107,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
             String idProduct = bill.get_idPro();
             product.add(idProduct);
         }
-
 //        Toast.makeText(context, idpro, Toast.LENGTH_SHORT).show();
 
         String statusBill = bill.getStatus();
