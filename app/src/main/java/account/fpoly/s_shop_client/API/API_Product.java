@@ -15,6 +15,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface API_Product {
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyy").create();
@@ -28,4 +29,8 @@ public interface API_Product {
 
     @GET("product")
     Call<ReceProduct> listProduct();
-        }
+    @GET("filterPrice")
+    Call<List<ProductModal>> filterProducts(@Query("minPrice") String minPrice, @Query("maxPrice") String maxPrice);
+
+
+}

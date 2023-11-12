@@ -95,6 +95,7 @@ public class Xacnhan_Bill extends AppCompatActivity {
                         list.add(bill);
                     }
                     adapter = new BillAdapter(getBaseContext(),list);
+                    adapter.notifyDataSetChanged();
                     rcv.setAdapter(adapter);
 
                 }catch (Exception e){
@@ -109,5 +110,5 @@ public class Xacnhan_Bill extends AppCompatActivity {
         });
         requestQueue.add(jsonObjectRequest);
     }
-
+    
 }

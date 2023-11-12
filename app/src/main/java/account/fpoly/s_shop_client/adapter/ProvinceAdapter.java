@@ -22,6 +22,7 @@ public class ProvinceAdapter extends RecyclerView.Adapter<ProvinceAdapter.Provin
     private final Context context;
     private List<Province> list;
 
+
     private final ProvinceOnClick provinceOnClick;
 
     public ProvinceAdapter(Context context, ProvinceOnClick provinceOnClick) {
