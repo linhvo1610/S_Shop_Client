@@ -73,6 +73,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         productViewHoder.NameProduct.setText("" + productModal.getName());
         productViewHoder.PriceProduct.setText("" + productModal.getPrice());
+        productViewHoder.Category.setText(""+ productModal.getId_cat().getName());
+
 
 
 
@@ -165,6 +167,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 }
                 holder.NameProduct.setText(""+sp.getName());
                 holder.PriceProduct.setText(""+sp.getPrice());
+                holder.Category.setText(""+sp.getId_cat().getName());
+
                 String urlImage = API.api+sp.getImage();
                 Glide.with(holder.itemView).load(urlImage).into(holder.ImageProduct);
 
@@ -180,7 +184,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     public class ProductViewHoder extends RecyclerView.ViewHolder {
-        private TextView NameProduct, PriceProduct,totalQuantity,Description;
+        private TextView NameProduct, PriceProduct,totalQuantity,Description, Category;
         private ImageView ImageProduct;
 
         public ProductViewHoder(@NonNull View itemView) {
@@ -190,6 +194,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             totalQuantity=itemView.findViewById(R.id.totalQuantity);
             ImageProduct=itemView.findViewById(R.id.img_product);
             Description=itemView.findViewById(R.id.chitiet_description);
+            Category=itemView.findViewById(R.id.txt_Catproduct);
         }
     }
 }

@@ -16,7 +16,7 @@ public class ProductModal {
     private  String price;
     private  String description;
     private List<Size> sizes;
-    private  String id_cat;
+    private  CatModal id_cat;
     private String image;
 
     public static class Size {
@@ -88,11 +88,11 @@ public class ProductModal {
     }
 
 
-    public String getId_cat() {
+    public CatModal getId_cat() {
         return id_cat;
     }
 
-    public void setId_cat(String id_cat) {
+    public void setId_cat(CatModal id_cat) {
         this.id_cat = id_cat;
     }
 
