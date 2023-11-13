@@ -32,5 +32,6 @@ public interface API_Product {
     @GET("filterPrice")
     Call<List<ProductModal>> filterProducts(@Query("minPrice") String minPrice, @Query("maxPrice") String maxPrice);
 
-
+    @GET("filterproduct")
+    Call<ReceProduct> filterName(@Query("name") String name);
 }

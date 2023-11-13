@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,15 +28,28 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.security.InvalidParameterException;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_Product;
 import account.fpoly.s_shop_client.GiaoDien.ChitietProduct;
 import account.fpoly.s_shop_client.GiaoDien.CustomDialog;
+import account.fpoly.s_shop_client.Modal.CatModal;
 import account.fpoly.s_shop_client.Modal.ProductModal;
 import account.fpoly.s_shop_client.Modal.ReceProduct;
 import account.fpoly.s_shop_client.Notification;
@@ -59,8 +75,7 @@ public class HomeFragment extends Fragment {
     CustomDialog dialog1;
     String minPrice = null;
     String maxPrice = null;
-    EditText min,max;
-    Button locp;
+    LinearLayout nameLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +108,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 dialog1=new CustomDialog(getContext());
                 ImageView dimiss = dialog1.findViewById(R.id.dimiss);
+                nameLayout = dialog1.findViewById(R.id.nameLayout);
                 dimiss.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -128,8 +144,8 @@ public class HomeFragment extends Fragment {
                             dialog1.dismiss();
                         }
                         else if (selectedItem.equals("Dưới 200k")) {
-                            minPrice = null;
-                            filterByPrice(minPrice, "200000");
+                            minPrice = "0";
+                            maxPrice= "200000";
                         } else if (selectedItem.equals("200k - 500k")) {
                             maxPrice = "500000";
                             minPrice = "200000";
@@ -144,7 +160,7 @@ public class HomeFragment extends Fragment {
                             minPrice = "3000000";
                         } else if (selectedItem.equals("Trên 5triệu")) {
                             minPrice = "5000000";
-                            maxPrice = "";
+                            maxPrice = "100000000000";
                         }
                         filterByPrice(minPrice, maxPrice);
                         minPrice = null;
@@ -157,7 +173,7 @@ public class HomeFragment extends Fragment {
                         // Xử lý sự kiện khi không có mục nào được chọn trong Spinner
                     }
                 });
-
+                ghetName();
 
 
                 dialog1.show();
@@ -179,7 +195,80 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+    private void ghetName() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "filterproduct",
+                null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    HashSet<String> uniqueNames = new HashSet<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+                        CatModal nameFilter = new CatModal();
+                        try {
+                            JSONObject jsonObjectCat = jsonObject.getJSONObject("id_cat");
+                            String name = jsonObjectCat.getString("name");
+                            String id = jsonObjectCat.getString("_id");
+
+                            if (!uniqueNames.contains(name)) {
+                                TextView textView = new TextView(getContext());
+                                textView.setText(name);
+
+                                textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 70));
+                                textView.setHeight(70);
+                                textView.setBackgroundResource(R.drawable.borderrdio);
+                                textView.setTextColor(Color.WHITE);
+                                textView.setTextSize(16);
+                                textView.setGravity(Gravity.CENTER);
+                                nameLayout.addView(textView);
+                                uniqueNames.add(name);
+                                textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Toast.makeText(getContext(), "Clicked: " + name + "\n" + id, Toast.LENGTH_SHORT).show();
+                                        API_Product.apiProduct.filterName(name).enqueue(new Callback<ReceProduct>() {
+                                            @Override
+                                            public void onResponse(Call<ReceProduct> call, Response<ReceProduct> response) {
+                                                if (response.isSuccessful()) {
+                                                    listproduct.clear();
+                                                    listproduct.addAll(response.body().getData());
+                                                    productAdapter.notifyDataSetChanged();
+                                                    dialog1.dismiss();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<ReceProduct> call, Throwable t) {
+                                                Toast.makeText(getContext(), "Fail", Toast.LENGTH_SHORT).show();
+                                                Log.d("gggg", "onFailure:" + t);
+                                            }
+                                        });
+                                    }
+                                });
+
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+//                        listFilter.add(nameFilter);
+                    }
+//                    filterNameAdapter = new FilterNameAdapter(listFilter.stream().filter(nameFilter -> nameFilter.getName() != null && !nameFilter.getName().isEmpty()).collect(Collectors.toList()),getContext());
+//                    rcvFilter.setAdapter(filterNameAdapter);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
     private void filterByPrice(String minPrice, String maxPrice) {
         API_Product.apiProduct.filterProducts(minPrice, maxPrice).enqueue(new Callback<List<ProductModal>>() {
             @Override
@@ -198,11 +287,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<ProductModal>> call, Throwable t) {
-                if (t instanceof InvalidParameterException) {
-                    Toast.makeText(getContext(), "Invalid price range", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
     }
