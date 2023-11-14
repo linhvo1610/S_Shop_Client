@@ -80,16 +80,16 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
         int priceFormat = Integer.parseInt(String.valueOf(roundedPrice));
         String Price = decimalFormat.format(priceFormat);
         holder.totalPrice.setText("đ"+Price);
-
         holder.totalQuantity.setText("x"+bill.getTotalQuantity());
         holder.statusPro.setText(bill.getStatus());
         holder.sizePro.setText("Size "+bill.getSize());
         holder.namePro.setText(bill.getName());
-        Glide.with(holder.itemView).load(API.api_image + bill.getImage()).into(holder.imageBill);
 
+        Glide.with(holder.itemView).load(API.api_image + bill.getImage()).into(holder.imageBill);
         idBill = bill.getId();
         SharedPreferences preferences = context.getSharedPreferences("infoUser",context.MODE_PRIVATE);
         iduser = preferences.getString("iduser",null);
+
 //        Toast.makeText(context, iduser, Toast.LENGTH_SHORT).show();
         address = bill.getId_address();
         price = bill.getTotalPrice();
@@ -110,6 +110,12 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
 //        Toast.makeText(context, idpro, Toast.LENGTH_SHORT).show();
 
         String statusBill = bill.getStatus();
+        SharedPreferences sharedPreferences = context.getSharedPreferences("bill", context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("idBill", idBill);
+        editor.putString("idUser", iduser);
+        editor.putString("status", statusBill);
+        editor.apply();
         if (statusBill.equals("Chờ xác nhận")){
             holder.huydon.setVisibility(View.VISIBLE);
             holder.huydon.setOnClickListener(new View.OnClickListener() {
@@ -199,6 +205,8 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
         else{
             holder.huydon.setVisibility(View.GONE);
         }
+
+
 
     }
 

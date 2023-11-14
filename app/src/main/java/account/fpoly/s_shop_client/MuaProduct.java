@@ -96,9 +96,6 @@ public class MuaProduct extends AppCompatActivity {
             }
         }
 
-
-
-
         showAddress();
         chooseAddress();
         layDulieu();
@@ -276,16 +273,19 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
 // cloud notification
     public void  makenotification() {
         String chanID = "CHANE_ID";
-        Intent intent = getIntent();
-        String idproduct = intent.getStringExtra("id_product");
+        SharedPreferences sharedPreferences = getSharedPreferences("bill",MODE_PRIVATE);
+       String id = sharedPreferences.getString("idBill",null);
+        String status = sharedPreferences.getString("status",null);
+
+
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(getApplicationContext(), chanID);
-        builder.setSmallIcon(R.drawable.logo_sshop)
-        .setContentText("heloo")
-        .setContentTitle("NOtification Title"+idproduct)
+        builder.setSmallIcon(R.drawable.bell)
+        .setContentText("Đơn hàng với mã "+ id + "\n"+ status)
+        .setContentTitle(name)
         .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-         intent = new Intent(getApplicationContext(), Notification.class);
+        Intent intent = new Intent(getApplicationContext(), Notification.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, intent,PendingIntent.FLAG_MUTABLE);
         builder.setContentIntent(pendingIntent);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
