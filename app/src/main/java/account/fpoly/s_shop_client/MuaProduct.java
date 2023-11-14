@@ -1,11 +1,19 @@
 package account.fpoly.s_shop_client;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -24,6 +32,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import com.squareup.picasso.Picasso;
 
@@ -77,6 +88,14 @@ public class MuaProduct extends AppCompatActivity {
         thanhtoan = findViewById(R.id.thanhtoan);
         tongPrice = findViewById(R.id.tongPrice);
         imageProduct = findViewById(R.id.imagePro);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(MuaProduct.this, Manifest.permission.POST_NOTIFICATIONS) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(MuaProduct.this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},101);
+            }
+        }
+
 
 
 
@@ -118,6 +137,7 @@ public class MuaProduct extends AppCompatActivity {
                 }, 2500);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
+                makenotification();
 
             }
         });
@@ -253,5 +273,35 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
         }
     }
 }
+// cloud notification
+    public void  makenotification() {
+        String chanID = "CHANE_ID";
+        Intent intent = getIntent();
+        String idproduct = intent.getStringExtra("id_product");
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(getApplicationContext(), chanID);
+        builder.setSmallIcon(R.drawable.logo_sshop)
+        .setContentText("heloo")
+        .setContentTitle("NOtification Title"+idproduct)
+        .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+         intent = new Intent(getApplicationContext(), Notification.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, intent,PendingIntent.FLAG_MUTABLE);
+        builder.setContentIntent(pendingIntent);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel    notificationChannel = notificationManager.getNotificationChannel(chanID);
+            if (notificationChannel==null){
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                notificationChannel = new NotificationChannel(chanID , "Some DES", importance);
+                notificationChannel.setLightColor(Color.GREEN);
+                notificationChannel.enableVibration(true);
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
+        }
+        notificationManager.notify(0,builder.build());
+
+    }
 
 }
