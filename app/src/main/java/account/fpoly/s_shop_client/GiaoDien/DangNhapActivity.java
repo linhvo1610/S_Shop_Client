@@ -3,11 +3,15 @@ package account.fpoly.s_shop_client.GiaoDien;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +47,8 @@ public class DangNhapActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private ServiceUser serviceUser;
     private String url = "http://192.168.1.13:3000";
-
+    CheckBox savepass;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +59,42 @@ public class DangNhapActivity extends AppCompatActivity {
 
         txtuser = findViewById(R.id.txt_username);
         txtpass = findViewById(R.id.txt_password);
-
-//        GetListUser();
-
+        savepass=findViewById(R.id.savePasswordCheckBox);
+        savepass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // Lưu mật khẩu
+                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("password", txtpass.getText().toString());
+                    editor.putString("username",txtuser.getText().toString());
+                    editor.putBoolean("savePassword", true);
+                    editor.apply();
+                } else {
+                    // Xóa mật khẩu đã lưu
+                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.remove("password");
+                    editor.remove("username");
+                    editor.putBoolean("savePassword", false);
+                    editor.apply();
+                }
+            }
+        });
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        boolean isPasswordSaved = sharedPreferences.getBoolean("savePassword", false);
+        if (isPasswordSaved) {
+            String savedUsername = sharedPreferences.getString("username", "");
+            String savedPassword = sharedPreferences.getString("password", "");
+            txtpass.setText(savedPassword);
+            txtuser.setText(savedUsername);
+            savepass.setChecked(true);
+        } else {
+            txtpass.setText(null);
+            txtuser.setText(null);
+            savepass.setChecked(false);
+        }
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
