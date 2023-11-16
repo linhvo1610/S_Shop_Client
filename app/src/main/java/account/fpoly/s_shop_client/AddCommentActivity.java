@@ -31,6 +31,7 @@ import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.Modal.CommentModal;
 import account.fpoly.s_shop_client.Service.CommentService;
 import account.fpoly.s_shop_client.adapter.CommentAdapter;
+import account.fpoly.s_shop_client.fragment.HomeFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -74,7 +75,8 @@ public class AddCommentActivity extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                Intent intent = new Intent(getBaseContext(), HomeFragment.class);
+                startActivity(intent);
             }
         });
     }
