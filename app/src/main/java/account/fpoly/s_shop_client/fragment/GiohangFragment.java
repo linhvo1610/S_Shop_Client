@@ -1,7 +1,6 @@
 package account.fpoly.s_shop_client.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import java.util.Objects;
 
-import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
-import account.fpoly.s_shop_client.MuaProduct;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.ApiService;
-import account.fpoly.s_shop_client.Tools.ACCOUNT;
 import account.fpoly.s_shop_client.Tools.LIST;
 import account.fpoly.s_shop_client.Tools.TOOLS;
 import account.fpoly.s_shop_client.adapter.CartAdapter;
@@ -75,7 +71,6 @@ public class GiohangFragment extends Fragment {
         mapping(view);
         showCarts();
         checkAll();
-        pay();
     }
     private void mapping(View view) {
         btn_buy_cart = view.findViewById(R.id.btn_buy_cart);
@@ -150,20 +145,6 @@ public class GiohangFragment extends Fragment {
             price_pay += (cart.getPrice_product()* cart.getQuantity());
         }
         tv_price_pay.setText(TOOLS.convertPrice(price_pay));
-    }
-
-    private void pay() {
-        btn_pay.setOnClickListener(v -> {
-            BillMore billMore = new BillMore();
-            billMore.setStatus(0);
-            billMore.setId_user(ACCOUNT.user.get_id());
-            billMore.setTotal(price_pay);
-            billMore.setList(LIST.listBuyCart);
-            Intent intent = new Intent(requireContext(), MuaProduct.class);
-            intent.putExtra("billmore", billMore);
-            startActivity(intent);
-            requireActivity().overridePendingTransition(R.anim.next_enter, R.anim.next_exit);
-        });
     }
 
     @SuppressLint("SetTextI18n")

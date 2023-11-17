@@ -54,7 +54,6 @@ import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_Product;
 import account.fpoly.s_shop_client.CommentActivity;
 import account.fpoly.s_shop_client.Message;
-import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.Modal.ProductModal;
 import account.fpoly.s_shop_client.Modal.UserModal;
@@ -76,7 +75,6 @@ public class ChitietProduct extends AppCompatActivity {
     TextView chitiet_tenProduct, chitiet_giaProduct, chitiet_description;
     String idProduct;
     String imagePro;
-    int size;
 
     private int sol = 1;
     int currentValue;
@@ -228,8 +226,6 @@ public class ChitietProduct extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
         decimalFormat = new DecimalFormat("#,###");
 
-
-
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ChitietProduct.this, R.style.BottomSheetDialogTheme);
         View bottomView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_dialog,
                 (LinearLayout) findViewById(R.id.bottomSheetDialog));
@@ -287,7 +283,7 @@ public class ChitietProduct extends AppCompatActivity {
                                 Collections.sort(sizeList);
 
                                 for (int k = 0; k < sizeList.size(); k++) {
-                                    size = sizeList.get(k);
+                                    int size = sizeList.get(k);
 
                                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -384,16 +380,14 @@ public class ChitietProduct extends AppCompatActivity {
         isDialogOpen = true;
 
         bottomView.findViewById(R.id.muasp).setOnClickListener(v -> {
-            Cart cart = new Cart();
-            cart.setId_user(ACCOUNT.user.get_id());
-            cart.setId_product(idProduct);
             if (!buyNow) {
+                Cart cart = new Cart();
+                cart.setId_user(ACCOUNT.user.get_id());
+                cart.setId_product(idProduct);
                 cart.setName_product(sharedPreferences.getString("tenProduct", null));
                 cart.setPrice_product(priceFormat);
                 cart.setImage(sharedPreferences.getString("anhProduct", null));
                 cart.setQuantity(newValue);
-//                int size = Integer.parseInt(sharedPreferences.getString("size", null));
-                cart.setSize(size);
                 ApiService.apiService.addCart(cart).enqueue(new Callback<Cart>() {
                     @Override
                     public void onResponse(@NonNull Call<Cart> call, @NonNull retrofit2.Response<Cart> response) {
@@ -411,22 +405,7 @@ public class ChitietProduct extends AppCompatActivity {
                     }
                 });
             } else {
-                BillMore billMore = new BillMore();
-                billMore.setId_user(ACCOUNT.user.get_id());
-                cart.setName_product(sharedPreferences.getString("tenProduct", null));
-                cart.setPrice_product(priceFormat);
-                cart.setImage(sharedPreferences.getString("anhProduct", null));
-                cart.setQuantity(newValue);
-                List<Cart> list = new ArrayList<>();
-                list.add(cart);
-                billMore.setList(list);
-                billMore.setStatus(0);
-                billMore.setTotal(cart.getQuantity() * cart.getPrice_product());
-                Intent intent = new Intent(ChitietProduct.this, MuaProduct.class);
-                intent.putExtra("billmore", billMore);
-                intent.putExtra("buy",true);
-                startActivity(intent);
-                overridePendingTransition(R.anim.next_enter, R.anim.next_exit);
+                startActivity(new Intent(getBaseContext(), MuaProduct.class));
                 bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
                 isDialogOpen = false;
             }

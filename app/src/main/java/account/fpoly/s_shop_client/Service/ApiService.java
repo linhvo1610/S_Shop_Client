@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 import account.fpoly.s_shop_client.Modal.Address;
-import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.Modal.District;
 import account.fpoly.s_shop_client.Modal.Province;
@@ -59,8 +58,5 @@ public interface ApiService {
 
     @POST("cart/add")
     Call<Cart> addCart(@Body Cart cart);
-
-    @POST("billmore/add")
-    Call<BillMore> createBill(@Body BillMore billMore);
 
 }
