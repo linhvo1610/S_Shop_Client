@@ -19,9 +19,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.GiaoDien.ChitietProduct;
 import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.R;
@@ -83,11 +85,13 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             if (holder1 instanceof CartHolderView) {
                 CartHolderView holder = (CartHolderView) holder1;
 
-                Glide.with(context).load(TOOLS.doMainDevice + cart.getImage()).into(holder.imv_image);
+//                Glide.with(context).load(TOOLS.doMainDevice + cart.getImage()).into(holder.imv_image);
+                Picasso.get().load(API.api_image + cart.getImage()).into(holder.imv_image);
                 holder.tv_name.setText(cart.getName_product());
                 holder.tv_price.setText("Tổng tiền: " + TOOLS.convertPrice(lastPrice));
                 holder.tv_quantity.setText(String.valueOf(cart.getQuantity()));
                 holder.cbox_add.setChecked(TOOLS.checkAllCarts);
+                holder.tv_size.setText(String.valueOf(cart.getSize()));
                 if (TOOLS.checkAllCarts) {
                     LIST.listBuyCart.add(cart);
                 }
@@ -142,7 +146,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 holder.ln_delete.setOnClickListener(v -> deleteCart(holder, cart.get_id()));
             } else if (holder1 instanceof CartHolderView1) {
                 CartHolderView1 holder = (CartHolderView1) holder1;
-                Glide.with(context).load(TOOLS.doMainDevice + cart.getImage()).into(holder.imv_image);
+                Picasso.get().load(API.api_image + cart.getImage()).into(holder.imv_image);
                 holder.tv_name.setText(cart.getName_product());
                 holder.tv_price.setText("Đơn giá: "+TOOLS.convertPrice(lastPrice));
                 holder.tv_quantity.setText("Số Lượng: "+cart.getQuantity());
@@ -210,6 +214,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         private final ImageView imv_subtract;
         private final CheckBox cbox_add;
         private final LinearLayout ln_delete;
+        private final TextView tv_size;
 
 
         public CartHolderView(@NonNull View itemView) {
@@ -222,6 +227,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             imv_add = itemView.findViewById(R.id.imv_add);
             imv_subtract = itemView.findViewById(R.id.imv_subtract);
             cbox_add = itemView.findViewById(R.id.cbox_add);
+            tv_size = itemView.findViewById(R.id.tv_size);
         }
     }
 
