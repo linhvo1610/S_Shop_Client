@@ -1,8 +1,6 @@
 package account.fpoly.s_shop_client.Modal;
 
-import java.io.Serializable;
-
-public class Cart implements Serializable {
+public class Cart {
     private String _id;
     private String id_user;
     private String id_product;
@@ -11,12 +9,10 @@ public class Cart implements Serializable {
     private String image;
     private Integer quantity;
 
-    private Integer size;
-
     public Cart() {
     }
 
-    public Cart(String _id, String id_user, String id_product, String name_product, Integer price_product, String image, Integer quantity, Integer size) {
+    public Cart(String _id, String id_user, String id_product, String name_product, Integer price_product, String image, Integer quantity) {
         this._id = _id;
         this.id_user = id_user;
         this.id_product = id_product;
@@ -24,7 +20,6 @@ public class Cart implements Serializable {
         this.price_product = price_product;
         this.image = image;
         this.quantity = quantity;
-        this.size = size;
     }
 
     public String get_id() {
@@ -81,14 +76,6 @@ public class Cart implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Integer getSize() {
-        return size;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
     }
 
     @Override
