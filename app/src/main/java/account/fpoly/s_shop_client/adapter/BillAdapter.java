@@ -229,9 +229,9 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
             totalQuantity = itemView.findViewById(R.id.totalQuantity);
             totalPrice = itemView.findViewById(R.id.totalPrice);
             statusPro = itemView.findViewById(R.id.statusPro);
-            namePro = itemView.findViewById(R.id.nameProbill);
-            imageBill = itemView.findViewById(R.id.imageBill);
-            sizePro = itemView.findViewById(R.id.sizePro);
+            namePro = itemView.findViewById(R.id.tv_name);
+            imageBill = itemView.findViewById(R.id.imv_image);
+            sizePro = itemView.findViewById(R.id.tv_size);
             huydon = itemView.findViewById(R.id.huydon);
             xacnhanPro = itemView.findViewById(R.id.xacnhanPro);
         }

@@ -76,7 +76,7 @@ public class ChitietProduct extends AppCompatActivity {
     TextView chitiet_tenProduct, chitiet_giaProduct, chitiet_description;
     String idProduct;
     String imagePro;
-    int size;
+
 
     private int sol = 1;
     int currentValue;
@@ -287,18 +287,17 @@ public class ChitietProduct extends AppCompatActivity {
                                 Collections.sort(sizeList);
 
                                 for (int k = 0; k < sizeList.size(); k++) {
-                                    size = sizeList.get(k);
+//                                    size = sizeList.get(k);
+                                    final int currentSize = sizeList.get(k);
 
                                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                             LinearLayout.LayoutParams.WRAP_CONTENT,
                                             LinearLayout.LayoutParams.WRAP_CONTENT
                                     );
                                     params.setMargins(10, 0, 0, 0);
-
-
                                     RadioButton radioButton = new RadioButton(getBaseContext());
-                                    radioButton.setId(View.generateViewId()); // Tạo ID duy nhất cho RadioButton
-                                    radioButton.setText(valueOf(size));
+                                    radioButton.setId(View.generateViewId());
+                                    radioButton.setText(valueOf(currentSize));
                                     radioButton.setButtonDrawable(null);
                                     radioButton.setHeight(90);
                                     radioButton.setWidth(160);
@@ -307,25 +306,21 @@ public class ChitietProduct extends AppCompatActivity {
                                     radioButton.setTextSize(15);
                                     radioButton.setGravity(Gravity.CENTER);
                                     radioButton.setButtonTintList(ColorStateList.valueOf(Color.GRAY));
-                                    // Thêm RadioButton vào RadioGroup hoặc ViewGroup tương ứng
-                                    // Ví dụ: radioGroup.addView(radioButton);
+
+                                    radioButton.setText(String.valueOf(currentSize));
+
                                     radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
                                         isRadioButtonSelected = isChecked;
                                         if (isChecked) {
-
                                             SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
                                             SharedPreferences.Editor editor = sharedPreferences1.edit();
-                                            editor.putString("size", valueOf(size));
-                                            Toast.makeText(ChitietProduct.this, "size: " + size, Toast.LENGTH_SHORT).show();
+//                                            editor.putString("size", valueOf(size));
+                                            editor.putString("size", valueOf(currentSize));
+                                            Toast.makeText(ChitietProduct.this, "size: " + currentSize, Toast.LENGTH_SHORT).show();
                                             editor.apply();
                                             buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_checkbox));
-                                        } else {
-                                            SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = sharedPreferences1.edit();
-                                            editor.putString("size", valueOf(size));
-                                            Toast.makeText(ChitietProduct.this, "size: " + size, Toast.LENGTH_SHORT).show();
-                                            editor.apply();
-                                            buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_checkbox));
+                                        } else{
+                                            buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_canlecheckbox));
                                         }
 
                                         radioButton.setLayoutParams(params);
@@ -387,12 +382,13 @@ public class ChitietProduct extends AppCompatActivity {
             Cart cart = new Cart();
             cart.setId_user(ACCOUNT.user.get_id());
             cart.setId_product(idProduct);
+            SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
+            int size = Integer.parseInt(sharedPreferences1.getString("size", null));
             if (!buyNow) {
                 cart.setName_product(sharedPreferences.getString("tenProduct", null));
                 cart.setPrice_product(priceFormat);
                 cart.setImage(sharedPreferences.getString("anhProduct", null));
                 cart.setQuantity(newValue);
-//                int size = Integer.parseInt(sharedPreferences.getString("size", null));
                 cart.setSize(size);
                 ApiService.apiService.addCart(cart).enqueue(new Callback<Cart>() {
                     @Override
@@ -417,6 +413,7 @@ public class ChitietProduct extends AppCompatActivity {
                 cart.setPrice_product(priceFormat);
                 cart.setImage(sharedPreferences.getString("anhProduct", null));
                 cart.setQuantity(newValue);
+                cart.setSize(size);
                 List<Cart> list = new ArrayList<>();
                 list.add(cart);
                 billMore.setList(list);

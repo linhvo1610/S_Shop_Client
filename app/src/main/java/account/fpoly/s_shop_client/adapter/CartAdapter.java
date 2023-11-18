@@ -69,10 +69,10 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == VIEW_TYPE_TYPE) {
-            View view = inflater.inflate(R.layout.cart_layout, parent, false);
+            View view = inflater.inflate(R.layout.iteam_giohang, parent, false);
             return new CartHolderView(view);
         } else {
-            View view = inflater.inflate(R.layout.cart_layout_1, parent, false);
+            View view = inflater.inflate(R.layout.iteam_trangthai_bill, parent, false);
             return new CartHolderView1(view);
         }
     }
@@ -88,7 +88,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 //                Glide.with(context).load(TOOLS.doMainDevice + cart.getImage()).into(holder.imv_image);
                 Picasso.get().load(API.api_image + cart.getImage()).into(holder.imv_image);
                 holder.tv_name.setText(cart.getName_product());
-                holder.tv_price.setText("Tổng tiền: " + TOOLS.convertPrice(lastPrice));
+                holder.tv_price.setText(TOOLS.convertPrice(lastPrice));
                 holder.tv_quantity.setText(String.valueOf(cart.getQuantity()));
                 holder.cbox_add.setChecked(TOOLS.checkAllCarts);
                 holder.tv_size.setText(String.valueOf(cart.getSize()));
@@ -134,13 +134,13 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     }
                     cart.setQuantity(cart.getQuantity() - 1);
                     holder.tv_quantity.setText(String.valueOf(cart.getQuantity()));
-                    holder.tv_price.setText("Tổng tiền: " + TOOLS.convertPrice(cart.getQuantity() * cart.getPrice_product()));
+                    holder.tv_price.setText(TOOLS.convertPrice(cart.getQuantity() * cart.getPrice_product()));
                     replaceCartItem(cart);
                 });
                 holder.imv_add.setOnClickListener(v -> {
                     cart.setQuantity(cart.getQuantity() + 1);
                     holder.tv_quantity.setText(String.valueOf(cart.getQuantity()));
-                    holder.tv_price.setText("Tổng tiền: " + TOOLS.convertPrice(cart.getQuantity() * cart.getPrice_product()));
+                    holder.tv_price.setText(TOOLS.convertPrice(cart.getQuantity() * cart.getPrice_product()));
                     replaceCartItem(cart);
                 });
                 holder.ln_delete.setOnClickListener(v -> deleteCart(holder, cart.get_id()));
@@ -150,6 +150,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 holder.tv_name.setText(cart.getName_product());
                 holder.tv_price.setText("Đơn giá: "+TOOLS.convertPrice(lastPrice));
                 holder.tv_quantity.setText("Số Lượng: "+cart.getQuantity());
+                holder.tv_size.setText(String.valueOf(cart.getSize()));
             }
         }
 
@@ -236,6 +237,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         private final TextView tv_quantity;
         private final TextView tv_price;
         private final ImageView imv_image;
+        private final TextView tv_size;
 
 
         public CartHolderView1(@NonNull View itemView) {
@@ -244,6 +246,8 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             tv_quantity = itemView.findViewById(R.id.tv_quantity);
             tv_price = itemView.findViewById(R.id.tv_price);
             imv_image = itemView.findViewById(R.id.imv_image);
+            tv_size = itemView.findViewById(R.id.tv_size);
+
         }
     }
 }
