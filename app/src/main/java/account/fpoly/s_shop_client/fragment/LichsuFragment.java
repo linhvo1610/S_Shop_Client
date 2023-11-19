@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,14 +29,19 @@ import java.util.List;
 
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.Modal.Bill;
+import account.fpoly.s_shop_client.Modal.BillMore;
+import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.adapter.BillAdapter;
+import account.fpoly.s_shop_client.adapter.StatusBillAdapter;
 
 
 public class LichsuFragment extends Fragment {
+    ImageView img_back;
     RecyclerView rcv;
-    List<Bill> list;
-    BillAdapter adapter;String iduser;
+    List<BillMore> list;
+    StatusBillAdapter adapter;String iduser;
+    TextView title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,35 +62,40 @@ public class LichsuFragment extends Fragment {
     String idpro;
     private void hienthiHistoty() {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billDanhan?id_user=" + iduser + "&status=Đã nhận", null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billStatus?id_user=" + iduser + "&status=5", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        Bill bill = new Bill();
-                        bill.setTotalPrice(jsonObject.getDouble("totalPrice"));
-                        bill.setTotalQuantity(jsonObject.getInt("totalQuantity"));
-                        bill.setStatus(jsonObject.getString("status"));
-                        bill.setSize(jsonObject.getInt("size"));
+                        BillMore bill = new BillMore();
+                        bill.set_id(jsonObject.getString("_id"));
+                        bill.setName(jsonObject.getString("name"));
+                        bill.setPhone(jsonObject.getString("phone"));
+                        bill.setAddress(jsonObject.getString("address"));
+                        bill.setTotal(jsonObject.getInt("total"));
+                        bill.setStatus(Integer.parseInt(jsonObject.getString("status")));
 
-                        JSONArray jsonArrayPro = jsonObject.getJSONArray("product");
-                        for (int j = 0; j < jsonArrayPro.length(); j++) {
-                            JSONObject jsonObjectPro = jsonArrayPro.getJSONObject(j);
-                            try {
-                                JSONObject idProductObject  = jsonObjectPro.getJSONObject("id_product");
-                                bill.setName(idProductObject .getString("name"));
-                                bill.setImage(idProductObject .getString("image"));
-
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
+                        JSONArray jsonArrayList = jsonObject.getJSONArray("list");
+                        ArrayList<Cart> cartList = new ArrayList<>();
+                        for (int j = 0; j < jsonArrayList.length(); j++) {
+                            JSONObject jsonObjectList = jsonArrayList.getJSONObject(j);
+                            Cart cart = new Cart();
+                            cart.setSize(jsonObjectList.getInt("size"));
+                            cart.setQuantity(jsonObjectList.getInt("quantity"));
+                            cart.setPrice_product(jsonObjectList.getInt("price_product"));
+                            cart.setName_product(jsonObjectList.getString("name_product"));
+                            cart.setImage(jsonObjectList.getString("image"));
+                            // Populate other fields of the Cart object
+                            cartList.add(cart);
                         }
+                        bill.setList(cartList);
                         list.add(bill);
                     }
-                    adapter = new BillAdapter(getContext(),list);
+                    adapter = new StatusBillAdapter(getContext(),list);
                     rcv.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
                 }catch (Exception e){
                     e.printStackTrace();

@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_marginTop="5dp"
     android:layout_height="wrap_content">
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,10 +22,11 @@
                 app:cardCornerRadius="5dp">
 
                 <ImageView
-                    android:id="@+id/imv_image"
+                    android:id="@+id/imageBills"
                     android:layout_width="110dp"
                     android:layout_height="90dp"
                     android:scaleType="centerCrop"
+                    android:layout_gravity="center"
                     android:src="@drawable/girl" />
             </androidx.cardview.widget.CardView>
 
@@ -37,7 +37,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_name"
+                    android:id="@+id/nameProbills"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Kily.PH Korean Cotton Knitted V "
@@ -52,17 +52,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Size: "
+                        android:text="Phân loại: "
                         android:textColor="#919090"
                         />
+
                     <TextView
-                        android:id="@+id/tv_size"
+                        android:id="@+id/sizePros"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Be, L"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
-                        android:textColor="#919090"
-                        />
+                        android:text="Be, L"
+                        android:textColor="#919090" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -72,7 +72,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_price"
+                        android:id="@+id/totalPrices"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -89,7 +89,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tv_quantity"
+                            android:id="@+id/totalQuantitys"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="6dp"
@@ -110,6 +110,7 @@
         android:layout_height="1dp"
         android:background="@color/gray"
         />
+
 
 
 </LinearLayout>

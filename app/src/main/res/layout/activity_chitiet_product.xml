@@ -143,23 +143,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="đ"
-                            android:textSize="17dp"
-                            android:textColor="#BFBCBC"
-                            android:textStyle="bold"
-                            android:textDirection="locale"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="75.258"
-                            android:textSize="17dp"
-                            android:textColor="#BFBCBC"
-                            android:textStyle="bold"
-                            />
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -307,36 +290,58 @@
             <!--            chi tiet-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_marginTop="6dp"
+                android:paddingLeft="15dp"
                 >
                 <TextView
                     android:layout_width="215dp"
                     android:layout_height="wrap_content"
                     android:text="Chi tiết sản phẩm"
-                    android:layout_marginLeft="15dp"
                     android:textSize="16dp"
                     android:textStyle="bold"
-                    android:layout_gravity="center"
                     />
-                <TextView
-                    android:layout_width="120dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Số sản phẩm..."
-                    android:layout_gravity="center"
-                    android:textSize="16dp"
-                    />
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleType="centerCrop"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="17dp"
-                    android:src="@drawable/next" />
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Thương hiệu:"
+                        android:textSize="16dp" />
+                    <TextView
+                        android:id="@+id/trademark"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Thuong hieu sp"
+                        android:textSize="16dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Loại sản phẩm:"
+                        android:textSize="16dp" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Loai sp"
+                        android:id="@+id/namecat"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+
             </LinearLayout>
             <!--            &#45;&#45;&#45;&#45;-->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -381,29 +386,7 @@ Return Policy 🔄
         </LinearLayout>
 
     </ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_margin="5dp"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/boder_black"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:text="danh gia san pham"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Rcv_binhluan"
-            tools:listitem="@layout/item_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="57dp"

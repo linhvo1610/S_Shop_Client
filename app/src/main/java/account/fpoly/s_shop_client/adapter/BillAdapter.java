@@ -116,95 +116,93 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
         editor.putString("idUser", iduser);
         editor.putString("status", statusBill);
         editor.apply();
-        if (statusBill.equals("Chờ xác nhận")){
-            holder.huydon.setVisibility(View.VISIBLE);
-            holder.huydon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(v.getRootView().getContext());
-                    View view = LayoutInflater.from(context).inflate(R.layout.dialog_huydon,null);
-                    builder.setView(view);
-                    AlertDialog dialog = builder.create();
-
-                    TextView huydonDialog,dong;
-                    huydonDialog = view.findViewById(R.id.huydondl);
-                    dong = view.findViewById(R.id.dong);
-
-                    huydonDialog.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            API_Bill.apiBill.huyOder(idBill).enqueue(new Callback<Bill>() {
-                                @Override
-                                public void onResponse(Call<Bill> call, Response<Bill> response) {
-                                    Toast.makeText(context, "Huy don thanh cong", Toast.LENGTH_SHORT).show();
-                                    list.remove(position);
-                                    notifyDataSetChanged();
-                                    dialog.dismiss();
-                                }
-
-                                @Override
-                                public void onFailure(Call<Bill> call, Throwable t) {
-                                    Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    });
-                    dong.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                        }
-                    });
-                    ImageView imageView = view.findViewById(R.id.imageView);
-// Tạo hiệu ứng chuông rung
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
-                    animator.setDuration(1000);
-                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
-                    animator.setRepeatCount(ObjectAnimator.INFINITE);
-                    animator.start();
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                    dialog.show();
-                }
-            });
-        }
-        else if (statusBill.equals("Đã giao")){
-            holder.xacnhanPro.setVisibility(View.VISIBLE);
-            holder.xacnhanPro.setText("Xac nhan");
-            holder.xacnhanPro.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, AddCommentActivity.class);
-                    intent.putExtra("id_product",idpro);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-
-
-                    API_Bill.apiBill.updateBill(idBill, new Bill(status,iduser,product,address,quantity,price,size)).enqueue(new Callback<Bill>() {
-                        @Override
-                        public void onResponse(Call<Bill> call, Response<Bill> response) {
-
-                            Toast.makeText(context, "Cap nhap thanh cong", Toast.LENGTH_SHORT).show();
-                            list.set(holder.getAdapterPosition(), new Bill(idBill,status,iduser,product,address,quantity,price,size));
-                            holder.xacnhanPro.setVisibility(View.GONE);
-
-                            notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onFailure(Call<Bill> call, Throwable t) {
-
-                        }
-                    });
-
-                }
-            });
-        }
-        else{
-            holder.huydon.setVisibility(View.GONE);
-        }
+//        if (statusBill.equals("Chờ xác nhận")){
+//            holder.huydon.setVisibility(View.VISIBLE);
+//            holder.huydon.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(v.getRootView().getContext());
+//                    View view = LayoutInflater.from(context).inflate(R.layout.dialog_huydon,null);
+//                    builder.setView(view);
+//                    AlertDialog dialog = builder.create();
+//
+//                    TextView huydonDialog,dong;
+//                    huydonDialog = view.findViewById(R.id.huydondl);
+//                    dong = view.findViewById(R.id.dong);
+//
+//                    huydonDialog.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//
+//                            API_Bill.apiBill.huyOder(idBill).enqueue(new Callback<Bill>() {
+//                                @Override
+//                                public void onResponse(Call<Bill> call, Response<Bill> response) {
+//                                    Toast.makeText(context, "Huy don thanh cong", Toast.LENGTH_SHORT).show();
+//                                    list.remove(position);
+//                                    notifyDataSetChanged();
+//                                    dialog.dismiss();
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<Bill> call, Throwable t) {
+//                                    Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+//                        }
+//                    });
+//                    dong.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            dialog.cancel();
+//                        }
+//                    });
+//                    ImageView imageView = view.findViewById(R.id.imageView);
+//// Tạo hiệu ứng chuông rung
+//                    ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+//                    animator.setDuration(1000);
+//                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//                    animator.setRepeatCount(ObjectAnimator.INFINITE);
+//                    animator.start();
+//                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//                    dialog.show();
+//                }
+//            });
+//        }
+//        else if (statusBill.equals("Đã giao")){
+//            holder.xacnhanPro.setVisibility(View.VISIBLE);
+//            holder.xacnhanPro.setText("Xac nhan");
+//            holder.xacnhanPro.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(context, AddCommentActivity.class);
+//                    intent.putExtra("id_product",idpro);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    context.startActivity(intent);
+//
+//
+//                    API_Bill.apiBill.updateBill(idBill, new Bill(status,iduser,product,address,quantity,price,size)).enqueue(new Callback<Bill>() {
+//                        @Override
+//                        public void onResponse(Call<Bill> call, Response<Bill> response) {
+//
+//                            Toast.makeText(context, "Cap nhap thanh cong", Toast.LENGTH_SHORT).show();
+//                            list.set(holder.getAdapterPosition(), new Bill(idBill,status,iduser,product,address,quantity,price,size));
+//                            holder.xacnhanPro.setVisibility(View.GONE);
+//
+//                            notifyDataSetChanged();
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<Bill> call, Throwable t) {
+//
+//                        }
+//                    });
+//
+//                }
+//            });
+//        }
+//
 
 
 
@@ -222,17 +220,15 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
     }
 
     public static class BillViewHolder extends ViewHolder {
-        TextView totalQuantity,totalPrice,statusPro,namePro,sizePro,huydon,xacnhanPro;
+        TextView totalQuantity,totalPrice,statusPro,namePro,sizePro,xacnhanPro;
         ImageView imageBill;
         public BillViewHolder(@NonNull View itemView) {
             super(itemView);
             totalQuantity = itemView.findViewById(R.id.totalQuantity);
             totalPrice = itemView.findViewById(R.id.totalPrice);
-            statusPro = itemView.findViewById(R.id.statusPro);
             namePro = itemView.findViewById(R.id.tv_name);
             imageBill = itemView.findViewById(R.id.imv_image);
             sizePro = itemView.findViewById(R.id.tv_size);
-            huydon = itemView.findViewById(R.id.huydon);
             xacnhanPro = itemView.findViewById(R.id.xacnhanPro);
         }
     }

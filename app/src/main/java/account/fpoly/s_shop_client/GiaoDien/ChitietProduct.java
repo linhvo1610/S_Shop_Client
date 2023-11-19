@@ -73,7 +73,7 @@ public class ChitietProduct extends AppCompatActivity {
 
     LinearLayout clickmua, chat, btn_add_cart;
     ImageView back, chitiet_imgProduct;
-    TextView chitiet_tenProduct, chitiet_giaProduct, chitiet_description;
+    TextView chitiet_tenProduct, chitiet_giaProduct, chitiet_description,trademark,namecat;
     String idProduct;
     String imagePro;
 
@@ -105,6 +105,8 @@ public class ChitietProduct extends AppCompatActivity {
         chitiet_tenProduct = findViewById(R.id.chitiet_tenProduct);
         chitiet_description = findViewById(R.id.chitiet_description);
         chitiet_imgProduct = findViewById(R.id.chitiet_imgProduct);
+        trademark = findViewById(R.id.trademark);
+        namecat = findViewById(R.id.namecat);
         LinearLayout linearLayout = findViewById(R.id.Ln_danhgia);
         sluongMuaText = findViewById(R.id.sluongMua);
         linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +132,12 @@ public class ChitietProduct extends AppCompatActivity {
         String chitietProduct = sharedPreferences.getString("descriptionPro", null);
         chitiet_description.setText(chitietProduct);
         imagePro = sharedPreferences.getString("image", null);
+
+        String trademarks = sharedPreferences.getString("trademark",null);
+        String nameCat = sharedPreferences.getString("namecat",null);
+
+        trademark.setText(trademarks);
+        namecat.setText(nameCat);
 
         Picasso.get().load(API.api_image + imagePro).into(chitiet_imgProduct);
 
