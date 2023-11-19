@@ -158,6 +158,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 editor.putString("quantityPro", sluong);
                 editor.putString("descriptionPro", description);
                 editor.putString("image", productModal.getImage());
+                editor.putString("trademark", productModal.getTrademark());
+                editor.putString("namecat", productModal.getId_cat().getName());
 
 
                 editor.apply();

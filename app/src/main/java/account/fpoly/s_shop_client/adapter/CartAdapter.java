@@ -148,8 +148,8 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 CartHolderView1 holder = (CartHolderView1) holder1;
                 Picasso.get().load(API.api_image + cart.getImage()).into(holder.imv_image);
                 holder.tv_name.setText(cart.getName_product());
-                holder.tv_price.setText("Đơn giá: "+TOOLS.convertPrice(lastPrice));
-                holder.tv_quantity.setText("Số Lượng: "+cart.getQuantity());
+                holder.tv_price.setText("$"+TOOLS.convertPrice(lastPrice));
+                holder.tv_quantity.setText("x"+cart.getQuantity());
                 holder.tv_size.setText(String.valueOf(cart.getSize()));
             }
         }

@@ -93,17 +93,17 @@ public class MuaProduct extends AppCompatActivity {
         tv_name = findViewById(R.id.tv_name);
         tv_phonenumber = findViewById(R.id.tv_phonenumber);
         tv_address = findViewById(R.id.tv_address);
-
-//        pricePro = findViewById(R.id.pricePro);
-//        quantityPro = findViewById(R.id.quantityPro);
-//        namePro = findViewById(R.id.namePro);
-//        sizePro = findViewById(R.id.sizePro);
         totalQuantity = findViewById(R.id.totalQuantity);
         thanhtien = findViewById(R.id.thanhtien);
         totalprice = findViewById(R.id.totalPrice);
         thanhtoan = findViewById(R.id.thanhtoan);
         tongPrice = findViewById(R.id.tongPrice);
-//        imageProduct = findViewById(R.id.imagePro);
+
+        SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
+        String sizeRadio = sharedPreferences1.getString("size",null);
+        Toast.makeText(this, "size: "+ sizeRadio, Toast.LENGTH_SHORT).show();
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(MuaProduct.this, Manifest.permission.POST_NOTIFICATIONS) !=
                     PackageManager.PERMISSION_GRANTED) {
@@ -159,40 +159,7 @@ public class MuaProduct extends AppCompatActivity {
 //        });
     }
     private SharedPreferences sharedPreferences;
-//    private void postBill() {
-//        sharedPreferences = getSharedPreferences("address", MODE_PRIVATE);
-//        String idAddress = sharedPreferences.getString("idAddress", null);
-//
-//        String staTer = "Chờ xác nhận";
-//        String iddiachi = address.get_id();
-//
-//
-//        // Tạo một danh sách các id_product
-//        List<String> product = new ArrayList<>();
-//// Số lượng sản phẩm muốn mua
-//        int numberOfProducts = 1;
-//// Vòng lặp để tự động tăng số lượng sản phẩm
-//        for (int i = 1; i <= numberOfProducts; i++) {
-//            String idProduct = idPro;
-//            product.add(idProduct);
-//        }
-//        int quntity = Integer.parseInt(quantity);
-//        int sizebill = Integer.parseInt(size);
-//        double pricebill = Double.parseDouble(String.valueOf(totalPrice));
-//
-//        API_Bill.apiBill.addBill(new Bill(staTer,iduser,product,iddiachi,quntity,pricebill,sizebill)).enqueue(new Callback<Bill>() {
-//            @Override
-//            public void onResponse(Call<Bill> call, retrofit2.Response<Bill> response) {
-//                Toast.makeText(getBaseContext(), "Them thanh cong", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Bill> call, Throwable t) {
-//                Toast.makeText(getBaseContext(), "Them that bai", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//    }
+
 
     @Override
     public void onResume() {
@@ -223,8 +190,9 @@ public class MuaProduct extends AppCompatActivity {
         size = sharedPreferencesSize.getString("size", null);
         quantity = sharedPreferencesQuantity.getString("quantity", null);
 
-        int priceFormat = Integer.parseInt(price);
-        String Price = decimalFormat.format(priceFormat);
+        totalQuantity.setText(quantity);
+//        int priceFormat = Integer.parseInt(price);
+
 
 
         if (price != null && quantity != null) {
@@ -249,7 +217,6 @@ public class MuaProduct extends AppCompatActivity {
 
         address = ADDRESS.aDefault(MuaProduct.this);
         if (address != null) {
-            Toast.makeText(this, ""+billMore, Toast.LENGTH_SHORT).show();
 
            billMore.setName(address.getFullname());
            billMore.setPhone(address.getNumberphone());
@@ -349,7 +316,7 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
                 @Override
                 public void onResponse(@NonNull Call<BillMore> call, @NonNull Response<BillMore> response) {
                     if (response.isSuccessful() ) {
-
+                        if (LIST.listBuyCart != null && GiohangFragment.cartList != null) {
                             if (LIST.listBuyCart.size() != GiohangFragment.cartList.size()) {
                                 for (int i = 0; i < GiohangFragment.cartList.size(); i++) {
                                     for (int j = 0; j < LIST.listBuyCart.size(); j++) {
@@ -360,11 +327,37 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
                                     }
                                 }
                             }
+                        }
+                        if (LIST.listBuyCart != null) {
                             LIST.listBuyCart.clear();
-                            TOOLS.checkAllCarts = false;
+                        }
+                        TOOLS.checkAllCarts = false;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                        View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_thongbao, null);
+                        builder.setView(view);
+                        AlertDialog dialog = builder.create();
 
+                        ImageView imageView = view.findViewById(R.id.imageView);
+// Tạo hiệu ứng chuông rung
+                        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                        animator.setDuration(1000);
+                        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                        animator.setRepeatCount(ObjectAnimator.INFINITE);
+                        animator.start();
 
-                    }else {
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                startActivity(new Intent(getBaseContext(), Tab_Giaodien_Activity.class));
+                            }
+                        }, 2500);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+
+                    }
+                    else {
 
                         Toast.makeText(MuaProduct.this, response.message()+"", Toast.LENGTH_SHORT).show();
                     }
