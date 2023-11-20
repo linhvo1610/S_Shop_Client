@@ -29,6 +29,7 @@ import account.fpoly.s_shop_client.API.API_Bill;
 import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.R;
+import account.fpoly.s_shop_client.Service.ApiService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -139,9 +140,21 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
             holder.xacnhanPro.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ApiService.apiService.updateBill(billMore.get_id()).enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            if (response.isSuccessful()&&response.body()!=null) {
+                                if (response.body() == 1) {
+                                    Toast.makeText(context, "update ok", Toast.LENGTH_SHORT).show();
+                                } 
+                            }
+                        }
 
-                    List<Cart> cartList = new ArrayList<>();
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
 
+                        }
+                    });
 
                 }
             });;
