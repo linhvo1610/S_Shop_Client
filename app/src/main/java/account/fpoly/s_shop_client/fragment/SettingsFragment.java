@@ -103,7 +103,7 @@ public class SettingsFragment extends Fragment {
             txtfullname.setText(fullname);
         }
 
-        Glide.with(getContext()).load(image).into(imginfo);
+        Glide.with(getContext()).load(API.api_image + image).into(imginfo);
 
 
         imginfo.setOnClickListener(new View.OnClickListener() {

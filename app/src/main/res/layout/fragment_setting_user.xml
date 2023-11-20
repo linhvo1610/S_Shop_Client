@@ -23,7 +23,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imginfo"
                 android:src="@drawable/user2"
                 android:layout_width="70dp"

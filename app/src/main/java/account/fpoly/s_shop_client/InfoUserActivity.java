@@ -1,15 +1,27 @@
 package account.fpoly.s_shop_client;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -32,6 +44,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -41,6 +55,9 @@ import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_User;
 import account.fpoly.s_shop_client.GiaoDien.DangNhapActivity;
 import account.fpoly.s_shop_client.Modal.UserModal;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +67,7 @@ public class InfoUserActivity extends AppCompatActivity {
     TextInputEditText edfullname,edgioitinh,edngaysinh,edemail,edphone;
     ImageView image,back;
     Spinner genderSpinner;
-    TextView btndangxuat;
+    TextView btndangxuat,add_image,linkimage;
     String curgioitinh,curid,name,email,phone,ngaysinh,curpasswd,curphanquyen,
             curimage,currol;
     LinearLayout update;
@@ -60,6 +77,32 @@ public class InfoUserActivity extends AppCompatActivity {
 
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
+    private static final int MY_REQEST_CODE = 10;
+    Uri mUri;
+    private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK){
+                        Intent data = result.getData();
+                        if (data == null){
+                            return;
+                        }
+                        Uri uri = data.getData();
+                        mUri = uri;
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                            image.setImageBitmap(bitmap);
+
+                        }catch (IOException e){
+                            e.fillInStackTrace();
+                        }
+                    }
+
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +138,13 @@ public class InfoUserActivity extends AppCompatActivity {
         image = findViewById(R.id.image);
         update = findViewById(R.id.update);
         back = findViewById(R.id.back);
+        add_image = findViewById(R.id.add_image);
+        add_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chonanh();
+            }
+        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,27 +191,34 @@ public class InfoUserActivity extends AppCompatActivity {
         user.setPassword(curpasswd);
 
         user.setDob(ngaysinhDate);
+        if (mUri != null) {
+            String strReaPath = RealPathUtil.getRealPath(getBaseContext(), mUri);
+            File image = new File(strReaPath);
+            RequestBody requestfile = RequestBody.create(MediaType.parse("image*"), image);
+            MultipartBody.Part mPart = MultipartBody.Part.createFormData("image", image.getName(), requestfile);
 
-        API_User.apiUser.updateUser(curid,user).enqueue(new Callback<UserModal>() {
-            @Override
-            public void onResponse(Call<UserModal> call, Response<UserModal> response) {
-                if (response.isSuccessful()){
-                    list.clear();
-                    UserModal user = response.body();
-                    list.add(user);
-//                    dapter = new UserDapter(list,getBaseContext());
-                    Toast.makeText(getBaseContext(), "Cap nhap thanh cong", Toast.LENGTH_SHORT).show();
-//                    dapter.notifyDataSetChanged();
-                }else {
-                    Toast.makeText(InfoUserActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+
+            API_User.apiUser.updateImage(curid, user, mPart).enqueue(new Callback<UserModal>() {
+                @Override
+                public void onResponse(Call<UserModal> call, Response<UserModal> response) {
+                    if (response.isSuccessful()) {
+                        list.clear();
+                        UserModal user = response.body();
+                        list.add(user);
+                        Toast.makeText(getBaseContext(), "Cap nhap thanh cong", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(InfoUserActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<UserModal> call, Throwable t) {
+                @Override
+                public void onFailure(Call<UserModal> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        }else{
+            Toast.makeText(this, "Null", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void hienthiInfo() {
@@ -185,7 +242,7 @@ public class InfoUserActivity extends AppCompatActivity {
 
         list= new ArrayList<>();
         Glide.with(getBaseContext())
-                .load(curimage)
+                .load( API.api_image + curimage)
                 .into(image);
         String selectedGender = curgioitinh; // Giới tính đã chọn
         int position = Arrays.asList(genders).indexOf(selectedGender);
@@ -222,6 +279,9 @@ public class InfoUserActivity extends AppCompatActivity {
                         genderSpinner.setSelection(position);
 
                         dateButton.setText(jsonObject.getString("dob"));
+                        Glide.with(getBaseContext())
+                                .load( API.api_image + curimage)
+                                .into(image);
                     }
 
                 }catch (Exception e){
@@ -235,6 +295,37 @@ public class InfoUserActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(jsonObjectRequest);
+    }
+    private void chonanh() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+            openGallery();
+            return;
+        }
+        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            openGallery();
+        }else{
+            String [] permisstion = {Manifest.permission.READ_EXTERNAL_STORAGE};
+            requestPermissions(permisstion, MY_REQEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_REQEST_CODE){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openGallery();
+            }
+        }
+
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        mActivityResultLauncher.launch(Intent.createChooser(intent, "Select Image"));
+//        startActivityForResult(Intent.createChooser(intent,"Select Image"),1);
     }
     @Override
     public void onBackPressed() {
