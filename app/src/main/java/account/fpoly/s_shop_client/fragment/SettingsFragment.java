@@ -133,7 +133,7 @@ public class SettingsFragment extends Fragment {
 
                         String image = jsonObject.getString("image");
                         String name = jsonObject.getString("fullname");
-                        Glide.with(getContext()).load(image).load(imginfo);
+                        Glide.with(getContext()).load(API.api_image + image).load(imginfo);
 
                         if (name.equals("")) {
                             txtfullname.setText("Cập nhập tên bạn!!!");
