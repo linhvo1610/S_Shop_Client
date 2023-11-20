@@ -62,12 +62,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InfoUserActivity extends AppCompatActivity {
+public class UploadImage extends AppCompatActivity {
 
     TextInputEditText edfullname,edgioitinh,edngaysinh,edemail,edphone;
     ImageView image,back;
     Spinner genderSpinner;
-    TextView btndangxuat,add_image,linkimage;
+    TextView btnluu,add_image,linkimage;
     String curgioitinh,curid,name,email,phone,ngaysinh,curpasswd,curphanquyen,
             curimage,currol;
     LinearLayout update;
@@ -103,22 +103,22 @@ public class InfoUserActivity extends AppCompatActivity {
                 }
             }
     );
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info_user);
+        setContentView(R.layout.activity_upload_image);
 
         anhxa();
 
         hienthiInfo();
         hienthiInfomationUser();
-        btndangxuat.setOnClickListener(new View.OnClickListener() {
+        btnluu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logout();
+                updateUserImage();
             }
         });
+
 
     }
 
@@ -128,7 +128,7 @@ public class InfoUserActivity extends AppCompatActivity {
         initDatePicker();
         dateButton.setText(getTodaysDate());
 
-        btndangxuat=findViewById(R.id.btndangxuat);
+        btnluu=findViewById(R.id.btnluu);
         edfullname = findViewById(R.id.edfullname);
         edgioitinh = findViewById(R.id.edgioitinh);
         edngaysinh = findViewById(R.id.edngaysinh);
@@ -143,8 +143,7 @@ public class InfoUserActivity extends AppCompatActivity {
         add_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                chonanh();
-                startActivity(new Intent(getBaseContext(), UploadImage.class));
+                chonanh();
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +167,7 @@ public class InfoUserActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateUser();
+//                updateUser();
             }
         });
     }
@@ -184,35 +183,31 @@ public class InfoUserActivity extends AppCompatActivity {
         String selectedGender = genderSpinner.getSelectedItem().toString();
 
         UserModal user = new UserModal();
-
         user.setFullname(fullnameuser);
         user.setEmail(emailuser);
         user.setPhone(phoneuser);
-//        user.setDob(ngaysinhuser);
         user.setSex(selectedGender);
         user.setRole(curphanquyen);
         user.setPassword(curpasswd);
 
-        user.setDob(ngaysinhDate);
-            API_User.apiUser.updateUser(curid, user).enqueue(new Callback<UserModal>() {
-                @Override
-                public void onResponse(Call<UserModal> call, Response<UserModal> response) {
-                    if (response.isSuccessful()) {
-                        list.clear();
-                        UserModal user = response.body();
-                        list.add(user);
-                        adapter.notifyDataSetChanged();
-                        Toast.makeText(getBaseContext(), "Cap nhap thanh cong", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(InfoUserActivity.this, "Fail", Toast.LENGTH_SHORT).show();
-                    }
+        API_User.apiUser.updateUser(curid, user).enqueue(new Callback<UserModal>() {
+            @Override
+            public void onResponse(Call<UserModal> call, Response<UserModal> response) {
+                if (response.isSuccessful()) {
+                    list.clear();
+                    UserModal user = response.body();
+                    list.add(user);
+                    Toast.makeText(getBaseContext(), "Cap nhap thanh cong", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Fail", Toast.LENGTH_SHORT).show();
                 }
+            }
 
-                @Override
-                public void onFailure(Call<UserModal> call, Throwable t) {
+            @Override
+            public void onFailure(Call<UserModal> call, Throwable t) {
 
-                }
-            });
+            }
+        });
     }
     private void updateUserImage() {
         String fullnameuser = edfullname.getText().toString().trim();
@@ -251,8 +246,9 @@ public class InfoUserActivity extends AppCompatActivity {
                         UserModal user = response.body();
                         list.add(user);
                         Toast.makeText(getBaseContext(), "Cap nhap thanh cong", Toast.LENGTH_SHORT).show();
+                        adapter.notifyDataSetChanged();
                     } else {
-                        Toast.makeText(InfoUserActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Fail", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -294,16 +290,6 @@ public class InfoUserActivity extends AppCompatActivity {
         int position = Arrays.asList(genders).indexOf(selectedGender);
         genderSpinner.setSelection(position);
     }
-    public void logout() {
-        Intent intent = new Intent(InfoUserActivity.this, DangNhapActivity.class);
-        SharedPreferences preferences= getSharedPreferences("infoUser", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferences.edit();
-        editor.remove("token");
-        editor.apply();
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
     private void hienthiInfomationUser(){
         RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "users?_id=" + curid, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -325,11 +311,11 @@ public class InfoUserActivity extends AppCompatActivity {
                         genderSpinner.setSelection(position);
 
                         dateButton.setText(jsonObject.getString("dob"));
-
                         Glide.with(getBaseContext())
                                 .load( API.api_image + curimage)
                                 .into(image);
                     }
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -416,7 +402,6 @@ public class InfoUserActivity extends AppCompatActivity {
         //datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
 
     }
-
     private String makeDateString(int day, int month, int year)
     {
         return   day + "/" + getMonthFormat(month) +  "/" + year;
@@ -458,4 +443,10 @@ public class InfoUserActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        hienthiInfo();
+//        hienthiInfomationUser();
+    }
 }

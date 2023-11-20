@@ -39,7 +39,7 @@ public interface API_User {
 
 
     @Multipart
-    @PUT("updateUser/{id}")
+    @PUT("updateUserImage/{id}")
     Call<UserModal> updateImage(@Path("id") String id,
                                 @Part("user") UserModal user,
                                 @Part MultipartBody.Part image);

@@ -53,7 +53,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textColor="@color/black"
-                        android:text="Thông tin cá nhân"
+                        android:text="Cập nhập ảnh Đại diện"
                         android:textSize="18dp"
                         android:textStyle="bold"
                         android:gravity="center"
@@ -69,11 +69,11 @@
                     android:layout_gravity="center"
                     >
                     <TextView
-                        android:id="@+id/btndangxuat"
+                        android:id="@+id/btnluu"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textColor="@color/colorPrimaty"
-                        android:text="Đăng xuất"
+                        android:text="Lưu"
                         android:textSize="18dp"
                         android:textStyle="bold"
                         android:gravity="center"
@@ -101,22 +101,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="18dp"
+                        android:gravity="center"
+                        android:layout_marginTop="50dp"
                         >
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:cardCornerRadius="100dp"
-                            android:layout_gravity="center"
-                            >
-                            <ImageView
-                                android:layout_width="130dp"
-                                android:layout_height="130dp"
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="330dp"
+                                android:layout_height="330dp"
                                 android:src="@drawable/girl"
                                 android:scaleType="centerCrop"
                                 android:id="@+id/image"
                                 />
-                        </androidx.cardview.widget.CardView>
                         <TextView
                             android:id="@+id/add_image"
                             android:layout_width="wrap_content"
@@ -142,7 +138,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:orientation="vertical"
                         android:background="@drawable/borderwith"
                         android:padding="10dp"
@@ -167,7 +163,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:orientation="vertical"
                         android:background="@drawable/borderwith"
                         android:padding="10dp"
@@ -195,7 +191,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:orientation="vertical"
                         android:background="@drawable/borderwith"
                         android:padding="10dp"
@@ -223,7 +219,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:orientation="vertical"
                         android:background="@drawable/borderwith"
                         android:padding="10dp"
@@ -252,7 +248,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:orientation="vertical"
                         android:background="@drawable/borderwith"
                         android:padding="10dp"
@@ -274,24 +270,23 @@
                             android:inputType="date"
                             android:id="@+id/edngaysinh"
                             />
-
                         <Button
                             android:id="@+id/datePickerButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:hint="Cập nhập..."
+                            android:textSize="17dp"
+                            android:textColor="@color/black"
                             android:background="@android:color/transparent"
                             android:gravity="left"
-                            android:hint="Cập nhập..."
-                            android:onClick="openDatePicker"
                             android:paddingLeft="0dp"
-                            android:textColor="@color/black"
-                            android:textSize="17dp" />
+                            android:onClick="openDatePicker"/>
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:id="@+id/update"
                         >
                         <TextView
@@ -306,21 +301,6 @@
                             android:layout_marginTop="40dp"
                             />
                     </LinearLayout>
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginBottom="15dp"-->
-<!--                        >-->
-<!--                        <TextView-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="50dp"-->
-<!--                            android:textSize="18dp"-->
-<!--                            android:textColor="@color/colorAccrnt"-->
-<!--                            android:text="Xóa tài khoản"-->
-<!--                            android:textStyle="bold"-->
-<!--                            android:gravity="center"-->
-<!--                            />-->
-<!--                    </LinearLayout>-->
 
                 </LinearLayout>
             </ScrollView>
