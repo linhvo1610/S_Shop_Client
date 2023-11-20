@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import account.fpoly.s_shop_client.Modal.Bill;
+import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.ReceBillMores;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -32,11 +33,14 @@ public interface API_Bill {
     Call<Bill> addBill(@Body Bill bill);
 
     @DELETE("bill/delete/{id}")
-    Call<Bill> huyOder(@Path("id") String id);
+    Call<BillMore> huyOder(@Path("id") String id);
 
     @PUT("bill/update/{id}")
     Call<Bill> updateBill(@Path("id") String id, @Body Bill bill);
 
     @GET("billStatus")
     Call<ReceBillMores> getListBillMores(@Query("id_user") String id_user, @Query("status") int status);
+
+    @PUT("bill/updateBillMores/{id}")
+    Call<BillMore> updateBillMores(@Path("id") String id, @Body BillMore billMore);
 }

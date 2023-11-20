@@ -1,11 +1,20 @@
 package account.fpoly.s_shop_client.adapter;
 
+import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,9 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import account.fpoly.s_shop_client.API.API;
+import account.fpoly.s_shop_client.API.API_Bill;
 import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.StatusBillViewHolder>{
@@ -53,19 +66,65 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
         String Price = decimalFormat.format(priceFormat);
         holder.totalPrice.setText("Tổng tiền: đ"+ Price);
 
-
-
-
-        NestedAdapter nestedAdapter = new NestedAdapter(billMore.getList());
+        NestedAdapter nestedAdapter = new NestedAdapter(billMore.getList(),context);
         holder.nestedRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.nestedRecyclerView.setAdapter(nestedAdapter);
 
+        String idbill = billMore.get_id();
 
         holder.huydon.setVisibility(View.GONE);
         if (billMore.getStatus() == 0){
             holder.statusPro.setText("Chờ xác nhận");
             holder.huydon.setVisibility(View.VISIBLE);
-//            holder.huydon.setText("Huy don");
+            holder.huydon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                    View view = LayoutInflater.from(context).inflate(R.layout.dialog_huydon,null);
+                    builder.setView(view);
+                    AlertDialog dialog = builder.create();
+
+                    TextView huydonDialog,dong;
+                    huydonDialog = view.findViewById(R.id.huydondl);
+                    dong = view.findViewById(R.id.dong);
+
+                    huydonDialog.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            API_Bill.apiBill.huyOder(idbill).enqueue(new Callback<BillMore>() {
+                                @Override
+                                public void onResponse(Call<BillMore> call, Response<BillMore> response) {
+                                    Toast.makeText(context, "Huy don thanh cong", Toast.LENGTH_SHORT).show();
+                                    list.remove(position);
+                                    notifyDataSetChanged();
+                                    dialog.dismiss();
+                                }
+
+                                @Override
+                                public void onFailure(Call<BillMore> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    });
+                    dong.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+                    ImageView imageView = view.findViewById(R.id.imageView);
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                    animator.setDuration(1000);
+                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                    animator.setRepeatCount(ObjectAnimator.INFINITE);
+                    animator.start();
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                    dialog.show();
+                }
+            });
         }
         // đang giao
         else if (billMore.getStatus() == 2){
@@ -81,6 +140,9 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
                 @Override
                 public void onClick(View v) {
 
+                    List<Cart> cartList = new ArrayList<>();
+
+
                 }
             });;
         }
@@ -95,6 +157,7 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
             holder.statusPro.setVisibility(View.INVISIBLE);
             holder.xacnhanPro.setVisibility(View.INVISIBLE);
             holder.statusPro.setVisibility(View.INVISIBLE);
+
         }
     }
 
