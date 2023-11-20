@@ -62,5 +62,7 @@ public interface ApiService {
 
     @POST("billmore/add")
     Call<BillMore> createBill(@Body BillMore billMore);
+    @POST("billmore/update/{id_billmore}")
+    Call<Integer> updateBill(@Path("id_billmore") String id_billmore);
 
 }
