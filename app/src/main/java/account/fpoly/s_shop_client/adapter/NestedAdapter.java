@@ -1,6 +1,7 @@
 package account.fpoly.s_shop_client.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,10 @@ public class NestedAdapter extends RecyclerView.Adapter<NestedAdapter.NestedView
     private List<Cart> itemList;
     Context context;
 
-    public NestedAdapter(List<Cart> itemList) {
+
+    public NestedAdapter(List<Cart> itemList, Context context) {
         this.itemList = itemList;
+        this.context = context;
     }
 
     @NonNull
@@ -52,6 +55,8 @@ public class NestedAdapter extends RecyclerView.Adapter<NestedAdapter.NestedView
         holder.sizePro.setText("Size:"+ cart.getSize());
 
         Picasso.get().load(API.api_image + cart.getImage()).into(holder.imageBill);
+
+
 
     }
 

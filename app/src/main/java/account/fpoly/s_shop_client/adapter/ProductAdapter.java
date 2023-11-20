@@ -144,7 +144,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         requestQueue.add(jsonObjectRequest);
 
 
-        productViewHoder.itemView.setOnClickListener(new View.OnClickListener() {
+        productViewHoder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
 
