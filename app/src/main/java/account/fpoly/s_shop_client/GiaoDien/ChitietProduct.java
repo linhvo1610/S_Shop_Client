@@ -305,7 +305,7 @@ public class ChitietProduct extends AppCompatActivity {
                                     params.setMargins(10, 0, 0, 0);
                                     RadioButton radioButton = new RadioButton(getBaseContext());
                                     radioButton.setId(View.generateViewId());
-                                    radioButton.setText(valueOf(currentSize));
+                                    radioButton.setText(String.valueOf(currentSize));
                                     radioButton.setButtonDrawable(null);
                                     radioButton.setHeight(90);
                                     radioButton.setWidth(160);
@@ -315,13 +315,12 @@ public class ChitietProduct extends AppCompatActivity {
                                     radioButton.setGravity(Gravity.CENTER);
                                     radioButton.setButtonTintList(ColorStateList.valueOf(Color.GRAY));
 
-                                    radioButton.setText(String.valueOf(currentSize));
-
+                                    SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences1.edit();
+                                    editor.clear();
+                                    editor.apply();
                                     radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                                        isRadioButtonSelected = isChecked;
                                         if (isChecked) {
-                                            SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = sharedPreferences1.edit();
 //                                            editor.putString("size", valueOf(size));
                                             editor.putString("size", valueOf(currentSize));
                                             Toast.makeText(ChitietProduct.this, "size: " + currentSize, Toast.LENGTH_SHORT).show();
@@ -391,50 +390,57 @@ public class ChitietProduct extends AppCompatActivity {
             cart.setId_user(ACCOUNT.user.get_id());
             cart.setId_product(idProduct);
             SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
-            int size = Integer.parseInt(sharedPreferences1.getString("size", null));
-            if (!buyNow) {
-                cart.setName_product(sharedPreferences.getString("tenProduct", null));
-                cart.setPrice_product(priceFormat);
-                cart.setImage(sharedPreferences.getString("anhProduct", null));
-                cart.setQuantity(newValue);
-                cart.setSize(size);
-                ApiService.apiService.addCart(cart).enqueue(new Callback<Cart>() {
-                    @Override
-                    public void onResponse(@NonNull Call<Cart> call, @NonNull retrofit2.Response<Cart> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(ChitietProduct.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                            bottomSheetDialog.dismiss();
+            String sizeString = sharedPreferences1.getString("size", null);
+
+            if (sizeString != null && !sizeString.isEmpty()) {
+                int size = Integer.parseInt(sizeString);
+                if (!buyNow) {
+                    cart.setName_product(sharedPreferences.getString("tenProduct", null));
+                    cart.setPrice_product(priceFormat);
+                    cart.setImage(sharedPreferences.getString("anhProduct", null));
+                    cart.setQuantity(newValue);
+                    cart.setSize(size);
+                    ApiService.apiService.addCart(cart).enqueue(new Callback<Cart>() {
+                        @Override
+                        public void onResponse(@NonNull Call<Cart> call, @NonNull retrofit2.Response<Cart> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(ChitietProduct.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                                bottomSheetDialog.dismiss();
+                            }
+
                         }
 
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<Cart> call, @NonNull Throwable t) {
-                        Toast.makeText(ChitietProduct.this, "Lỗi!", Toast.LENGTH_SHORT).show();
-                        bottomSheetDialog.dismiss();
-                    }
-                });
+                        @Override
+                        public void onFailure(@NonNull Call<Cart> call, @NonNull Throwable t) {
+                            Toast.makeText(ChitietProduct.this, "Lỗi!", Toast.LENGTH_SHORT).show();
+                            bottomSheetDialog.dismiss();
+                        }
+                    });
+                } else {
+                    BillMore billMore = new BillMore();
+                    billMore.setId_user(ACCOUNT.user.get_id());
+                    cart.setName_product(sharedPreferences.getString("tenProduct", null));
+                    cart.setPrice_product(priceFormat);
+                    cart.setImage(sharedPreferences.getString("anhProduct", null));
+                    cart.setQuantity(newValue);
+                    cart.setSize(size);
+                    List<Cart> list = new ArrayList<>();
+                    list.add(cart);
+                    billMore.setList(list);
+                    billMore.setStatus(0);
+                    billMore.setTotal(cart.getQuantity() * cart.getPrice_product());
+                    Intent intent = new Intent(ChitietProduct.this, MuaProduct.class);
+                    intent.putExtra("billmore", billMore);
+                    intent.putExtra("buy",true);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.next_enter, R.anim.next_exit);
+                    bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
+                    isDialogOpen = false;
+                }
             } else {
-                BillMore billMore = new BillMore();
-                billMore.setId_user(ACCOUNT.user.get_id());
-                cart.setName_product(sharedPreferences.getString("tenProduct", null));
-                cart.setPrice_product(priceFormat);
-                cart.setImage(sharedPreferences.getString("anhProduct", null));
-                cart.setQuantity(newValue);
-                cart.setSize(size);
-                List<Cart> list = new ArrayList<>();
-                list.add(cart);
-                billMore.setList(list);
-                billMore.setStatus(0);
-                billMore.setTotal(cart.getQuantity() * cart.getPrice_product());
-                Intent intent = new Intent(ChitietProduct.this, MuaProduct.class);
-                intent.putExtra("billmore", billMore);
-                intent.putExtra("buy",true);
-                startActivity(intent);
-                overridePendingTransition(R.anim.next_enter, R.anim.next_exit);
-                bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
-                isDialogOpen = false;
+                Toast.makeText(this, "Hãy chon size", Toast.LENGTH_SHORT).show();
             }
+
         });
         bottomSheetDialog.setContentView(bottomView);
         bottomSheetDialog.show();
