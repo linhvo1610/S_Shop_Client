@@ -93,17 +93,20 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
                         @Override
                         public void onClick(View v) {
 
-                            API_Bill.apiBill.huyOder(idbill).enqueue(new Callback<BillMore>() {
+                            ApiService.apiService.cancelBill(billMore.get_id()).enqueue(new Callback<Integer>() {
                                 @Override
-                                public void onResponse(Call<BillMore> call, Response<BillMore> response) {
-                                    Toast.makeText(context, "Huy don thanh cong", Toast.LENGTH_SHORT).show();
-                                    list.remove(position);
-                                    notifyDataSetChanged();
-                                    dialog.dismiss();
+                                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                    if (response.isSuccessful()&&response.body()!=null) {
+                                        if (response.body() == 1) {
+                                            Toast.makeText(context, "cancel ok", Toast.LENGTH_SHORT).show();
+                                            list.remove(billMore);
+                                            notifyDataSetChanged();
+                                        }
+                                    }
                                 }
 
                                 @Override
-                                public void onFailure(Call<BillMore> call, Throwable t) {
+                                public void onFailure(Call<Integer> call, Throwable t) {
 
                                 }
                             });
