@@ -104,7 +104,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         SharedPreferences preferences = context.getSharedPreferences("infoUser",context.MODE_PRIVATE);
         iduser = preferences.getString("iduser", null);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?" +"&status=Đã nhận&id_product=" + id, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?" +"&status=5&id_product=" + id, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -114,13 +114,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                         // Lặp qua từng đối tượng trong JSONArray
                         for (int j = 0; j < jsonArray.length(); j++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(j);
-
-                            // Lấy giá trị của totalQuantity từ mỗi đối tượng
-                            int quantity = jsonObject.getInt("totalQuantity");
-
-                            // Cộng dồn vào tổng quantity
-                            totalQuantityBill += quantity;
-
+                            JSONArray jsonArrayPro = jsonObject.getJSONArray("list");
+                            for (int k = 0; k < jsonArrayPro.length(); k++) {
+//                                JSONObject jsonObjectPro = jsonArrayPro.getJSONObject(k);
+//                                int quantity = jsonObjectPro.getInt("quantity");
+//                                totalQuantityBill += quantity;
+                                JSONObject jsonObjectPro = jsonArrayPro.getJSONObject(k);
+                                String idProduct = jsonObjectPro.getString("id_product");
+                                if (idProduct.equals(id)) { // Kiểm tra xem id_product có phải là id cần tìm không
+                                    int quantity = jsonObjectPro.getInt("quantity");
+                                    totalQuantityBill += quantity;
+                                }
+                            }
                         }
                         SharedPreferences sharedPreferences = context.getSharedPreferences("billPro", context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -146,6 +146,8 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
                             if (response.isSuccessful()&&response.body()!=null) {
                                 if (response.body() == 1) {
                                     Toast.makeText(context, "update ok", Toast.LENGTH_SHORT).show();
+                                    list.remove(billMore);
+                                    notifyDataSetChanged();
                                 } 
                             }
                         }
