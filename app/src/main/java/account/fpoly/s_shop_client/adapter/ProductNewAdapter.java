@@ -1,17 +1,11 @@
 package account.fpoly.s_shop_client.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,29 +22,24 @@ import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import account.fpoly.s_shop_client.GiaoDien.ChitietProduct;
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.Modal.ProductModal;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.IClickItemListener;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHoder> {
+public class ProductNewAdapter extends RecyclerView.Adapter<ProductNewAdapter.ProductNewViewHolder>{
+
     private final List<ProductModal> list;
     List<ProductModal.Size> listSize;
     private final Context context;
     private final IClickItemListener iClickItemListener;
     String iduser;
-    public ProductAdapter(List<ProductModal> list, Context context, IClickItemListener iClickItemListener) {
+    public ProductNewAdapter(List<ProductModal> list, Context context, IClickItemListener iClickItemListener) {
         this.list = list;
         this.context=context;
         this.iClickItemListener = iClickItemListener;
@@ -60,14 +49,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @NonNull
     @Override
-    public ProductViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.iteam_product,parent,false);
-        return new ProductViewHoder(view);
+    public ProductNewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.iteam_product_hot,parent,false);
+        return new ProductNewViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductViewHoder holder, int position) {
-        ProductViewHoder productViewHoder = holder;
+    public void onBindViewHolder(@NonNull ProductNewViewHolder holder, int position) {
+
+        ProductNewViewHolder productViewHoder = holder;
         ProductModal productModal = list.get(position);
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         productViewHoder.NameProduct.setText("" + productModal.getName());
@@ -172,18 +162,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 iClickItemListener.onCLickItemProduct(productModal);
             }
         });
-
     }
+
     @Override
     public int getItemCount() {
         return list.size();
     }
 
-    public class ProductViewHoder extends RecyclerView.ViewHolder {
+    public static class ProductNewViewHolder extends RecyclerView.ViewHolder {
         private TextView NameProduct, PriceProduct,totalQuantity,Description, Category;
         private ImageView ImageProduct;
-
-        public ProductViewHoder(@NonNull View itemView) {
+        public ProductNewViewHolder(@NonNull View itemView) {
             super(itemView);
             NameProduct=itemView.findViewById(R.id.txt_nameproduct);
             PriceProduct=itemView.findViewById(R.id.txt_price_product);

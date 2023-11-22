@@ -180,35 +180,31 @@ public class ChitietProduct extends AppCompatActivity {
             }
         });
     }
-
-    int totalQuantityBill;
-
     private void listQuantity() {
-
-        SharedPreferences sharedPreferencesBill = getSharedPreferences("product", MODE_PRIVATE);
-        String idProbill = sharedPreferencesBill.getString("idProduct", null);
+        SharedPreferences sharedPreferencesQuantity = getSharedPreferences("product", MODE_PRIVATE);
+        String id = sharedPreferencesQuantity.getString("idProduct",null);
         RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?status=Xác nhận&id_product=" + idProbill, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?id_product=" + id + "&status=5", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
+                    int totalQuantityBill = 0;
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        totalQuantityBill = 0;
-                        // Lặp qua từng đối tượng trong JSONArray
-                        for (int j = 0; j < jsonArray.length(); j++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(j);
+                        JSONObject billObject = jsonArray.getJSONObject(i);
+                        JSONArray productList = billObject.getJSONArray("list");
+                        for (int j = 0; j < productList.length(); j++) {
+                            JSONObject product = productList.getJSONObject(j);
 
-                            // Lấy giá trị của totalQuantity từ mỗi đối tượng
-                            int quantity = jsonObject.getInt("totalQuantity");
-
-                            // Cộng dồn vào tổng quantity
-                            totalQuantityBill += quantity;
-
+                            String idProductbill = product.getString("id_product");
+                            if (idProductbill.equalsIgnoreCase(idProduct)) {
+                                int quantity = product.getInt("quantity");
+                                totalQuantityBill += quantity;
+                            }
                         }
-                        sluongMuaText.setText(" " + totalQuantityBill);
                     }
-
+                    sluongMuaText.setText(String.valueOf(totalQuantityBill));
+                    Toast.makeText(ChitietProduct.this, totalQuantityBill, Toast.LENGTH_SHORT).show();
 
                 } catch (Exception e) {
                     e.printStackTrace();

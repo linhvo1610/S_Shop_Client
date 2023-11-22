@@ -25,6 +25,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -56,6 +57,7 @@ import account.fpoly.s_shop_client.Notification;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.IClickItemListener;
 import account.fpoly.s_shop_client.adapter.ProductAdapter;
+import account.fpoly.s_shop_client.adapter.ProductNewAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,9 +69,10 @@ public class HomeFragment extends Fragment {
     EditText etd_timkiem;
     ImageView chat_admin,notification,dialog;
     ProductAdapter productAdapter;
+    ProductNewAdapter productNewAdapter;
     private List<ProductModal> listproduct;
     TextView chuyen;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView,rcv_new;
     private String anhProduct, tenProduct, giaProduct;
 
     CustomDialog dialog1;
@@ -96,13 +99,24 @@ public class HomeFragment extends Fragment {
 
 
         recyclerView=view.findViewById(R.id.rcv_product);
+        rcv_new=view.findViewById(R.id.rcv_new);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rcv_new.setLayoutManager(layoutManager);
+
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
         listproduct= new ArrayList<>();
+
+
         callApiSeviceListProduct();
+        callApiSeviceListProductHot();
+
+
+
         dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -339,6 +353,30 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+    private void callApiSeviceListProductHot() {
+        API_Product.apiProduct.listProductNew().enqueue(new Callback<ReceProduct>() {
+            @Override
+            public void onResponse(Call<ReceProduct> call, Response<ReceProduct> response) {
+                listproduct = response.body().getData();
+                productNewAdapter = new ProductNewAdapter(listproduct, getContext(), new IClickItemListener() {
+                    @Override
+                    public void onCLickItemProduct(ProductModal productModal) {
+                        onClickGoToDetailProduct(productModal);
+                    }
+                });
+                rcv_new.setAdapter(productNewAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<ReceProduct> call, Throwable t) {
+                try {
+                    throw t;
+                } catch (Throwable e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
 
     private void onClickGoToDetailProduct(ProductModal productModal){
         Intent intent = new Intent(getContext(), ChitietProduct.class);
@@ -363,6 +401,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         callApiSeviceListProduct();
+        callApiSeviceListProductHot();
     }
     private String removeVietnameseDiacritics(String text) {
         String normalizedText = Normalizer.normalize(text, Normalizer.Form.NFD);
