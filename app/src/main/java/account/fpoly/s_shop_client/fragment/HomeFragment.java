@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -122,7 +123,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 dialog1=new CustomDialog(getContext());
                 ImageView dimiss = dialog1.findViewById(R.id.dimiss);
-                nameLayout = dialog1.findViewById(R.id.nameLayout);
+//                nameLayout = dialog1.findViewById(R.id.nameLayout);
                 dimiss.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -227,14 +228,15 @@ public class HomeFragment extends Fragment {
                             String name = jsonObjectCat.getString("name");
                             String id = jsonObjectCat.getString("_id");
 
+                            GridLayout nameLayout = dialog1.findViewById(R.id.nameLayout);
+
                             if (!uniqueNames.contains(name)) {
                                 TextView textView = new TextView(getContext());
                                 textView.setText(name);
-
-                                textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 70));
-                                textView.setHeight(70);
-                                textView.setBackgroundResource(R.drawable.borderrdio);
-                                textView.setTextColor(Color.WHITE);
+                                textView.setLayoutParams(new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f), GridLayout.spec(GridLayout.UNDEFINED, 1f)));
+                                textView.setHeight(100);
+                                textView.setWidth(170);
+                                textView.setTextColor(Color.MAGENTA);
                                 textView.setTextSize(16);
                                 textView.setGravity(Gravity.CENTER);
                                 nameLayout.addView(textView);
@@ -242,7 +244,6 @@ public class HomeFragment extends Fragment {
                                 textView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Toast.makeText(getContext(), "Clicked: " + name + "\n" + id, Toast.LENGTH_SHORT).show();
                                         API_Product.apiProduct.filterName(name).enqueue(new Callback<ReceProduct>() {
                                             @Override
                                             public void onResponse(Call<ReceProduct> call, Response<ReceProduct> response) {
