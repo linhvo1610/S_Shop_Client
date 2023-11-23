@@ -164,7 +164,7 @@ public class ChitietProduct extends AppCompatActivity {
                 decimalFormat = new DecimalFormat("#,###");
                 TextView buttonMinus = bottomView.findViewById(R.id.buttonMinus);
                 TextView buttonPlus = bottomView.findViewById(R.id.buttonPlus);
-                TextView totalQuantity = bottomView.findViewById(R.id.totalQuantity);
+//                TextView totalQuantity = bottomView.findViewById(R.id.totalQuantity);
                 EditText edsoluong = bottomView.findViewById(R.id.numberPickerQuantity);
                 LinearLayout checkboxLayout = bottomView.findViewById(R.id.checkboxLayout);
                 RadioGroup radioGroup = bottomView.findViewById(R.id.radioGroup);
@@ -259,6 +259,9 @@ public class ChitietProduct extends AppCompatActivity {
         int priceFormat = Integer.parseInt(priceProduct);
         String Price = decimalFormat.format(priceFormat);
         checkboxPriceProduct.setText(Price);
+
+        String priceImport = sharedPreferences.getString("importPrice", null);
+        int priceFormatImport = Integer.parseInt(priceImport);
 
         String totalQuantityProduct = sharedPreferences.getString("quantityPro", null);
         int qantityFormat = Integer.parseInt(totalQuantityProduct);
@@ -404,6 +407,7 @@ public class ChitietProduct extends AppCompatActivity {
                     cart.setImage(sharedPreferences.getString("anhProduct", null));
                     cart.setQuantity(newValue);
                     cart.setSize(size);
+                    cart.setImportPrice(priceFormatImport);
                     ApiService.apiService.addCart(cart).enqueue(new Callback<Cart>() {
                         @Override
                         public void onResponse(@NonNull Call<Cart> call, @NonNull retrofit2.Response<Cart> response) {
@@ -428,6 +432,7 @@ public class ChitietProduct extends AppCompatActivity {
                     cart.setImage(sharedPreferences.getString("anhProduct", null));
                     cart.setQuantity(newValue);
                     cart.setSize(size);
+                    cart.setImportPrice(priceFormatImport);
                     List<Cart> list = new ArrayList<>();
                     list.add(cart);
                     billMore.setList(list);
