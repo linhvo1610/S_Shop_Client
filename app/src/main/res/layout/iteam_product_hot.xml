@@ -4,25 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="3dp"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white"
+        android:layout_marginBottom="3dp"
         >
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="17dp"
             >
             <ImageView
-                android:layout_width="110dp"
-                android:layout_height="100dp"
+                android:id="@+id/img_product"
+                android:layout_width="100dp"
+                android:layout_height="110dp"
                 android:layout_gravity="center"
                 android:src="@drawable/girl"
                 android:scaleType="centerCrop"
+                android:layout_marginTop="2dp"
                 />
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -33,8 +35,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yêu thích"
-                    android:textSize="10dp"
+                    android:text="  Mới  "
+                    android:textSize="9dp"
                     android:textColor="#F8F7F7"
                     android:background="#cf3067"
                     android:padding="4dp"
@@ -46,13 +48,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="5dp"
             >
             <TextView
+                android:id="@+id/txt_nameproduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Kily.PH Korean Cotton Knitted V Neck Ringer Garter Crop Top Shirt 6A0178"
                 android:textSize="10dp"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/black"
+                android:maxLength="40"
+                android:layout_gravity="center"
+                android:gravity="center"
+                />
+            <TextView
+                android:id="@+id/txt_Catproduct"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="Category"
+                android:textSize="17dp"
                 android:textColor="@color/black"
                 android:maxLength="40"
                 />
@@ -60,85 +74,92 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:gravity="center"
                 android:layout_marginTop="5dp"
                 >
+                <!--                    <TextView-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:text="đ199.000"-->
+                <!--                        android:textColor="#888484"-->
+                <!--                        />-->
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_price_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:text=" đ149.275"
                     android:textColor="#cf3067"
-                    android:textSize="10dp"
-                    android:gravity="center"
+                    android:textSize="12dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_marginRight="8dp"
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    >
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/favorite1" />
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/favorite1" />
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/favorite1" />
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/favorite1" />
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/rating" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đã bán"
+                    android:textSize="13dp"
+                    android:layout_marginLeft="10dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 349"
+                    android:textSize="13dp"
+                    android:id="@+id/totalQuantity"
                     />
             </LinearLayout>
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:layout_marginRight="8dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                >-->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    >-->
-<!--                    <ImageView-->
-<!--                        android:layout_width="8dp"-->
-<!--                        android:layout_height="8dp"-->
-<!--                        android:src="@drawable/favorite1" />-->
-<!--                    <ImageView-->
-<!--                        android:layout_width="8dp"-->
-<!--                        android:layout_height="8dp"-->
-<!--                        android:src="@drawable/favorite1" />-->
-<!--                    <ImageView-->
-<!--                        android:layout_width="8dp"-->
-<!--                        android:layout_height="8dp"-->
-<!--                        android:src="@drawable/favorite1" />-->
-<!--                    <ImageView-->
-<!--                        android:layout_width="8dp"-->
-<!--                        android:layout_height="8dp"-->
-<!--                        android:src="@drawable/favorite1" />-->
-<!--                    <ImageView-->
-<!--                        android:layout_width="8dp"-->
-<!--                        android:layout_height="8dp"-->
-<!--                        android:src="@drawable/rating" />-->
-<!--                </LinearLayout>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                >
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:src="@drawable/pin"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hà Nội"
+                    android:textSize="13dp"
+                    android:layout_marginLeft="6dp"
+                    />
+            </LinearLayout>
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Đã bán"-->
-<!--                    android:textSize="10dp"-->
-<!--                    android:layout_marginLeft="10dp"-->
-<!--                    />-->
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text=" 349"-->
-<!--                    android:textSize="10dp"-->
-<!--                    />-->
-<!--            </LinearLayout>-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                >-->
-<!--                <ImageView-->
-<!--                    android:layout_width="13dp"-->
-<!--                    android:layout_height="13dp"-->
-<!--                    android:src="@drawable/pin"-->
-<!--                    />-->
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Hà Nội"-->
-<!--                    android:textSize="13dp"-->
-<!--                    android:layout_marginLeft="6dp"-->
-<!--                    />-->
-<!--            </LinearLayout>-->
 
         </LinearLayout>
     </LinearLayout>

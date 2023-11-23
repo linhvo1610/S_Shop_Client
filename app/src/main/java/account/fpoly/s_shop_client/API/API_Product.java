@@ -29,6 +29,8 @@ public interface API_Product {
 
     @GET("product")
     Call<ReceProduct> listProduct();
+    @GET("productHot")
+    Call<ReceProduct> listProductNew();
     @GET("filterPrice")
     Call<List<ProductModal>> filterProducts(@Query("minPrice") String minPrice, @Query("maxPrice") String maxPrice);
 

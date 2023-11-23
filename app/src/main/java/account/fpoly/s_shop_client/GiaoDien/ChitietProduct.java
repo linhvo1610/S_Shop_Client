@@ -180,36 +180,31 @@ public class ChitietProduct extends AppCompatActivity {
             }
         });
     }
-
-    int totalQuantityBill;
-
     private void listQuantity() {
-
-        SharedPreferences sharedPreferencesBill = getSharedPreferences("product", MODE_PRIVATE);
-        String idProbill = sharedPreferencesBill.getString("idProduct", null);
+        SharedPreferences sharedPreferencesQuantity = getSharedPreferences("product", MODE_PRIVATE);
+        String id = sharedPreferencesQuantity.getString("idProduct",null);
         RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?status=Xác nhận&id_product=" + idProbill, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billQu?id_product=" + id + "&status=5", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
+                    int totalQuantityBill = 0;
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        totalQuantityBill = 0;
-                        // Lặp qua từng đối tượng trong JSONArray
-                        for (int j = 0; j < jsonArray.length(); j++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(j);
+                        JSONObject billObject = jsonArray.getJSONObject(i);
+                        JSONArray productList = billObject.getJSONArray("list");
+                        for (int j = 0; j < productList.length(); j++) {
+                            JSONObject product = productList.getJSONObject(j);
 
-                            // Lấy giá trị của totalQuantity từ mỗi đối tượng
-                            int quantity = jsonObject.getInt("totalQuantity");
-
-                            // Cộng dồn vào tổng quantity
-                            totalQuantityBill += quantity;
-
+                            String idProductbill = product.getString("id_product");
+                            if (idProductbill.equalsIgnoreCase(idProduct)) {
+                                int quantity = product.getInt("quantity");
+                                totalQuantityBill += quantity;
+                            }
                         }
-                        sluongMuaText.setText(" " + totalQuantityBill);
                     }
-
-
+                    sluongMuaText.setText(String.valueOf(totalQuantityBill));
+                    soluongdamua = totalQuantityBill;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -231,7 +226,8 @@ public class ChitietProduct extends AppCompatActivity {
         editor.putString("quantity", valueOf(value));
         editor.apply();
     }
-
+    int soluong,size;
+    int soluongdamua;
     private void showBottomSheet(boolean buyNow) {
         SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
         decimalFormat = new DecimalFormat("#,###");
@@ -242,9 +238,12 @@ public class ChitietProduct extends AppCompatActivity {
         View bottomView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_dialog,
                 (LinearLayout) findViewById(R.id.bottomSheetDialog));
         decimalFormat = new DecimalFormat("#,###");
+        LinearLayout layoutSize = bottomView.findViewById(R.id.layoutSize);
+        TextView totalQuantitySize = bottomView.findViewById(R.id.totalQuantitySize);
+
         TextView buttonMinus = bottomView.findViewById(R.id.buttonMinus);
         TextView buttonPlus = bottomView.findViewById(R.id.buttonPlus);
-        TextView totalQuantity = bottomView.findViewById(R.id.totalQuantity);
+        TextView totalQuantity = bottomView.findViewById(R.id.totalQuantitys);
         EditText edsoluong = bottomView.findViewById(R.id.numberPickerQuantity);
         LinearLayout checkboxLayout = bottomView.findViewById(R.id.checkboxLayout);
         RadioGroup radioGroup = bottomView.findViewById(R.id.radioGroup);
@@ -263,7 +262,11 @@ public class ChitietProduct extends AppCompatActivity {
 
         String totalQuantityProduct = sharedPreferences.getString("quantityPro", null);
         int qantityFormat = Integer.parseInt(totalQuantityProduct);
-        String qantity = decimalFormat.format(qantityFormat);
+
+
+
+        int resul = qantityFormat - soluongdamua;
+        String qantity = decimalFormat.format(resul);
         totalQuantity.setText(qantity);
 
 //        String imageProduct = sharedPreferences.getString("anhProduct", null);
@@ -285,7 +288,8 @@ public class ChitietProduct extends AppCompatActivity {
                                 JSONArray sizesArray = item.getJSONArray("sizes");
                                 for (int j = 0; j < sizesArray.length(); j++) {
                                     JSONObject sizeItem = sizesArray.getJSONObject(j);
-                                    int size = sizeItem.getInt("size");
+                                    size = sizeItem.getInt("size");
+                                    soluong = sizeItem.getInt("quantity");
                                     if (!sizeList.contains(size)) {
                                         sizeList.add(size); // Thêm size vào danh sách
                                     }
@@ -309,7 +313,7 @@ public class ChitietProduct extends AppCompatActivity {
                                     radioButton.setButtonDrawable(null);
                                     radioButton.setHeight(90);
                                     radioButton.setWidth(160);
-                                    radioButton.setBackgroundResource(R.color.light_white);
+                                    radioButton.setBackgroundResource(R.color.colorAccrnt);
                                     radioButton.setLayoutParams(params);
                                     radioButton.setTextSize(15);
                                     radioButton.setGravity(Gravity.CENTER);
@@ -321,9 +325,7 @@ public class ChitietProduct extends AppCompatActivity {
                                     editor.apply();
                                     radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
                                         if (isChecked) {
-//                                            editor.putString("size", valueOf(size));
                                             editor.putString("size", valueOf(currentSize));
-                                            Toast.makeText(ChitietProduct.this, "size: " + currentSize, Toast.LENGTH_SHORT).show();
                                             editor.apply();
                                             buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_checkbox));
                                         } else{
@@ -331,8 +333,10 @@ public class ChitietProduct extends AppCompatActivity {
                                         }
 
                                         radioButton.setLayoutParams(params);
-                                        buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_canlecheckbox)); // Hình ảnh cho trạng thái chưa chọn
                                     });
+                                    if (!radioButton.isChecked()) {
+                                        radioButton.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_checkbox));
+                                    }
                                     radioGroup.addView(radioButton);
                                 }
                             }
