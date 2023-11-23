@@ -12,6 +12,7 @@ public class Cart implements Serializable {
     private Integer quantity;
 
     private Integer size;
+    private Integer importPrice;
 
     public Cart() {
     }
@@ -89,6 +90,14 @@ public class Cart implements Serializable {
 
     public void setSize(Integer size) {
         this.size = size;
+    }
+
+    public Integer getImportPrice() {
+        return importPrice;
+    }
+
+    public void setImportPrice(Integer importPrice) {
+        this.importPrice = importPrice;
     }
 
     @Override

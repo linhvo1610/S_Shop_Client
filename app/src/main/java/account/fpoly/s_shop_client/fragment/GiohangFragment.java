@@ -64,7 +64,7 @@ public class GiohangFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private static LinearLayout ln_pay;
     private Button btn_login_cart,btn_buy_cart;
-    private static int price_pay;
+    private static int price_pay, import_price_pay;
 
     private TextView btn_pay;
     public static List<Cart> cartList;
@@ -145,9 +145,11 @@ public class GiohangFragment extends Fragment {
         }
         ln_pay.setVisibility(View.VISIBLE);
         price_pay = 0;
+        import_price_pay = 0;
         for (int i = 0; i < list.size(); i++) {
             Cart cart = list.get(i);
             price_pay += (cart.getPrice_product()* cart.getQuantity());
+            import_price_pay += (cart.getImportPrice()*cart.getQuantity());
         }
         tv_price_pay.setText(TOOLS.convertPrice(price_pay));
     }
@@ -158,6 +160,7 @@ public class GiohangFragment extends Fragment {
             billMore.setStatus(0);
             billMore.setId_user(ACCOUNT.user.get_id());
             billMore.setTotal(price_pay);
+            billMore.setImportPrice(import_price_pay);
             billMore.setList(LIST.listBuyCart);
             Intent intent = new Intent(requireContext(), MuaProduct.class);
             intent.putExtra("billmore", billMore);
