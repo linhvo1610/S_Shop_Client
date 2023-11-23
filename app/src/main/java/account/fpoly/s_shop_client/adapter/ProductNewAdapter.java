@@ -121,7 +121,6 @@ public class ProductNewAdapter extends RecyclerView.Adapter<ProductNewAdapter.Pr
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Call API Fail", Toast.LENGTH_SHORT).show();
             }
         });
 
