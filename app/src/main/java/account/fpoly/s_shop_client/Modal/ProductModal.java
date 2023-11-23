@@ -18,6 +18,7 @@ public class ProductModal {
     private List<Size> sizes;
     private  CatModal id_cat;
     private String image;
+    private String gianhap;
 
     public static class Size {
         private int size;
@@ -102,5 +103,13 @@ public class ProductModal {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getImportPrice() {
+        return gianhap;
+    }
+
+    public void setImportPrice(String importPrice) {
+        this.gianhap = importPrice;
     }
 }

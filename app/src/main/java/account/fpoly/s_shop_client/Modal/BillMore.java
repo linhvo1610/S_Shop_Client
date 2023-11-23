@@ -16,6 +16,7 @@ public class BillMore implements Serializable {
     private List<Cart> list;
 
     private String address;
+    private int totalImport;
 
     public BillMore() {
     }
@@ -102,5 +103,13 @@ public class BillMore implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getImportPrice() {
+        return totalImport;
+    }
+
+    public void setImportPrice(int importPrice) {
+        this.totalImport = importPrice;
     }
 }

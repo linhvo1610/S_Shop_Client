@@ -295,6 +295,7 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
     private void getBill() {
         billMore = (BillMore) getIntent().getSerializableExtra("billmore");
         total_product = billMore.getTotal();
+
     }
     private void showList() {
         LinearLayoutManager manager = new LinearLayoutManager(MuaProduct.this, LinearLayoutManager.VERTICAL, false);
