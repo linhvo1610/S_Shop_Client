@@ -239,7 +239,7 @@ public class ChitietProduct extends AppCompatActivity {
                 (LinearLayout) findViewById(R.id.bottomSheetDialog));
         decimalFormat = new DecimalFormat("#,###");
         LinearLayout layoutSize = bottomView.findViewById(R.id.layoutSize);
-        TextView totalQuantitySize = bottomView.findViewById(R.id.totalQuantitySize);
+        TextView totalQuantitySizes = bottomView.findViewById(R.id.totalQuantitySize);
 
         TextView buttonMinus = bottomView.findViewById(R.id.buttonMinus);
         TextView buttonPlus = bottomView.findViewById(R.id.buttonPlus);
@@ -302,8 +302,17 @@ public class ChitietProduct extends AppCompatActivity {
                                 Collections.sort(sizeList);
 
                                 for (int k = 0; k < sizeList.size(); k++) {
-//                                    size = sizeList.get(k);
                                     final int currentSize = sizeList.get(k);
+                                    int currentQuantity = 0;
+                                    String currentID = null;
+                                    for (int m = 0; m < sizesArray.length(); m++) {
+                                        JSONObject sizeItem = sizesArray.getJSONObject(m);
+                                        if (sizeItem.getInt("size") == currentSize) {
+                                            currentQuantity = sizeItem.getInt("quantity");
+                                            currentID = sizeItem.getString("_id");
+                                            break;
+                                        }
+                                    }
 
                                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -326,9 +335,18 @@ public class ChitietProduct extends AppCompatActivity {
                                     SharedPreferences.Editor editor = sharedPreferences1.edit();
                                     editor.clear();
                                     editor.apply();
+
+                                    int finalCurrentQuantity = currentQuantity;
+                                    String finalCurrentID = currentID;
+
                                     radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
                                         if (isChecked) {
+                                            layoutSize.setVisibility(View.VISIBLE);
+                                            totalQuantitySizes.setText(String.valueOf(finalCurrentQuantity));
                                             editor.putString("size", valueOf(currentSize));
+                                            editor.putString("totalQuantitySize", valueOf(finalCurrentQuantity));
+                                            editor.putString("totalSizeID", valueOf(finalCurrentID));
+                                            Toast.makeText(ChitietProduct.this, "Số lượng còn: "+ finalCurrentQuantity, Toast.LENGTH_SHORT).show();
                                             editor.apply();
                                             buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_checkbox));
                                         } else{
