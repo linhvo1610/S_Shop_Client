@@ -70,7 +70,7 @@
             android:name=".GiaoDien.ChitietProduct"
             android:exported="false" />
         <activity
-            android:name=".Tab_Giaodien_Activity"
+            android:name=".SplassActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustNothing" />
         <activity
@@ -83,7 +83,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SplassActivity"
+            android:name=".Tab_Giaodien_Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

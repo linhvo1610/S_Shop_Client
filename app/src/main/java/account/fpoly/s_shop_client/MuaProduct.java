@@ -184,7 +184,6 @@ public class MuaProduct extends AppCompatActivity {
 
         SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
         String sizeRadio = sharedPreferences1.getString("size",null);
-        Toast.makeText(this, "size: "+ sizeRadio, Toast.LENGTH_SHORT).show();
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -529,14 +528,12 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
                     }
                     else {
 
-                        Toast.makeText(MuaProduct.this, response.message()+"", Toast.LENGTH_SHORT).show();
                     }
                 }
 
 
                 @Override
                 public void onFailure(@NonNull Call<BillMore> call, @NonNull Throwable t) {
-                    Toast.makeText(MuaProduct.this, "Lỗi!", Toast.LENGTH_SHORT).show();
                 }
             });
         });
