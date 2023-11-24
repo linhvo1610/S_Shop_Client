@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ import account.fpoly.s_shop_client.HistoryOrderClient;
 import account.fpoly.s_shop_client.HuyBill;
 import account.fpoly.s_shop_client.InfoUserActivity;
 import account.fpoly.s_shop_client.R;
+import account.fpoly.s_shop_client.SplassActivity;
+import account.fpoly.s_shop_client.Tools.ACCOUNT;
 import account.fpoly.s_shop_client.Xacnhan_Bill;
 
 public class SettingsFragment extends Fragment {
@@ -41,6 +44,8 @@ public class SettingsFragment extends Fragment {
     TextView txtfullname;
     API_User api_user;
     LinearLayout linnerXacnhan,linnerDanggiao,xacnhanPro,huyBill;
+    LinearLayout ln_cart_emty;
+    Button btn_buy_cart;
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +59,8 @@ public class SettingsFragment extends Fragment {
         linnerDanggiao = view.findViewById(R.id.linnerDanggiao);
         xacnhanPro = view.findViewById(R.id.xacnhanPro);
         huyBill = view.findViewById(R.id.huyBill);
+        ln_cart_emty=view.findViewById(R.id.ln_cart_emty);
+        btn_buy_cart=view.findViewById(R.id.btn_buy_cart);
         huyBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +129,19 @@ public class SettingsFragment extends Fragment {
         loadInfomation();
     }
     private void loadInfomation() {
+
+        if (ACCOUNT.user == null){
+            ln_cart_emty.setVisibility(View.VISIBLE);
+            btn_buy_cart.setText("Đăng nhập để mua sắm");
+            btn_buy_cart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), SplassActivity.class));
+                }
+            });
+            return;
+        }
+
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "users?_id=" + curidUser, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override

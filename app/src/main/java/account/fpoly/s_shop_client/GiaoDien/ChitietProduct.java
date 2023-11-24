@@ -2,17 +2,21 @@ package account.fpoly.s_shop_client.GiaoDien;
 
 import static java.lang.String.valueOf;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
@@ -26,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -62,6 +67,8 @@ import account.fpoly.s_shop_client.MuaProduct;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.ApiService;
 import account.fpoly.s_shop_client.Service.ServiceProduct;
+import account.fpoly.s_shop_client.SplassActivity;
+import account.fpoly.s_shop_client.Tab_Giaodien_Activity;
 import account.fpoly.s_shop_client.Tools.ACCOUNT;
 import account.fpoly.s_shop_client.adapter.ProductAdapter;
 import retrofit2.Call;
@@ -346,7 +353,6 @@ public class ChitietProduct extends AppCompatActivity {
                                             editor.putString("size", valueOf(currentSize));
                                             editor.putString("totalQuantitySize", valueOf(finalCurrentQuantity));
                                             editor.putString("totalSizeID", valueOf(finalCurrentID));
-                                            Toast.makeText(ChitietProduct.this, "Số lượng còn: "+ finalCurrentQuantity, Toast.LENGTH_SHORT).show();
                                             editor.apply();
                                             buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_checkbox));
                                         } else{
@@ -412,6 +418,39 @@ public class ChitietProduct extends AppCompatActivity {
 
         bottomView.findViewById(R.id.muasp).setOnClickListener(v -> {
             Cart cart = new Cart();
+
+            if (ACCOUNT.user == null){
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_yeucau_login, null);
+                builder.setView(view);
+                AlertDialog dialog = builder.create();
+                TextView dong,login;
+                ImageView imageView = view.findViewById(R.id.imageView);
+                dong = view.findViewById(R.id.dongs);
+                login = view.findViewById(R.id.login);
+// Tạo hiệu ứng chuông rung
+                ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                animator.setDuration(1000);
+                animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                animator.setRepeatCount(ObjectAnimator.INFINITE);
+                animator.start();
+
+                login.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getBaseContext(), SplassActivity.class));
+                    }
+                });
+                dong.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                return;
+            }
+
             cart.setId_user(ACCOUNT.user.get_id());
             cart.setId_product(idProduct);
             SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
@@ -430,7 +469,6 @@ public class ChitietProduct extends AppCompatActivity {
                         @Override
                         public void onResponse(@NonNull Call<Cart> call, @NonNull retrofit2.Response<Cart> response) {
                             if (response.isSuccessful()) {
-                                Toast.makeText(ChitietProduct.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                                 bottomSheetDialog.dismiss();
                             }
 
@@ -438,7 +476,6 @@ public class ChitietProduct extends AppCompatActivity {
 
                         @Override
                         public void onFailure(@NonNull Call<Cart> call, @NonNull Throwable t) {
-                            Toast.makeText(ChitietProduct.this, "Lỗi!", Toast.LENGTH_SHORT).show();
                             bottomSheetDialog.dismiss();
                         }
                     });

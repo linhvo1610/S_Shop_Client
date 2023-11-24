@@ -28,6 +28,7 @@ import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.MuaProduct;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.ApiService;
+import account.fpoly.s_shop_client.SplassActivity;
 import account.fpoly.s_shop_client.Tools.ACCOUNT;
 import account.fpoly.s_shop_client.Tools.LIST;
 import account.fpoly.s_shop_client.Tools.TOOLS;
@@ -89,9 +90,23 @@ public class GiohangFragment extends Fragment {
         tv_check_all = view.findViewById(R.id.tv_check_all);
         ln_speed = view.findViewById(R.id.ln_speed);
         recyclerView = view.findViewById(R.id.rcv_cart);
+
     }
 
     private void showCarts() {
+
+        if (ACCOUNT.user == null){
+            ln_speed.setVisibility(View.VISIBLE);
+            btn_buy_cart.setText("Đăng nhập để mua sắm");
+            btn_buy_cart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), SplassActivity.class));
+                }
+            });
+            return;
+        }
+
         adapter = new CartAdapter(requireContext(),false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
