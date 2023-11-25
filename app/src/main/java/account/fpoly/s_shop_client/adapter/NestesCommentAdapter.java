@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,26 +23,25 @@ import account.fpoly.s_shop_client.AddCommentActivity;
 import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.R;
 
-public class NestedAdapter extends RecyclerView.Adapter<NestedAdapter.NestedViewHolder>{
+public class NestesCommentAdapter extends RecyclerView.Adapter<NestesCommentAdapter.NestesViewHolder>{
     private List<Cart> itemList;
     Context context;
 
-
-    public NestedAdapter(List<Cart> itemList, Context context) {
+    public NestesCommentAdapter(List<Cart> itemList, Context context) {
         this.itemList = itemList;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public NestedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.iteam_nested,parent,false);
+    public NestesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.iteam_nested_coment,parent,false);
 
-        return new NestedViewHolder(view);
+        return new NestesViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NestedViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NestesViewHolder holder, int position) {
         Cart cart = itemList.get(position);
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         if (holder.namePro != null) {
@@ -62,8 +60,6 @@ public class NestedAdapter extends RecyclerView.Adapter<NestedAdapter.NestedView
 
         Picasso.get().load(API.api_image + cart.getImage()).into(holder.imageBill);
 
-
-
         holder.danhgia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,7 +71,7 @@ public class NestedAdapter extends RecyclerView.Adapter<NestedAdapter.NestedView
                 editor.apply();
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-
+                holder.danhgia.setVisibility(View.GONE);
             }
         });
     }
@@ -85,11 +81,11 @@ public class NestedAdapter extends RecyclerView.Adapter<NestedAdapter.NestedView
         return itemList.size();
     }
 
-    public static class NestedViewHolder extends RecyclerView.ViewHolder {
+    public static class NestesViewHolder extends RecyclerView.ViewHolder {
         TextView totalQuantity,totalPrice,statusPro,namePro,sizePro;
         LinearLayout danhgia;
         ImageView imageBill;
-        public NestedViewHolder(@NonNull View itemView) {
+        public NestesViewHolder(@NonNull View itemView) {
             super(itemView);
             totalQuantity = itemView.findViewById(R.id.totalQuantitys);
             totalPrice = itemView.findViewById(R.id.totalPrices);

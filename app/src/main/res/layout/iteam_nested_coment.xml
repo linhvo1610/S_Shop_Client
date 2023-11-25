@@ -101,27 +101,28 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/btn_danhgia"
+                    android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:background="@drawable/button_background"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:id="@+id/btn_danhgia"
-                    android:visibility="gone"
-                    >
+                    android:layout_gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:text="Đánh giá sản phẩm"
                         android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:text="Đánh Giá"/>
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
-
-
 
 
             </LinearLayout>
