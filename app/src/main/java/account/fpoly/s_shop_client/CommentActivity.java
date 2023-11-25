@@ -50,7 +50,7 @@ public class CommentActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
 
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getBaseContext());
         idProduct = sharedPreferences.getString("idProduct", null);
 
         recyclerView.setLayoutManager(linearLayoutManager);

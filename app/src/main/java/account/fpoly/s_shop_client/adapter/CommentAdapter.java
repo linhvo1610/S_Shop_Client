@@ -50,15 +50,16 @@ Context context;
     }
 
     public  static class CommentViewHoder extends RecyclerView.ViewHolder {
-    TextView tv_Username, tv_comment, tv_productName,tv_productname_comment;
+    TextView tv_Username, tv_comment, tv_productName,tv_productname_comment,phanloai;
     ImageView imageUser;
 
         public CommentViewHoder(@NonNull View itemView) {
             super(itemView);
             tv_Username= itemView.findViewById(R.id.tv_username_comment);
-            tv_productName= itemView.findViewById(R.id.tv_productname_comment);
+//            tv_productName= itemView.findViewById(R.id.tv_username_comment);
             tv_comment= itemView.findViewById(R.id.tv_decription_comment);
             imageUser= itemView.findViewById(R.id.img_user_comment);
+            phanloai= itemView.findViewById(R.id.phanloai);
             tv_productname_comment= itemView.findViewById(R.id.tv_productname_comment);
         }
     }

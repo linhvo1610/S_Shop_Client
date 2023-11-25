@@ -52,11 +52,11 @@ public class AddCommentActivity extends AppCompatActivity {
         Button btnadd = findViewById(R.id.btn_comment);
         ImageView img = findViewById(R.id.img_back_comment_add);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("id_product", MODE_PRIVATE);
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        idProduct = sharedPreferences.getString("idProduct", null);
+        idProduct = sharedPreferences.getString("idP", null);
 
         recyclerView.setLayoutManager(linearLayoutManager);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -133,7 +133,6 @@ public  void  addComment(){
     String iduser = preferencesbill.getString("iduser",null);
     SharedPreferences preferences = getSharedPreferences("id_product",MODE_PRIVATE);
     String idpr = preferences.getString("idP",null);
-
 
     CommentService.apiComment.addComment(new CommentModal( iduser,idpr,comment)).enqueue(new Callback<CommentModal>() {
         @Override

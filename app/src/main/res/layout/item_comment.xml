@@ -49,6 +49,15 @@
                     android:id="@+id/tv_productname_comment"
                     android:textColor="#516BFF"
                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Size: 41"
+                    android:padding="5dp"
+                    android:id="@+id/phanloai"
+                    android:textColor="#656667"
+                    android:visibility="gone"
+                    />
             </LinearLayout>
 
 

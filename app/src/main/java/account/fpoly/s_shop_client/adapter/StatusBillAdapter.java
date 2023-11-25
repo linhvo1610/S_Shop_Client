@@ -176,6 +176,9 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
             holder.xacnhanPro.setVisibility(View.INVISIBLE);
             holder.statusPro.setVisibility(View.INVISIBLE);
 
+            NestesCommentAdapter nestesCommentAdapter = new NestesCommentAdapter(billMore.getList(),context);
+            holder.nestedRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+            holder.nestedRecyclerView.setAdapter(nestesCommentAdapter);
         }
     }
 
