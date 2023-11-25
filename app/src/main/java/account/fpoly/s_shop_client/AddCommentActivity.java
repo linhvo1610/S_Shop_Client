@@ -1,5 +1,6 @@
 package account.fpoly.s_shop_client;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ import account.fpoly.s_shop_client.Modal.CommentModal;
 import account.fpoly.s_shop_client.Service.CommentService;
 import account.fpoly.s_shop_client.adapter.CommentAdapter;
 import account.fpoly.s_shop_client.fragment.HomeFragment;
+import account.fpoly.s_shop_client.fragment.LichsuFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -75,8 +77,7 @@ public class AddCommentActivity extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), HomeFragment.class);
-                startActivity(intent);
+               onBackPressed();
             }
         });
     }
@@ -130,19 +131,21 @@ public  void  addComment(){
         String comment = edt.getText().toString();
     SharedPreferences preferencesbill = getSharedPreferences("infoUser",MODE_PRIVATE);
     String iduser = preferencesbill.getString("iduser",null);
-    Intent intent = getIntent();
-    String idproduct = intent.getStringExtra("id_product");
-    CommentService.apiComment.addComment(new CommentModal( iduser,idproduct,comment)).enqueue(new Callback<CommentModal>() {
+    SharedPreferences preferences = getSharedPreferences("id_product",MODE_PRIVATE);
+    String idpr = preferences.getString("idP",null);
+
+
+    CommentService.apiComment.addComment(new CommentModal( iduser,idpr,comment)).enqueue(new Callback<CommentModal>() {
         @Override
         public void onResponse(Call<CommentModal> call, retrofit2.Response<CommentModal> response) {
-            Toast.makeText(AddCommentActivity.this, " thanh cong ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddCommentActivity.this, "Bình Luận Thành Công", Toast.LENGTH_SHORT).show();
             callListVolley();
             commentAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void onFailure(Call<CommentModal> call, Throwable t) {
-            Toast.makeText(AddCommentActivity.this, " k thanh cong ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddCommentActivity.this, "Bình Luận Không Thành Công", Toast.LENGTH_SHORT).show();
         }
     });
 }

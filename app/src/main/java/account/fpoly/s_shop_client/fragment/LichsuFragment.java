@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import account.fpoly.s_shop_client.API.API;
+import account.fpoly.s_shop_client.AddCommentActivity;
 import account.fpoly.s_shop_client.Modal.Bill;
 import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
@@ -104,6 +105,8 @@ public class LichsuFragment extends Fragment {
                         for (int j = 0; j < jsonArrayList.length(); j++) {
                             JSONObject jsonObjectList = jsonArrayList.getJSONObject(j);
                             Cart cart = new Cart();
+
+                            cart.setId_product(jsonObjectList.getString("id_product"));
                             cart.setSize(jsonObjectList.getInt("size"));
                             cart.setQuantity(jsonObjectList.getInt("quantity"));
                             cart.setPrice_product(jsonObjectList.getInt("price_product"));

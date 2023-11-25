@@ -1,6 +1,7 @@
 package account.fpoly.s_shop_client.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import account.fpoly.s_shop_client.API.API;
+import account.fpoly.s_shop_client.AddCommentActivity;
 import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.R;
 
@@ -53,11 +55,25 @@ public class NestedAdapter extends RecyclerView.Adapter<NestedAdapter.NestedView
 
         holder.totalPrice.setText("đ"+ Price);
         holder.sizePro.setText("Size:"+ cart.getSize());
+        // truyen du lieu sang comment
+
+
 
         Picasso.get().load(API.api_image + cart.getImage()).into(holder.imageBill);
+        holder.danhgia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AddCommentActivity.class);
+
+                SharedPreferences sharedPreferences = context.getSharedPreferences("id_product", context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("idP", cart.getId_product());
+                editor.apply();
+                context.startActivity(intent);
 
 
-
+            }
+        });
     }
 
     @Override
@@ -66,7 +82,7 @@ public class NestedAdapter extends RecyclerView.Adapter<NestedAdapter.NestedView
     }
 
     public static class NestedViewHolder extends RecyclerView.ViewHolder {
-        TextView totalQuantity,totalPrice,statusPro,namePro,sizePro;
+        TextView totalQuantity,totalPrice,statusPro,namePro,sizePro,danhgia;
         ImageView imageBill;
         public NestedViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +91,7 @@ public class NestedAdapter extends RecyclerView.Adapter<NestedAdapter.NestedView
             namePro = itemView.findViewById(R.id.nameProbills);
             imageBill = itemView.findViewById(R.id.imageBills);
             sizePro = itemView.findViewById(R.id.sizePros);
+            danhgia=itemView.findViewById(R.id.btn_danhgia);
         }
     }
 }
