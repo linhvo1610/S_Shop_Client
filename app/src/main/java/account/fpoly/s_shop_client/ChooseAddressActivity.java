@@ -124,7 +124,7 @@ public class ChooseAddressActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<List<Province>> call, @NonNull Throwable t) {
-                Toast.makeText(ChooseAddressActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -200,7 +200,7 @@ public class ChooseAddressActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<List<Ward>> call, @NonNull Throwable t) {
-                Toast.makeText(ChooseAddressActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -233,7 +233,7 @@ public class ChooseAddressActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<List<District>> call, @NonNull Throwable t) {
-                Toast.makeText(ChooseAddressActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

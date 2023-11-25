@@ -144,7 +144,7 @@ public  void  addComment(){
 
         @Override
         public void onFailure(Call<CommentModal> call, Throwable t) {
-            Toast.makeText(AddCommentActivity.this, "Bình Luận Không Thành Công", Toast.LENGTH_SHORT).show();
+
         }
     });
 }

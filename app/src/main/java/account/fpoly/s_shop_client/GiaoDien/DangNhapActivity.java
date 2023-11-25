@@ -148,7 +148,7 @@ public class DangNhapActivity extends AppCompatActivity {
                         startActivity(new Intent(getBaseContext(),Tab_Giaodien_Activity.class));
                         Toast.makeText(DangNhapActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                     }else if (userModal1.getRole().equalsIgnoreCase("Admin")){
-                        Toast.makeText(DangNhapActivity.this, "App danh cho User", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DangNhapActivity.this, "App dành  cho Khách Hàng ", Toast.LENGTH_SHORT).show();
                     }
 
                     ApiService.apiService.getAddress(userModal1.get_id()).enqueue(new Callback<List<Address>>() {
@@ -233,7 +233,7 @@ public class DangNhapActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<UserModal>> call, Throwable t) {
-                Toast.makeText(DangNhapActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+
 
             }
         });

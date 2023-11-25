@@ -129,7 +129,7 @@ public class LichsuFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Call API Fail", Toast.LENGTH_SHORT).show();
+
             }
         });
         requestQueue.add(jsonObjectRequest);

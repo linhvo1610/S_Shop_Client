@@ -257,7 +257,7 @@ public class HomeFragment extends Fragment {
 
                                             @Override
                                             public void onFailure(Call<ReceProduct> call, Throwable t) {
-                                                Toast.makeText(getContext(), "Fail", Toast.LENGTH_SHORT).show();
+
                                                 Log.d("gggg", "onFailure:" + t);
                                             }
                                         });
@@ -279,7 +279,7 @@ public class HomeFragment extends Fragment {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Fail", Toast.LENGTH_SHORT).show();
+
             }
         });
         requestQueue.add(jsonObjectRequest);
@@ -296,7 +296,7 @@ public class HomeFragment extends Fragment {
 
 
                 }else{
-                    Toast.makeText(getContext(), "Fail", Toast.LENGTH_SHORT).show();
+
                 }
             }
 

@@ -68,6 +68,7 @@ import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.ApiService;
 import account.fpoly.s_shop_client.Service.ServiceProduct;
 import account.fpoly.s_shop_client.SplassActivity;
+import account.fpoly.s_shop_client.TabCartActivity;
 import account.fpoly.s_shop_client.Tab_Giaodien_Activity;
 import account.fpoly.s_shop_client.Tools.ACCOUNT;
 import account.fpoly.s_shop_client.adapter.ProductAdapter;
@@ -79,7 +80,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ChitietProduct extends AppCompatActivity {
 
     LinearLayout clickmua, chat, btn_add_cart;
-    ImageView back, chitiet_imgProduct;
+    ImageView back, chitiet_imgProduct,img_chuyen_gh;
     TextView chitiet_tenProduct, chitiet_giaProduct, chitiet_description,trademark,namecat;
     String idProduct;
     String imagePro;
@@ -106,6 +107,7 @@ public class ChitietProduct extends AppCompatActivity {
         decimalFormat = new DecimalFormat("#,###");
 
         clickmua = findViewById(R.id.clickmua);
+        img_chuyen_gh=findViewById(R.id.img_chuyen_gh);
         back = findViewById(R.id.back);
         chat = findViewById(R.id.chat);
         chitiet_giaProduct = findViewById(R.id.chitiet_giaProduct);
@@ -121,6 +123,12 @@ public class ChitietProduct extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ChitietProduct.this, CommentActivity.class);
                 startActivity(intent);
+            }
+        });
+        img_chuyen_gh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ChitietProduct.this, TabCartActivity.class));
             }
         });
         btn_add_cart = findViewById(R.id.btn_add_detail);
@@ -219,7 +227,7 @@ public class ChitietProduct extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getBaseContext(), "Call API Fail", Toast.LENGTH_SHORT).show();
+
             }
         });
 
