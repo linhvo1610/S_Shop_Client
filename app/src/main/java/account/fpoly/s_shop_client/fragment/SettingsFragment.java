@@ -43,7 +43,7 @@ public class SettingsFragment extends Fragment {
     String image,curidUser,fullname;
     TextView txtfullname;
     API_User api_user;
-    LinearLayout linnerXacnhan,linnerDanggiao,xacnhanPro,huyBill;
+    LinearLayout linnerXacnhan,linnerDanggiao,xacnhanPro,huyBill,ln_thongtin;
     LinearLayout ln_cart_emty;
     Button btn_buy_cart;
     @SuppressLint("MissingInflatedId")
@@ -61,10 +61,17 @@ public class SettingsFragment extends Fragment {
         huyBill = view.findViewById(R.id.huyBill);
         ln_cart_emty=view.findViewById(R.id.ln_cart_emty);
         btn_buy_cart=view.findViewById(R.id.btn_buy_cart);
+        ln_thongtin=view.findViewById(R.id.ln_thongtin);
         huyBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), HuyBill.class));
+            }
+        });
+        ln_thongtin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), InfoUserActivity.class));
             }
         });
         linnerXacnhan.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +139,7 @@ public class SettingsFragment extends Fragment {
 
         if (ACCOUNT.user == null){
             ln_cart_emty.setVisibility(View.VISIBLE);
-            btn_buy_cart.setText("Đăng nhập để mua sắm");
+            btn_buy_cart.setText("Bạn cần đăng nhập để  sử dụng chức năng này ");
             btn_buy_cart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

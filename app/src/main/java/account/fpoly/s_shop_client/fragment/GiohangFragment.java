@@ -97,7 +97,7 @@ public class GiohangFragment extends Fragment {
 
         if (ACCOUNT.user == null){
             ln_speed.setVisibility(View.VISIBLE);
-            btn_buy_cart.setText("Đăng nhập để mua sắm");
+            btn_buy_cart.setText("Bạn cần đăng nhập để sử dụng chức năng này ");
             btn_buy_cart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -131,7 +131,7 @@ public class GiohangFragment extends Fragment {
 
                 @Override
                 public void onFailure(@NonNull Call<List<Cart>> call, @NonNull Throwable t) {
-                    Toast.makeText(requireContext(), "Lỗi!", Toast.LENGTH_SHORT).show();
+
                 }
             });
         }
