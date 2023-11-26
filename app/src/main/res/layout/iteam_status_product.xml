@@ -230,13 +230,13 @@
             android:padding="5dp"
             android:layout_marginRight="10dp"
             android:textColor="#F44336"
-
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/huydon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Huy don"
+            android:text="Hủy đơn hàng"
             android:gravity="center"
             android:padding="5dp"
             android:layout_gravity="right"

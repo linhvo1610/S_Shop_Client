@@ -484,6 +484,29 @@ public class ChitietProduct extends AppCompatActivity {
                             @Override
                             public void onResponse(@NonNull Call<Cart> call, @NonNull retrofit2.Response<Cart> response) {
                                 if (response.isSuccessful()) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                                    View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_check, null);
+                                    builder.setView(view);
+                                    AlertDialog dialog = builder.create();
+                                    ImageView imageView = view.findViewById(R.id.imageView);
+                                    TextView title = view.findViewById(R.id.title);
+
+                                    title.setText("Đã thêm vào giỏ hàng!");
+// Tạo hiệu ứng chuông rung
+                                    ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                                    animator.setDuration(1000);
+                                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                                    animator.setRepeatCount(ObjectAnimator.INFINITE);
+                                    animator.start();
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dialog.dismiss();
+                                        }
+                                    }, 1700);
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    dialog.show();
                                     bottomSheetDialog.dismiss();
                                 }
 
