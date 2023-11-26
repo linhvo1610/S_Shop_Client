@@ -78,7 +78,7 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
 
         holder.huydon.setVisibility(View.GONE);
         if (billMore.getStatus() == 0){
-            holder.statusPro.setText("Chờ xác nhận");
+            holder.statusPro.setVisibility(View.GONE);
             holder.huydon.setVisibility(View.VISIBLE);
             holder.huydon.setOnClickListener(new View.OnClickListener() {
                 @Override
