@@ -358,6 +358,12 @@ public class ChitietProduct extends AppCompatActivity {
                                         if (isChecked) {
                                             layoutSize.setVisibility(View.VISIBLE);
                                             totalQuantitySizes.setText(String.valueOf(finalCurrentQuantity));
+
+                                            SharedPreferences sharedPreferencesCheckQuantity = getSharedPreferences("soluongSize", MODE_PRIVATE);
+                                            SharedPreferences.Editor editors = sharedPreferencesCheckQuantity.edit();
+                                            editors.putInt("soluongSize", finalCurrentQuantity);
+
+                                            editor.apply();
                                             editor.putString("size", valueOf(currentSize));
                                             editor.putString("totalQuantitySize", valueOf(finalCurrentQuantity));
                                             editor.putString("totalSizeID", valueOf(finalCurrentID));
@@ -459,60 +465,84 @@ public class ChitietProduct extends AppCompatActivity {
                 return;
             }
 
-            cart.setId_user(ACCOUNT.user.get_id());
-            cart.setId_product(idProduct);
-            SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
-            String sizeString = sharedPreferences1.getString("size", null);
+                cart.setId_user(ACCOUNT.user.get_id());
+                cart.setId_product(idProduct);
+                SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
+                String sizeString = sharedPreferences1.getString("size", null);
 
-            if (sizeString != null && !sizeString.isEmpty()) {
-                int size = Integer.parseInt(sizeString);
-                if (!buyNow) {
-                    cart.setName_product(sharedPreferences.getString("tenProduct", null));
-                    cart.setPrice_product(priceFormat);
-                    cart.setImage(sharedPreferences.getString("anhProduct", null));
-                    cart.setQuantity(newValue);
-                    cart.setSize(size);
-                    cart.setImportPrice(priceFormatImport);
-                    ApiService.apiService.addCart(cart).enqueue(new Callback<Cart>() {
-                        @Override
-                        public void onResponse(@NonNull Call<Cart> call, @NonNull retrofit2.Response<Cart> response) {
-                            if (response.isSuccessful()) {
-                                bottomSheetDialog.dismiss();
+                if (sizeString != null && !sizeString.isEmpty()) {
+                    int size = Integer.parseInt(sizeString);
+
+                    if (!buyNow) {
+                        cart.setName_product(sharedPreferences.getString("tenProduct", null));
+                        cart.setPrice_product(priceFormat);
+                        cart.setImage(sharedPreferences.getString("anhProduct", null));
+                        cart.setQuantity(newValue);
+                        cart.setSize(size);
+                        cart.setImportPrice(priceFormatImport);
+                        ApiService.apiService.addCart(cart).enqueue(new Callback<Cart>() {
+                            @Override
+                            public void onResponse(@NonNull Call<Cart> call, @NonNull retrofit2.Response<Cart> response) {
+                                if (response.isSuccessful()) {
+                                    bottomSheetDialog.dismiss();
+                                }
+
                             }
 
-                        }
-
-                        @Override
-                        public void onFailure(@NonNull Call<Cart> call, @NonNull Throwable t) {
-                            bottomSheetDialog.dismiss();
-                        }
-                    });
+                            @Override
+                            public void onFailure(@NonNull Call<Cart> call, @NonNull Throwable t) {
+                                bottomSheetDialog.dismiss();
+                            }
+                        });
+                    } else {
+                        BillMore billMore = new BillMore();
+                        billMore.setId_user(ACCOUNT.user.get_id());
+                        cart.setName_product(sharedPreferences.getString("tenProduct", null));
+                        cart.setPrice_product(priceFormat);
+                        cart.setImage(sharedPreferences.getString("anhProduct", null));
+                        cart.setQuantity(newValue);
+                        cart.setSize(size);
+                        cart.setImportPrice(priceFormatImport);
+                        List<Cart> list = new ArrayList<>();
+                        list.add(cart);
+                        billMore.setList(list);
+                        billMore.setStatus(0);
+                        billMore.setTotal(cart.getQuantity() * cart.getPrice_product());
+                        Intent intent = new Intent(ChitietProduct.this, MuaProduct.class);
+                        intent.putExtra("billmore", billMore);
+                        intent.putExtra("buy",true);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.next_enter, R.anim.next_exit);
+                        bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
+                        isDialogOpen = false;
+                    }
                 } else {
-                    BillMore billMore = new BillMore();
-                    billMore.setId_user(ACCOUNT.user.get_id());
-                    cart.setName_product(sharedPreferences.getString("tenProduct", null));
-                    cart.setPrice_product(priceFormat);
-                    cart.setImage(sharedPreferences.getString("anhProduct", null));
-                    cart.setQuantity(newValue);
-                    cart.setSize(size);
-                    cart.setImportPrice(priceFormatImport);
-                    List<Cart> list = new ArrayList<>();
-                    list.add(cart);
-                    billMore.setList(list);
-                    billMore.setStatus(0);
-                    billMore.setTotal(cart.getQuantity() * cart.getPrice_product());
-                    Intent intent = new Intent(ChitietProduct.this, MuaProduct.class);
-                    intent.putExtra("billmore", billMore);
-                    intent.putExtra("buy",true);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.next_enter, R.anim.next_exit);
-                    bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
-                    isDialogOpen = false;
-                }
-            } else {
-                Toast.makeText(this, "Hãy chon size", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Hãy chon size", Toast.LENGTH_SHORT).show();
             }
-
+//            SharedPreferences sharedPreferencesCheckQuantity = getSharedPreferences("soluongSize", MODE_PRIVATE);
+//            int soluongSize = sharedPreferencesCheckQuantity.getInt("soluongSize",0);
+//            if (newValue > soluongSize){
+//                AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+//                View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_check, null);
+//                builder.setView(view);
+//                AlertDialog dialog = builder.create();
+//                ImageView imageView = view.findViewById(R.id.imageView);
+//// Tạo hiệu ứng chuông rung
+//                ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+//                animator.setDuration(1000);
+//                animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//                animator.setRepeatCount(ObjectAnimator.INFINITE);
+//                animator.start();
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        dialog.dismiss();
+//                    }
+//                }, 1700);
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                dialog.show();
+//            }
         });
         bottomSheetDialog.setContentView(bottomView);
         bottomSheetDialog.show();

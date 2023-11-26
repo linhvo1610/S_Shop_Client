@@ -3,9 +3,11 @@ package account.fpoly.s_shop_client.adapter;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,7 @@ import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.ApiService;
+import account.fpoly.s_shop_client.Tab_Giaodien_Activity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -98,8 +101,9 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
                                 public void onResponse(Call<Integer> call, Response<Integer> response) {
                                     if (response.isSuccessful()&&response.body()!=null) {
                                         if (response.body() == 1) {
-                                            Toast.makeText(context, "cancel ok", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "Đã hủy đơn hàng!!!", Toast.LENGTH_SHORT).show();
                                             list.remove(billMore);
+                                            dialog.cancel();
                                             notifyDataSetChanged();
                                         }
                                     }
@@ -148,9 +152,39 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
                         public void onResponse(Call<Integer> call, Response<Integer> response) {
                             if (response.isSuccessful()&&response.body()!=null) {
                                 if (response.body() == 1) {
-                                    Toast.makeText(context, "update ok", Toast.LENGTH_SHORT).show();
-                                    list.remove(billMore);
-                                    notifyDataSetChanged();
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                                    View view = LayoutInflater.from(context).inflate(R.layout.dialog_thongbao, null);
+                                    builder.setView(view);
+                                    AlertDialog dialog = builder.create();
+
+                                    ImageView imageView = view.findViewById(R.id.imageView);
+                                    TextView title = view.findViewById(R.id.title);
+// Tạo hiệu ứng chuông rung
+                                    title.setText("Cảm hơn bạn đã tin tưởng về sản phẩm chúc bạn có trải nghiệm tốt!!!");
+
+                                    ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                                    animator.setDuration(1000);
+                                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                                    animator.setRepeatCount(ObjectAnimator.INFINITE);
+                                    animator.start();
+
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            list.remove(billMore);
+                                            notifyDataSetChanged();
+                                            dialog.dismiss();
+                                            Intent intent = new Intent(context, Tab_Giaodien_Activity.class);
+
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            context.startActivity(intent);
+                                        }
+                                    }, 1700);
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    dialog.show();
+
                                 } 
                             }
                         }
