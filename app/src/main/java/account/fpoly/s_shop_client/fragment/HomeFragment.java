@@ -366,6 +366,7 @@ public class HomeFragment extends Fragment {
                     }
                 });
                 rcv_new.setAdapter(productNewAdapter);
+                productNewAdapter.notifyDataSetChanged();
             }
 
             @Override
