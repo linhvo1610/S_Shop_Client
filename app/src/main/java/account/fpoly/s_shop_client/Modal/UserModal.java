@@ -20,6 +20,48 @@ public class UserModal implements Serializable {
     private String role;
     private String token;
 
+
+     String currentPassword;
+     String newPassword;
+     String confirmPassword;
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public UserModal(String currentPassword, String newPassword, String confirmPassword) {
+        this.currentPassword = currentPassword;
+        this.newPassword = newPassword;
+        this.confirmPassword = confirmPassword;
+    }
+
+    public UserModal(String _id, String currentPassword, String newPassword, String confirmPassword) {
+        this._id = _id;
+        this.currentPassword = currentPassword;
+        this.newPassword = newPassword;
+        this.confirmPassword = confirmPassword;
+    }
+
     public String getToken() {
         return token;
     }
