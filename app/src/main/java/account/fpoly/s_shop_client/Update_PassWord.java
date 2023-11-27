@@ -1,5 +1,6 @@
 package account.fpoly.s_shop_client;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import account.fpoly.s_shop_client.API.API_User;
@@ -21,6 +23,7 @@ public class Update_PassWord extends AppCompatActivity {
     Button btnupdate;
     EditText ed_passcu,ed_passnew,nhaplai;
     String password,iduser;
+    ImageView img_back_updatePass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +33,17 @@ public class Update_PassWord extends AppCompatActivity {
         btnupdate = findViewById(R.id.btnupdate);
         ed_passnew = findViewById(R.id.ed_passnew);
         ed_passcu = findViewById(R.id.ed_passcu);
+        img_back_updatePass=findViewById(R.id.img_back_updatePass);
 
         SharedPreferences preferences = getSharedPreferences("infoUser", MODE_PRIVATE);
         iduser = preferences.getString("iduser", null);
         password = preferences.getString("password", null);
+        img_back_updatePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
             btnupdate.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -51,6 +61,7 @@ public class Update_PassWord extends AppCompatActivity {
                             public void onResponse(Call<UserModal> call, Response<UserModal> response) {
                                 if (response.isSuccessful()) {
                                     Toast.makeText(Update_PassWord.this, "Cập nhật mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                                    onBackPressed();
                                 } else {
                                     Toast.makeText(Update_PassWord.this, "Cập nhật mật khẩu thất bại", Toast.LENGTH_SHORT).show();
                                     Log.e("passs", "Cập nhật mật khẩu thất bại: " + response.message());
