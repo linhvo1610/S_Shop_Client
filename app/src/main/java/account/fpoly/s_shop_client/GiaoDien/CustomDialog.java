@@ -19,7 +19,7 @@ public class CustomDialog extends Dialog {
         WindowManager.LayoutParams layoutParams = window.getAttributes();
         layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT; // Đặt độ lớn theo chiều rộng
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT; // Đặt độ lớn theo chiều cao
-        layoutParams.gravity = Gravity.RIGHT | Gravity.TOP; // Đặt dialog ở bên trái
+        layoutParams.gravity = Gravity.CENTER; // Đặt dialog ở bên trái
         layoutParams.x = 0; // Đặt vị trí theo trục X
         layoutParams.y = 0;
         window.setAttributes(layoutParams);
