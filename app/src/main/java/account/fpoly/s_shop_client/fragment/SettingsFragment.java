@@ -36,6 +36,7 @@ import account.fpoly.s_shop_client.InfoUserActivity;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.SplassActivity;
 import account.fpoly.s_shop_client.Tools.ACCOUNT;
+import account.fpoly.s_shop_client.Update_PassWord;
 import account.fpoly.s_shop_client.Xacnhan_Bill;
 
 public class SettingsFragment extends Fragment {
@@ -44,7 +45,7 @@ public class SettingsFragment extends Fragment {
     TextView txtfullname;
     API_User api_user;
     LinearLayout linnerXacnhan,linnerDanggiao,xacnhanPro,huyBill,ln_thongtin;
-    LinearLayout ln_cart_emty;
+    LinearLayout ln_cart_emty,updatepass;
     Button btn_buy_cart;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -62,6 +63,16 @@ public class SettingsFragment extends Fragment {
         ln_cart_emty=view.findViewById(R.id.ln_cart_emty);
         btn_buy_cart=view.findViewById(R.id.btn_buy_cart);
         ln_thongtin=view.findViewById(R.id.ln_thongtin);
+        updatepass=view.findViewById(R.id.updatepass);
+
+        updatepass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Update_PassWord.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
         huyBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
