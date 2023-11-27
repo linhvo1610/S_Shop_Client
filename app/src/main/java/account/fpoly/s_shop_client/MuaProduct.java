@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -180,11 +181,12 @@ public class MuaProduct extends AppCompatActivity {
                 });
             }
         });
-        AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT); // AppMoMoLib.ENVIRONMENT.PRODUCTION
+         // AppMoMoLib.ENVIRONMENT.PRODUCTION
 
         SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
         String sizeRadio = sharedPreferences1.getString("size",null);
 
+        AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(MuaProduct.this, Manifest.permission.POST_NOTIFICATIONS) !=
@@ -213,14 +215,14 @@ public class MuaProduct extends AppCompatActivity {
     private void requestPayment(String iddonhang) {
         AppMoMoLib.getInstance().setAction(AppMoMoLib.ACTION.PAYMENT);
         AppMoMoLib.getInstance().setActionType(AppMoMoLib.ACTION_TYPE.GET_TOKEN);
-//            amount = tongPrice.getText().toString().trim();
+            int tongtien = tongtienHang;
 
 
         Map<String, Object> eventValue = new HashMap<>();
         //client Required
         eventValue.put("merchantname", merchantName); //Tên đối tác. được đăng ký tại https://business.momo.vn. VD: Google, Apple, Tiki , CGV Cinemas
         eventValue.put("merchantcode", merchantCode); //Mã đối tác, được cung cấp bởi MoMo tại https://business.momo.vn
-        eventValue.put("amount",amount); //Kiểu integer
+        eventValue.put("amount",tongtien); //Kiểu integer
         eventValue.put("orderId", iddonhang); //uniqueue id cho BillId, giá trị duy nhất cho mỗi BILL
         eventValue.put("orderLabel", iddonhang); //gán nhãn
 
@@ -248,7 +250,6 @@ public class MuaProduct extends AppCompatActivity {
 
         eventValue.put("extra", "");
         AppMoMoLib.getInstance().requestMoMoCallBack(this, eventValue);
-
 
     }
 //    Get token callback from MoMo app an submit to server side
@@ -340,12 +341,13 @@ public class MuaProduct extends AppCompatActivity {
 // tổng thanh toán
             int shipValue = Integer.parseInt("23400");
             int totalThanhtoan = total_product + shipValue;
+            tongtienHang = totalThanhtoan;
             String formattedPrice = decimalFormat.format(totalThanhtoan);
             thanhtoan.setText( "đ" + formattedPrice);
             tongPrice.setText( "đ" + formattedPrice);
         }
     }
-
+ int tongtienHang;
     @SuppressLint("SetTextI18n")
     private void showAddress() {
 
@@ -378,6 +380,7 @@ public class MuaProduct extends AppCompatActivity {
 @Override
 protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == REQUESR_ADDRESS_CHOOSE) {
             if (resultCode == RESULT_OK) {
                 assert data != null;
