@@ -176,10 +176,10 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
                                             list.remove(billMore);
                                             notifyDataSetChanged();
                                             dialog.dismiss();
-                                            Intent intent = new Intent(context, Tab_Giaodien_Activity.class);
-
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            context.startActivity(intent);
+//                                            Intent intent = new Intent(context, Tab_Giaodien_Activity.class);
+//
+//                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                            context.startActivity(intent);
                                         }
                                     }, 1700);
                                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
