@@ -241,6 +241,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
+                android:id="@+id/contact_us"
                 android:orientation="horizontal"
                 android:padding="8dp"
                 android:layout_width="match_parent"
@@ -254,7 +255,7 @@
                     android:layout_marginTop="6dp"
                     android:layout_marginLeft="10dp"
                     android:textSize="15dp"
-                    android:text="Trò chuyện"
+                    android:text="Liên hệ với chúng tôi"
                     android:layout_width="0dp"
                     android:layout_weight="@integer/material_motion_duration_long_1"
                     android:layout_height="wrap_content"/>
