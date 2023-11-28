@@ -9,7 +9,6 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -31,6 +30,9 @@ public interface API_User {
 
     @PUT("updateUser/{id}")
     Call<UserModal> updateUser(@Path("id") String id, @Body UserModal user);
+
+    @PUT("updatePass/{id}")
+    Call<UserModal> updatePassword(@Path("id") String id, @Body UserModal user);
 
     @POST("register")
     Call<UserModal> postUser (@Body UserModal userModal);

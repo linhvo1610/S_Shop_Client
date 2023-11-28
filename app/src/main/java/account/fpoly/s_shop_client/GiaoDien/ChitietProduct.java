@@ -2,17 +2,21 @@ package account.fpoly.s_shop_client.GiaoDien;
 
 import static java.lang.String.valueOf;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
@@ -26,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -62,6 +67,9 @@ import account.fpoly.s_shop_client.MuaProduct;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.ApiService;
 import account.fpoly.s_shop_client.Service.ServiceProduct;
+import account.fpoly.s_shop_client.SplassActivity;
+import account.fpoly.s_shop_client.TabCartActivity;
+import account.fpoly.s_shop_client.Tab_Giaodien_Activity;
 import account.fpoly.s_shop_client.Tools.ACCOUNT;
 import account.fpoly.s_shop_client.adapter.ProductAdapter;
 import retrofit2.Call;
@@ -72,7 +80,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ChitietProduct extends AppCompatActivity {
 
     LinearLayout clickmua, chat, btn_add_cart;
-    ImageView back, chitiet_imgProduct;
+    ImageView back, chitiet_imgProduct,img_chuyen_gh;
     TextView chitiet_tenProduct, chitiet_giaProduct, chitiet_description,trademark,namecat;
     String idProduct;
     String imagePro;
@@ -99,6 +107,7 @@ public class ChitietProduct extends AppCompatActivity {
         decimalFormat = new DecimalFormat("#,###");
 
         clickmua = findViewById(R.id.clickmua);
+        img_chuyen_gh=findViewById(R.id.img_chuyen_gh);
         back = findViewById(R.id.back);
         chat = findViewById(R.id.chat);
         chitiet_giaProduct = findViewById(R.id.chitiet_giaProduct);
@@ -114,6 +123,12 @@ public class ChitietProduct extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ChitietProduct.this, CommentActivity.class);
                 startActivity(intent);
+            }
+        });
+        img_chuyen_gh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ChitietProduct.this, TabCartActivity.class));
             }
         });
         btn_add_cart = findViewById(R.id.btn_add_detail);
@@ -212,7 +227,7 @@ public class ChitietProduct extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getBaseContext(), "Call API Fail", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -239,7 +254,7 @@ public class ChitietProduct extends AppCompatActivity {
                 (LinearLayout) findViewById(R.id.bottomSheetDialog));
         decimalFormat = new DecimalFormat("#,###");
         LinearLayout layoutSize = bottomView.findViewById(R.id.layoutSize);
-        TextView totalQuantitySize = bottomView.findViewById(R.id.totalQuantitySize);
+        TextView totalQuantitySizes = bottomView.findViewById(R.id.totalQuantitySize);
 
         TextView buttonMinus = bottomView.findViewById(R.id.buttonMinus);
         TextView buttonPlus = bottomView.findViewById(R.id.buttonPlus);
@@ -302,8 +317,17 @@ public class ChitietProduct extends AppCompatActivity {
                                 Collections.sort(sizeList);
 
                                 for (int k = 0; k < sizeList.size(); k++) {
-//                                    size = sizeList.get(k);
                                     final int currentSize = sizeList.get(k);
+                                    int currentQuantity = 0;
+                                    String currentID = null;
+                                    for (int m = 0; m < sizesArray.length(); m++) {
+                                        JSONObject sizeItem = sizesArray.getJSONObject(m);
+                                        if (sizeItem.getInt("size") == currentSize) {
+                                            currentQuantity = sizeItem.getInt("quantity");
+                                            currentID = sizeItem.getString("_id");
+                                            break;
+                                        }
+                                    }
 
                                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -326,9 +350,23 @@ public class ChitietProduct extends AppCompatActivity {
                                     SharedPreferences.Editor editor = sharedPreferences1.edit();
                                     editor.clear();
                                     editor.apply();
+
+                                    int finalCurrentQuantity = currentQuantity;
+                                    String finalCurrentID = currentID;
+
                                     radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
                                         if (isChecked) {
+                                            layoutSize.setVisibility(View.VISIBLE);
+                                            totalQuantitySizes.setText(String.valueOf(finalCurrentQuantity));
+
+                                            SharedPreferences sharedPreferencesCheckQuantity = getSharedPreferences("soluongSize", MODE_PRIVATE);
+                                            SharedPreferences.Editor editors = sharedPreferencesCheckQuantity.edit();
+                                            editors.putInt("soluongSize", finalCurrentQuantity);
+
+                                            editor.apply();
                                             editor.putString("size", valueOf(currentSize));
+                                            editor.putString("totalQuantitySize", valueOf(finalCurrentQuantity));
+                                            editor.putString("totalSizeID", valueOf(finalCurrentID));
                                             editor.apply();
                                             buttonView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_checkbox));
                                         } else{
@@ -394,62 +432,141 @@ public class ChitietProduct extends AppCompatActivity {
 
         bottomView.findViewById(R.id.muasp).setOnClickListener(v -> {
             Cart cart = new Cart();
-            cart.setId_user(ACCOUNT.user.get_id());
-            cart.setId_product(idProduct);
-            SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
-            String sizeString = sharedPreferences1.getString("size", null);
 
-            if (sizeString != null && !sizeString.isEmpty()) {
-                int size = Integer.parseInt(sizeString);
-                if (!buyNow) {
-                    cart.setName_product(sharedPreferences.getString("tenProduct", null));
-                    cart.setPrice_product(priceFormat);
-                    cart.setImage(sharedPreferences.getString("anhProduct", null));
-                    cart.setQuantity(newValue);
-                    cart.setSize(size);
-                    cart.setImportPrice(priceFormatImport);
-                    ApiService.apiService.addCart(cart).enqueue(new Callback<Cart>() {
-                        @Override
-                        public void onResponse(@NonNull Call<Cart> call, @NonNull retrofit2.Response<Cart> response) {
-                            if (response.isSuccessful()) {
-                                Toast.makeText(ChitietProduct.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                                bottomSheetDialog.dismiss();
-                            }
+            if (ACCOUNT.user == null){
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_yeucau_login, null);
+                builder.setView(view);
+                AlertDialog dialog = builder.create();
+                TextView dong,login;
+                ImageView imageView = view.findViewById(R.id.imageView);
+                dong = view.findViewById(R.id.dongs);
+                login = view.findViewById(R.id.login);
+// Tạo hiệu ứng chuông rung
+                ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                animator.setDuration(1000);
+                animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                animator.setRepeatCount(ObjectAnimator.INFINITE);
+                animator.start();
 
-                        }
-
-                        @Override
-                        public void onFailure(@NonNull Call<Cart> call, @NonNull Throwable t) {
-                            Toast.makeText(ChitietProduct.this, "Lỗi!", Toast.LENGTH_SHORT).show();
-                            bottomSheetDialog.dismiss();
-                        }
-                    });
-                } else {
-                    BillMore billMore = new BillMore();
-                    billMore.setId_user(ACCOUNT.user.get_id());
-                    cart.setName_product(sharedPreferences.getString("tenProduct", null));
-                    cart.setPrice_product(priceFormat);
-                    cart.setImage(sharedPreferences.getString("anhProduct", null));
-                    cart.setQuantity(newValue);
-                    cart.setSize(size);
-                    cart.setImportPrice(priceFormatImport);
-                    List<Cart> list = new ArrayList<>();
-                    list.add(cart);
-                    billMore.setList(list);
-                    billMore.setStatus(0);
-                    billMore.setTotal(cart.getQuantity() * cart.getPrice_product());
-                    Intent intent = new Intent(ChitietProduct.this, MuaProduct.class);
-                    intent.putExtra("billmore", billMore);
-                    intent.putExtra("buy",true);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.next_enter, R.anim.next_exit);
-                    bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
-                    isDialogOpen = false;
-                }
-            } else {
-                Toast.makeText(this, "Hãy chon size", Toast.LENGTH_SHORT).show();
+                login.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getBaseContext(), SplassActivity.class));
+                    }
+                });
+                dong.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                return;
             }
 
+                cart.setId_user(ACCOUNT.user.get_id());
+                cart.setId_product(idProduct);
+                SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
+                String sizeString = sharedPreferences1.getString("size", null);
+
+                if (sizeString != null && !sizeString.isEmpty()) {
+                    int size = Integer.parseInt(sizeString);
+
+                    if (!buyNow) {
+                        cart.setName_product(sharedPreferences.getString("tenProduct", null));
+                        cart.setPrice_product(priceFormat);
+                        cart.setImage(sharedPreferences.getString("anhProduct", null));
+                        cart.setQuantity(newValue);
+                        cart.setSize(size);
+                        cart.setImportPrice(priceFormatImport);
+                        ApiService.apiService.addCart(cart).enqueue(new Callback<Cart>() {
+                            @Override
+                            public void onResponse(@NonNull Call<Cart> call, @NonNull retrofit2.Response<Cart> response) {
+                                if (response.isSuccessful()) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                                    View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_check, null);
+                                    builder.setView(view);
+                                    AlertDialog dialog = builder.create();
+                                    ImageView imageView = view.findViewById(R.id.imageView);
+                                    TextView title = view.findViewById(R.id.title);
+
+                                    title.setText("Đã thêm vào giỏ hàng!");
+// Tạo hiệu ứng chuông rung
+                                    ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                                    animator.setDuration(1000);
+                                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                                    animator.setRepeatCount(ObjectAnimator.INFINITE);
+                                    animator.start();
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dialog.dismiss();
+                                        }
+                                    }, 1700);
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    dialog.show();
+                                    bottomSheetDialog.dismiss();
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<Cart> call, @NonNull Throwable t) {
+                                bottomSheetDialog.dismiss();
+                            }
+                        });
+                    } else {
+                        BillMore billMore = new BillMore();
+                        billMore.setId_user(ACCOUNT.user.get_id());
+                        cart.setName_product(sharedPreferences.getString("tenProduct", null));
+                        cart.setPrice_product(priceFormat);
+                        cart.setImage(sharedPreferences.getString("anhProduct", null));
+                        cart.setQuantity(newValue);
+                        cart.setSize(size);
+                        cart.setImportPrice(priceFormatImport);
+                        List<Cart> list = new ArrayList<>();
+                        list.add(cart);
+                        billMore.setList(list);
+                        billMore.setStatus(0);
+                        billMore.setImportPrice(priceFormatImport);
+                        billMore.setTotal(cart.getQuantity() * cart.getPrice_product());
+                        Intent intent = new Intent(ChitietProduct.this, MuaProduct.class);
+                        intent.putExtra("billmore", billMore);
+                        intent.putExtra("buy",true);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.next_enter, R.anim.next_exit);
+                        bottomSheetDialog.dismiss(); // Đóng bottomSheetDialog sau khi chọn một kích cỡ
+                        isDialogOpen = false;
+                    }
+                } else {
+                    Toast.makeText(this, "Hãy chon size", Toast.LENGTH_SHORT).show();
+            }
+//            SharedPreferences sharedPreferencesCheckQuantity = getSharedPreferences("soluongSize", MODE_PRIVATE);
+//            int soluongSize = sharedPreferencesCheckQuantity.getInt("soluongSize",0);
+//            if (newValue > soluongSize){
+//                AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+//                View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_check, null);
+//                builder.setView(view);
+//                AlertDialog dialog = builder.create();
+//                ImageView imageView = view.findViewById(R.id.imageView);
+//// Tạo hiệu ứng chuông rung
+//                ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+//                animator.setDuration(1000);
+//                animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//                animator.setRepeatCount(ObjectAnimator.INFINITE);
+//                animator.start();
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        dialog.dismiss();
+//                    }
+//                }, 1700);
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                dialog.show();
+//            }
         });
         bottomSheetDialog.setContentView(bottomView);
         bottomSheetDialog.show();

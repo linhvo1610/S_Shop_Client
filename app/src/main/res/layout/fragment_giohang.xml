@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
-                    android:text="Giỏ hang"
+                    android:text="Giỏ hàng"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:gravity="center"
@@ -101,7 +101,7 @@
             android:gravity="center">
 
             <ImageView
-                android:src="@drawable/cart_emty"
+                android:src="@drawable/logo_sshop"
                 android:layout_width="240dp"
                 android:layout_height="240dp" />
 
@@ -109,7 +109,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chưa có sản phẩm nào trong giỏ"
+                android:text="Đăng nhập để mua sắm thoải thích"
                 android:textColor="@color/black"
                 android:textSize="17sp" />
 
@@ -119,9 +119,10 @@
                 android:minLines="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cùng mua sắm hàng ngàn sản phẩm cùng chuỗi cửa hàng StyleZone nhé"
+                android:text="Cùng mua sắm hàng ngàn sản phẩm cùng  S_Shop nhé"
                 android:textAlignment="center"
                 android:textSize="14sp" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_buy_cart"
                 android:layout_width="wrap_content"
@@ -176,34 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-<!--        <LinearLayout-->
-<!--            android:visibility="gone"-->
-<!--            android:id="@+id/ln_pay"-->
-<!--            android:layout_marginBottom="70dp"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/grey"-->
-<!--            android:orientation="horizontal">-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv_price_pay"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="17sp" />-->
-
-<!--            <androidx.appcompat.widget.AppCompatButton-->
-<!--                android:id="@+id/btn_pay"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@color/colormain"-->
-<!--                android:text="Thanh toán"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="19sp" />-->
-<!--        </LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -94,7 +94,7 @@ public class AddAddressActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NonNull Call<Integer> call, @NonNull Throwable t) {
-                        Toast.makeText(AddAddressActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+
                         dialog.dismiss();
                     }
                 });
@@ -181,7 +181,7 @@ public class AddAddressActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NonNull Call<Address> call, @NonNull Throwable t) {
-                        Toast.makeText(AddAddressActivity.this, "Lỗi!", Toast.LENGTH_SHORT).show();
+
                         dialog.dismiss();
                     }
                 });
@@ -211,7 +211,7 @@ public class AddAddressActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NonNull Call<Address> call, @NonNull Throwable t) {
-                    Toast.makeText(AddAddressActivity.this, "Lỗi!", Toast.LENGTH_SHORT).show();
+
                 }
             });
         });

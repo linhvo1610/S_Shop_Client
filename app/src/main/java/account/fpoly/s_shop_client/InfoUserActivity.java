@@ -55,6 +55,7 @@ import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_User;
 import account.fpoly.s_shop_client.GiaoDien.DangNhapActivity;
 import account.fpoly.s_shop_client.Modal.UserModal;
+import account.fpoly.s_shop_client.fragment.SettingsFragment;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -202,9 +203,11 @@ public class InfoUserActivity extends AppCompatActivity {
                         UserModal user = response.body();
                         list.add(user);
                         adapter.notifyDataSetChanged();
-                        Toast.makeText(getBaseContext(), "Cap nhap thanh cong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Cập Nhât Thông Tin Thành Công", Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+
                     } else {
-                        Toast.makeText(InfoUserActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InfoUserActivity.this, "Cập Nhât Thông Tin Không  Thành Công", Toast.LENGTH_SHORT).show();
                     }
                 }
 

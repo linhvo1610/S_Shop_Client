@@ -1,12 +1,15 @@
 package account.fpoly.s_shop_client.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,10 +31,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import account.fpoly.s_shop_client.API.API;
+import account.fpoly.s_shop_client.AddCommentActivity;
 import account.fpoly.s_shop_client.Modal.Bill;
 import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.R;
+import account.fpoly.s_shop_client.SplassActivity;
+import account.fpoly.s_shop_client.Tools.ACCOUNT;
 import account.fpoly.s_shop_client.adapter.BillAdapter;
 import account.fpoly.s_shop_client.adapter.StatusBillAdapter;
 
@@ -42,6 +48,8 @@ public class LichsuFragment extends Fragment {
     List<BillMore> list;
     StatusBillAdapter adapter;String iduser;
     TextView title;
+    LinearLayout ln_cart_emty;
+    Button btn_buy_cart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +57,8 @@ public class LichsuFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_trangthaidon, container, false);
         rcv=view.findViewById(R.id.rcv_lichsu);
+        ln_cart_emty=view.findViewById(R.id.ln_cart_emty);
+        btn_buy_cart=view.findViewById(R.id.btn_buy_cart);
         SharedPreferences preferences = getActivity().getSharedPreferences("infoUser", Context.MODE_PRIVATE);
         iduser = preferences.getString("iduser", null);
         list = new ArrayList<>();
@@ -61,6 +71,19 @@ public class LichsuFragment extends Fragment {
 
     String idpro;
     private void hienthiHistoty() {
+
+        if (ACCOUNT.user == null){
+            ln_cart_emty.setVisibility(View.VISIBLE);
+            btn_buy_cart.setText("Đăng nhập để mua sắm");
+            btn_buy_cart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), SplassActivity.class));
+                }
+            });
+            return;
+        }
+
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "billStatus?id_user=" + iduser + "&status=5", null, new Response.Listener<JSONObject>() {
             @Override
@@ -82,6 +105,8 @@ public class LichsuFragment extends Fragment {
                         for (int j = 0; j < jsonArrayList.length(); j++) {
                             JSONObject jsonObjectList = jsonArrayList.getJSONObject(j);
                             Cart cart = new Cart();
+
+                            cart.setId_product(jsonObjectList.getString("id_product"));
                             cart.setSize(jsonObjectList.getInt("size"));
                             cart.setQuantity(jsonObjectList.getInt("quantity"));
                             cart.setPrice_product(jsonObjectList.getInt("price_product"));
@@ -104,7 +129,7 @@ public class LichsuFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Call API Fail", Toast.LENGTH_SHORT).show();
+
             }
         });
         requestQueue.add(jsonObjectRequest);

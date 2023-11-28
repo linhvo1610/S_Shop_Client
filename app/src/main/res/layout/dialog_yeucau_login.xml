@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingTop="8dp"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -31,17 +30,44 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Đặt hàng thành công"
+            android:text="Đăng nhập để mua sắm thỏa thích"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:textSize="18dp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/dongs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Đóng"
+                android:gravity="center"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                />
+            <TextView
+                android:id="@+id/login"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Đăng nhập"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <ImageView

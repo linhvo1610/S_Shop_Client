@@ -107,9 +107,10 @@ public class DangKyActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<UserModal> call, Throwable t) {
-                    Toast.makeText(DangKyActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+
                 }
             });
         }
     }
+
 }

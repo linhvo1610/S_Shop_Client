@@ -81,12 +81,11 @@
                 android:visibility="gone"
                 >
                 <TextView
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#8E8C8D"
-                    android:text="Size: "
-                    android:textSize="16dp"
+                    android:text="Tổng số lượng: "
+                    android:textSize="13dp"
                     />
                 <TextView
                     android:id="@+id/totalQuantitySize"
@@ -94,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#8E8C8D"
                     android:text="53421"
-                    android:textSize="16dp"
+                    android:textSize="13dp"
                     />
             </LinearLayout>
         </LinearLayout>

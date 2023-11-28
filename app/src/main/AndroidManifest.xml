@@ -4,12 +4,16 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
 
     <application
         android:name=".Application.MyApplication"
@@ -22,8 +26,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.S_Shop_Client"
         android:usesCleartextTraffic="true"
+        tools:replace="android:theme"
         tools:targetApi="31">
         <activity
+
             android:name=".NotifyActivity"
             android:exported="false" />
 
@@ -35,8 +41,18 @@
             </intent-filter>
         </service>
 
+
+            android:name=".ContactUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Update_PassWord"
+            android:exported="false" />
+
         <activity
             android:name=".UploadImage"
+            android:exported="false" />
+        <activity
+            android:name=".TabCartActivity"
             android:exported="false" />
         <activity
             android:name=".AddCommentActivity"
@@ -87,7 +103,7 @@
             android:name=".GiaoDien.ChitietProduct"
             android:exported="false" />
         <activity
-            android:name=".Tab_Giaodien_Activity"
+            android:name=".SplassActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustNothing" />
         <activity
@@ -100,7 +116,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SplassActivity"
+            android:name=".Tab_Giaodien_Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
