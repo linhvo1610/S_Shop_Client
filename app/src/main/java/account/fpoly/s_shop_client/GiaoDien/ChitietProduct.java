@@ -530,6 +530,7 @@ public class ChitietProduct extends AppCompatActivity {
                         list.add(cart);
                         billMore.setList(list);
                         billMore.setStatus(0);
+                        billMore.setImportPrice(priceFormatImport);
                         billMore.setTotal(cart.getQuantity() * cart.getPrice_product());
                         Intent intent = new Intent(ChitietProduct.this, MuaProduct.class);
                         intent.putExtra("billmore", billMore);
