@@ -28,6 +28,7 @@ import java.util.Arrays;
 
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_User;
+import account.fpoly.s_shop_client.ContactUsActivity;
 import account.fpoly.s_shop_client.DaGiao_activity;
 import account.fpoly.s_shop_client.DangGiao_Activity;
 import account.fpoly.s_shop_client.HistoryOrderClient;
@@ -45,7 +46,7 @@ public class SettingsFragment extends Fragment {
     TextView txtfullname;
     API_User api_user;
     LinearLayout linnerXacnhan,linnerDanggiao,xacnhanPro,huyBill,ln_thongtin;
-    LinearLayout ln_cart_emty,updatepass;
+    LinearLayout ln_cart_emty,updatepass,contactus;
     Button btn_buy_cart;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -64,6 +65,15 @@ public class SettingsFragment extends Fragment {
         btn_buy_cart=view.findViewById(R.id.btn_buy_cart);
         ln_thongtin=view.findViewById(R.id.ln_thongtin);
         updatepass=view.findViewById(R.id.updatepass);
+        contactus = view.findViewById(R.id.contact_us);
+
+        contactus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ContactUsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         updatepass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +126,7 @@ public class SettingsFragment extends Fragment {
         fullname = sharedPreferences.getString("fullname", null);
 
 
-        if (fullname.equals("")){
+        if (fullname == null || fullname.equals("")){
             txtfullname.setText("Cập nhập tên bạn!!!");
             txtfullname.setOnClickListener(new View.OnClickListener() {
                 @Override
