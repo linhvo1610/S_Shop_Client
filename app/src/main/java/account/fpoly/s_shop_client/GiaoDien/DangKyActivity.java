@@ -18,6 +18,7 @@ import account.fpoly.s_shop_client.API.API_User;
 import account.fpoly.s_shop_client.Modal.UserModal;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.ServiceUser;
+import account.fpoly.s_shop_client.Tools.TOOLS;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,6 +82,7 @@ public class DangKyActivity extends AppCompatActivity {
         String sex = dangky_sex.getText().toString().trim();
         String fullname = dangky_fullname.getText().toString().trim();
         String image = register_img.getText().toString().trim();
+        String token = TOOLS.getToken(DangKyActivity.this);;
 
         if (TextUtils.isEmpty(username)){
             Toast.makeText(this, "Không được để trống Username", Toast.LENGTH_SHORT).show();
@@ -92,7 +94,7 @@ public class DangKyActivity extends AppCompatActivity {
             Toast.makeText(this, "Không được để trống email", Toast.LENGTH_SHORT).show();
         }else {
             serviceUser = retrofit.create(ServiceUser.class);
-            Call<UserModal> call = serviceUser.dangkiUser(new UserModal(username, password, email, phone, dob, fullname));
+            Call<UserModal> call = serviceUser.dangkiUser(new UserModal(username, password, email, phone, dob, fullname, token));
             call.enqueue(new Callback<UserModal>() {
                 @Override
                 public void onResponse(Call<UserModal> call, Response<UserModal> response) {
@@ -110,42 +112,5 @@ public class DangKyActivity extends AppCompatActivity {
             });
         }
     }
-    public void registerUser(){
-        String username = dangky_username.getText().toString().trim();
-        String phone = dangky_phone.getText().toString().trim();
-        String password = dangky_password.getText().toString().trim();
-        String email = dangky_email.getText().toString().trim();
 
-        String dob = dangky_dob.getText().toString().trim();
-        String sex = dangky_sex.getText().toString().trim();
-        String fullname = dangky_fullname.getText().toString().trim();
-        String image = register_img.getText().toString().trim();
-
-        if (TextUtils.isEmpty(username)){
-            Toast.makeText(this, "Không được để trống Username", Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(phone)){
-            Toast.makeText(this, "Không được để trống họ tên", Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Không được để trống password", Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(email)){
-            Toast.makeText(this, "Không được để trống email", Toast.LENGTH_SHORT).show();
-        }else {
-            API_User.apiUser.postUser(new UserModal(username, password, email, phone, dob,  fullname))
-                    .enqueue(new Callback<UserModal>() {
-                        @Override
-                        public void onResponse(Call<UserModal> call, Response<UserModal> response) {
-                            Toast.makeText(DangKyActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(DangKyActivity.this, DangNhapActivity.class);
-                            startActivity(intent);
-
-                            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                        }
-
-                        @Override
-                        public void onFailure(Call<UserModal> call, Throwable t) {
-
-                        }
-                    });
-        }
-    }
 }

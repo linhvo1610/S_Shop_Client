@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "901607013528",
+    "project_id": "sshop-701ec",
+    "storage_bucket": "sshop-701ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901607013528:android:c4c48e456bfbd8f95de4ed",
+        "android_client_info": {
+          "package_name": "account.fpoly.s_shop_client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRT9C2aojVyus1QMJF8FiCC_N9v1BsNXQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
