@@ -80,4 +80,8 @@ public class TOOLS {
         String regex = "\\d{10}";
         return !phoneNumber.matches(regex);
     }
+    public static String getToken(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(TOKEN, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(TOKEN,null);
+    }
 }

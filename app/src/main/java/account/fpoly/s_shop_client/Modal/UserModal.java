@@ -18,14 +18,14 @@ public class UserModal implements Serializable {
     private String dob;
     private String sex;
     private String role;
-    private String token;
+    private String tokenNotify;
 
     public String getToken() {
-        return token;
+        return tokenNotify;
     }
 
     public void setToken(String token) {
-        this.token = token;
+        this.tokenNotify = token;
     }
 
     public UserModal() {
@@ -44,7 +44,7 @@ public class UserModal implements Serializable {
         this.role = role;
     }
 
-    public UserModal(String username, String password, String email, String phone, String dob,  String fullname ) {
+    public UserModal(String username, String password, String email, String phone, String dob,  String fullname, String tokenNotify ) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -52,6 +52,7 @@ public class UserModal implements Serializable {
         this.dob = dob;
 //        this.sex = sex;
         this.fullname = fullname;
+        this.tokenNotify = tokenNotify;
     }
 
     public UserModal(String username, String password) {

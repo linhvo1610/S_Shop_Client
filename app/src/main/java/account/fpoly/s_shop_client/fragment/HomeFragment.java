@@ -55,6 +55,7 @@ import account.fpoly.s_shop_client.Modal.CatModal;
 import account.fpoly.s_shop_client.Modal.ProductModal;
 import account.fpoly.s_shop_client.Modal.ReceProduct;
 import account.fpoly.s_shop_client.Notification;
+import account.fpoly.s_shop_client.NotifyActivity;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.IClickItemListener;
 import account.fpoly.s_shop_client.adapter.ProductAdapter;
@@ -203,7 +204,7 @@ public class HomeFragment extends Fragment {
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), Notification.class));
+                startActivity(new Intent(getContext(), NotifyActivity.class));
             }
         });
 

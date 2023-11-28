@@ -9,9 +9,11 @@ import account.fpoly.s_shop_client.Modal.Address;
 import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
 import account.fpoly.s_shop_client.Modal.District;
+import account.fpoly.s_shop_client.Modal.Notify;
 import account.fpoly.s_shop_client.Modal.Province;
 import account.fpoly.s_shop_client.Modal.Ward;
 import account.fpoly.s_shop_client.Tools.TOOLS;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -60,11 +62,15 @@ public interface ApiService {
     @POST("cart/add")
     Call<Cart> addCart(@Body Cart cart);
 
-    @POST("billmore/add")
-    Call<BillMore> createBill(@Body BillMore billMore);
+    @POST("billmore/add/{token}")
+    Call<BillMore> createBill(@Path("token") String token_device, @Body BillMore billMore);
     @POST("billmore/update/{id_billmore}")
     Call<Integer> updateBill(@Path("id_billmore") String id_billmore);
     @POST("billmore/cancel/{id_billmore}")
     Call<Integer> cancelBill(@Path("id_billmore") String id_billmore);
+    @GET("notify/{id_user}")
+    Call<List<Notify>> getNotify(@Path("id_user") String id_cart);
+    @POST("api/tokenNotify/{id_user}")
+    Call<Integer> tokenNotify(@Path("id_user") String id_user,@Body RequestBody requestBody);
 
 }
