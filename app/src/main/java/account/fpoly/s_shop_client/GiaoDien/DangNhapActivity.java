@@ -65,12 +65,27 @@ public class DangNhapActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // Lưu mật khẩu
-                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("password", txtpass.getText().toString());
-                    editor.putString("username",txtuser.getText().toString());
-                    editor.putBoolean("savePassword", true);
-                    editor.apply();
+//                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putString("password", txtpass.getText().toString());
+//                    editor.putString("username",txtuser.getText().toString());
+//                    editor.putBoolean("savePassword", true);
+//                    editor.apply();
+
+                    String password = txtpass.getText().toString();
+                    String username = txtuser.getText().toString();
+                    if (!username.isEmpty() && !password.isEmpty()) {
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("password", password);
+                        editor.putString("username", username);
+                        editor.putBoolean("savePassword", true);
+                        editor.apply();
+                    } else {
+                        Toast.makeText(getBaseContext(), "Hãy nhập Username và Password trước khi lưu!!!", Toast.LENGTH_SHORT).show();
+                        savepass.setChecked(false); // Không lưu nếu mật khẩu chưa được nhập
+                    }
+
                 } else {
                     // Xóa mật khẩu đã lưu
                     SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -87,9 +102,18 @@ public class DangNhapActivity extends AppCompatActivity {
         if (isPasswordSaved) {
             String savedUsername = sharedPreferences.getString("username", "");
             String savedPassword = sharedPreferences.getString("password", "");
-            txtpass.setText(savedPassword);
-            txtuser.setText(savedUsername);
-            savepass.setChecked(true);
+//            txtpass.setText(savedPassword);
+//            txtuser.setText(savedUsername);
+//            savepass.setChecked(true);
+
+            if (!savedPassword.isEmpty()) {
+                txtpass.setText(savedPassword);
+                txtuser.setText(savedUsername);
+                savepass.setChecked(true);
+            } else {
+                Toast.makeText(this, "Nhập Username, Password trước khi lưu!!!", Toast.LENGTH_SHORT).show();
+                savepass.setChecked(false); // Không check nếu mật khẩu chưa được lưu
+            }
         } else {
             txtpass.setText(null);
             txtuser.setText(null);
