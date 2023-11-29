@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,21 +7,222 @@
     android:orientation="vertical"
     tools:context=".ContactUsActivity">
 
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/contact_phone"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="40dp"-->
+
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:text="0962431044"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        tools:ignore="MissingConstraints"-->
+    <!--        tools:layout_editor_absoluteY="498dp" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/contact_email"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="40dp"-->
+    <!--        android:layout_marginStart="24dp"-->
+    <!--        android:text="linhvvph26503@fpt.edu.vn"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        tools:ignore="MissingConstraints"-->
+    <!--        tools:layout_editor_absoluteY="406dp" />-->
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="Hỗ trợ chăm sóc khách hàng"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="101dp"
+            tools:layout_editor_absoluteY="69dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="Liên hệ với chúng tôi nếu bạn có vấn đề về sản phẩm."
+            android:textColor="#535353"
+            android:textSize="16dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="101dp"
+            tools:layout_editor_absoluteY="69dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="Chúng tôi sẵn lòng giúp đỡ bạn."
+            android:textColor="#535353"
+            android:textSize="16dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="101dp"
+            tools:layout_editor_absoluteY="69dp" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/contact_phone"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="0967526621"/>
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/edittext_bkg"
+        android:drawableLeft="@drawable/phone"
+        android:drawablePadding="8dp"
+        android:gravity=""
+        android:text="0962431044"
+        android:padding="17dp"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/contact_email"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/edittext_bkg"
+        android:drawableLeft="@drawable/baseline_email_24"
+        android:drawablePadding="8dp"
+        android:gravity=""
+        android:text="vanhai12520@gmail.com"
+        android:padding="17dp"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_phone"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="linhvvph26503@fpt.edu.vn"/>
+        android:layout_marginTop="52dp"
+        android:gravity="center"
+        android:text="Trang mạng xã hội"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_email"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="36dp"
+        android:layout_weight="1"
+        android:src="@drawable/facebook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/contact_facebook"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="linhvvph26503@fpt.edu.vn"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:text="Truy cập vào pate Facebook"
+        android:textColor="#4C4C4C"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/back_ping" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
 
-</LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.5"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--    <TextView-->
+<!--        android:id="@+id/contact_facebook"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginStart="24dp"-->
+<!--        android:text="linhvvph26503@fpt.edu.vn"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        tools:ignore="MissingConstraints"-->
+<!--        tools:layout_editor_absoluteY="605dp" />-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
