@@ -121,7 +121,7 @@ public class MuaProduct extends AppCompatActivity {
                     Toast.makeText(MuaProduct.this, "Vui lòng chọn địa chỉ", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ApiService.apiService.createBill(billMore).enqueue(new Callback<BillMore>() {
+                ApiService.apiService.createBill(ACCOUNT.user.getToken(),billMore).enqueue(new Callback<BillMore>() {
                     @Override
                     public void onResponse(@NonNull Call<BillMore> call, @NonNull Response<BillMore> response) {
                         if (response.isSuccessful() ) {
