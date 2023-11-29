@@ -8,11 +8,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ContactUsActivity extends AppCompatActivity {
     TextView contact_phone, contact_email,contact_facebook;
+    ImageView back;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
     @Override
@@ -22,6 +24,14 @@ public class ContactUsActivity extends AppCompatActivity {
         contact_phone = findViewById(R.id.contact_phone);
         contact_email = findViewById(R.id.contact_email);
         contact_facebook = findViewById(R.id.contact_facebook);
+        back = findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         contact_phone.setOnClickListener(new View.OnClickListener() {
             @Override
