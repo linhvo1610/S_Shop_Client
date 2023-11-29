@@ -303,50 +303,6 @@ public class MuaProduct extends AppCompatActivity {
         // Thực hiện cập nhật dữ liệu ở đây
         layDulieu();
     }
-    private void layDulieu() {
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
-        SharedPreferences sharedPreferencesSize = getSharedPreferences("size", MODE_PRIVATE);
-        SharedPreferences sharedPreferencesQuantity = getSharedPreferences("quantityProduct", MODE_PRIVATE);
-        SharedPreferences preferencesUser = getSharedPreferences("infoUser",MODE_PRIVATE);
-        iduser = preferencesUser.getString("iduser",null);
-        imagePro = sharedPreferences.getString("image", null);
-
-
-
-        fullname = preferencesUser.getString("fullname",null);
-        phone = preferencesUser.getString("phone",null);
-        addressU = preferencesUser.getString("addressUser",null);
-
-        idPro = sharedPreferences.getString("idProduct",null);
-
-        name = sharedPreferences.getString("tenProduct", null);
-        price = sharedPreferences.getString("giaProduct", null);
-        size = sharedPreferencesSize.getString("size", null);
-        quantity = sharedPreferencesQuantity.getString("quantity", null);
-
-        totalQuantity.setText(quantity);
-//        int priceFormat = Integer.parseInt(price);
-
-
-
-        if (price != null && quantity != null) {
-            int priceValue = Integer.parseInt(price);
-            int quantityValue = Integer.parseInt(quantity);
-            totalPrice = priceValue * quantityValue;
-//thành tiền
-            formattedthanhtienPrice = decimalFormat.format(total_product);
-            thanhtien.setText( "đ" + formattedthanhtienPrice);
-            totalprice.setText( formattedthanhtienPrice);
-// tổng thanh toán
-            int shipValue = Integer.parseInt("23400");
-            int totalThanhtoan = total_product + shipValue;
-            tongtienHang = totalThanhtoan;
-            String formattedPrice = decimalFormat.format(totalThanhtoan);
-            thanhtoan.setText( "đ" + formattedPrice);
-            tongPrice.setText( "đ" + formattedPrice);
-        }
-    }
  int tongtienHang;
     @SuppressLint("SetTextI18n")
     private void showAddress() {
@@ -399,41 +355,51 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
 }
 
 // cloud notification
-    public void  makenotification() {
-        String chanID = "CHANE_ID";
-        SharedPreferences sharedPreferences = getSharedPreferences("bill",MODE_PRIVATE);
-        String id = sharedPreferences.getString("idBill",null);
-        String status = sharedPreferences.getString("status",null);
-
-
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(getApplicationContext(), chanID);
-        builder.setSmallIcon(R.drawable.bell)
-                .setContentText("Đơn hàng với mã "+ id + "\n"+ status)
-                .setContentTitle(name)
-                .setAutoCancel(true)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        Intent intent = new Intent(getApplicationContext(), Notification.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, intent,PendingIntent.FLAG_MUTABLE);
-        builder.setContentIntent(pendingIntent);
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel    notificationChannel = notificationManager.getNotificationChannel(chanID);
-            if (notificationChannel==null){
-                int importance = NotificationManager.IMPORTANCE_HIGH;
-                notificationChannel = new NotificationChannel(chanID , "Some DES", importance);
-                notificationChannel.setLightColor(Color.GREEN);
-                notificationChannel.enableVibration(true);
-                notificationManager.createNotificationChannel(notificationChannel);
-            }
-        }
-        notificationManager.notify(0,builder.build());
-
-    }
     private void getBill() {
         billMore = (BillMore) getIntent().getSerializableExtra("billmore");
         total_product = billMore.getTotal();
+//        thanhtien.setText( "đ" + total_product);
+//        Toast.makeText(this, "price: "+ total_product, Toast.LENGTH_SHORT).show();
+    }
+    private void layDulieu() {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
+        SharedPreferences sharedPreferencesSize = getSharedPreferences("size", MODE_PRIVATE);
+        SharedPreferences sharedPreferencesQuantity = getSharedPreferences("quantityProduct", MODE_PRIVATE);
+        SharedPreferences preferencesUser = getSharedPreferences("infoUser",MODE_PRIVATE);
+        iduser = preferencesUser.getString("iduser",null);
+        imagePro = sharedPreferences.getString("image", null);
+
+
+
+        fullname = preferencesUser.getString("fullname",null);
+        phone = preferencesUser.getString("phone",null);
+        addressU = preferencesUser.getString("addressUser",null);
+
+        idPro = sharedPreferences.getString("idProduct",null);
+
+        name = sharedPreferences.getString("tenProduct", null);
+        price = sharedPreferences.getString("giaProduct", null);
+        size = sharedPreferencesSize.getString("size", null);
+        quantity = sharedPreferencesQuantity.getString("quantity", null);
+
+        totalQuantity.setText(quantity);
+
+        billMore = (BillMore) getIntent().getSerializableExtra("billmore");
+        int total_products = billMore.getTotal();
+
+        formattedthanhtienPrice = decimalFormat.format(total_products);
+        thanhtien.setText( "đ" + formattedthanhtienPrice);
+        totalprice.setText("đ" + formattedthanhtienPrice);
+
+
+        int shipValue = Integer.parseInt("23400");
+        int totalThanhtoan = total_products + shipValue;
+        tongtienHang = totalThanhtoan;
+        String formattedPrice = decimalFormat.format(totalThanhtoan);
+        thanhtoan.setText( "đ" + formattedPrice);
+
+        tongPrice.setText( "đ" + formattedPrice);
     }
     private void showList() {
         LinearLayoutManager manager = new LinearLayoutManager(MuaProduct.this, LinearLayoutManager.VERTICAL, false);

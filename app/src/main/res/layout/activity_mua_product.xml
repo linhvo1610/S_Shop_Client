@@ -366,17 +366,17 @@
                         android:textColor="@color/black"
                         />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/thanhtien"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="đ39.887"
-                    android:textSize="15dp"
-                    android:textColor="#cf3067"
-                    android:gravity="right"
                     android:layout_gravity="center"
-                    android:textStyle="bold"
-                    />
+                    android:gravity="right"
+                    android:text="đ39.887"
+                    android:textColor="#cf3067"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
             </LinearLayout>
             <LinearLayout
                 android:visibility="gone"
