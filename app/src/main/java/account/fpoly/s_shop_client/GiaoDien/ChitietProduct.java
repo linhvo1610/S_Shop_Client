@@ -363,7 +363,7 @@ public class ChitietProduct extends AppCompatActivity {
                                             SharedPreferences.Editor editors = sharedPreferencesCheckQuantity.edit();
                                             editors.putInt("soluongSize", finalCurrentQuantity);
 
-                                            editor.apply();
+                                            editors.apply();
                                             editor.putString("size", valueOf(currentSize));
                                             editor.putString("totalQuantitySize", valueOf(finalCurrentQuantity));
                                             editor.putString("totalSizeID", valueOf(finalCurrentID));
@@ -472,7 +472,36 @@ public class ChitietProduct extends AppCompatActivity {
 
                 if (sizeString != null && !sizeString.isEmpty()) {
                     int size = Integer.parseInt(sizeString);
-
+                    SharedPreferences sharedPreferencesCheckQuantity = getSharedPreferences("soluongSize", MODE_PRIVATE);
+                    int soluongSize = sharedPreferencesCheckQuantity.getInt("soluongSize",0);
+                    Log.e( "showBottomSheet: ", newValue+"");
+                    currentValue = Integer.parseInt(edsoluong.getText().toString());
+                    newValue = currentValue;
+                    saveValueToSharedPreferences(newValue);
+                    if (newValue > soluongSize){
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+//                        View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_check, null);
+//                        builder.setView(view);
+//                        AlertDialog dialog = builder.create();
+//                        ImageView imageView = view.findViewById(R.id.imageView);
+//// Tạo hiệu ứng chuông rung
+//                        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+//                        animator.setDuration(1000);
+//                        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//                        animator.setRepeatCount(ObjectAnimator.INFINITE);
+//                        animator.start();
+//                        Handler handler = new Handler();
+//                        handler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                dialog.dismiss();
+//                            }
+//                        }, 1700);
+//                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                        dialog.show();
+                        Toast.makeText(this, "qua roi", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     if (!buyNow) {
                         cart.setName_product(sharedPreferences.getString("tenProduct", null));
                         cart.setPrice_product(priceFormat);
@@ -543,30 +572,7 @@ public class ChitietProduct extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "Hãy chon size", Toast.LENGTH_SHORT).show();
             }
-//            SharedPreferences sharedPreferencesCheckQuantity = getSharedPreferences("soluongSize", MODE_PRIVATE);
-//            int soluongSize = sharedPreferencesCheckQuantity.getInt("soluongSize",0);
-//            if (newValue > soluongSize){
-//                AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
-//                View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_check, null);
-//                builder.setView(view);
-//                AlertDialog dialog = builder.create();
-//                ImageView imageView = view.findViewById(R.id.imageView);
-//// Tạo hiệu ứng chuông rung
-//                ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
-//                animator.setDuration(1000);
-//                animator.setInterpolator(new AccelerateDecelerateInterpolator());
-//                animator.setRepeatCount(ObjectAnimator.INFINITE);
-//                animator.start();
-//                Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        dialog.dismiss();
-//                    }
-//                }, 1700);
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                dialog.show();
-//            }
+
         });
         bottomSheetDialog.setContentView(bottomView);
         bottomSheetDialog.show();
