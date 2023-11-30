@@ -349,6 +349,7 @@ Return Policy 🔄
             android:background="#2BBCAE"
             android:orientation="vertical"
             android:id="@+id/chat"
+
             >
             <ImageView
                 android:layout_width="30dp"

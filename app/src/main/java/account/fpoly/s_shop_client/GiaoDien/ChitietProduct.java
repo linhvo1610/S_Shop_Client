@@ -58,6 +58,7 @@ import java.util.Set;
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_Product;
 import account.fpoly.s_shop_client.CommentActivity;
+import account.fpoly.s_shop_client.ContactUsActivity;
 import account.fpoly.s_shop_client.Message;
 import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
@@ -161,6 +162,7 @@ public class ChitietProduct extends AppCompatActivity {
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), ContactUsActivity.class));
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
