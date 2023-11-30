@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".InfoUserActivity">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".thongtinUser">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,7 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textColor="@color/black"
-                        android:text="Cập nhập thông tin"
+                        android:text="Thông tin cá nhân"
                         android:textSize="18dp"
                         android:textStyle="bold"
                         android:gravity="center"
@@ -68,7 +66,16 @@
                     android:layout_marginRight="10dp"
                     android:layout_gravity="center"
                     >
-
+                    <TextView
+                        android:id="@+id/btndangxuat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/colorPrimaty"
+                        android:text="Đăng xuất"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -108,17 +115,7 @@
                                 android:id="@+id/image"
                                 />
                         </androidx.cardview.widget.CardView>
-                        <TextView
-                            android:id="@+id/add_image"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Thay đổi ảnh đại diện"
-                            android:textColor="@color/colorPrimaty"
-                            android:textSize="20dp"
-                            android:layout_gravity="center"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            />
+
                         <TextView
                             android:id="@+id/linkimage"
                             android:layout_width="wrap_content"
@@ -153,6 +150,8 @@
                             android:textSize="20dp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
+                            android:focusableInTouchMode="false"
+
                             android:id="@+id/edfullname"
                             />
                     </LinearLayout>
@@ -235,11 +234,23 @@
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:id="@+id/edgioitinh"
+                            android:focusableInTouchMode="false"
                             />
                         <Spinner
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/gender_spinner"/>
+                            android:id="@+id/gender_spinner"
+                            android:clickable="false"
+                            android:visibility="gone"
+                            />
+                        <TextView
+                            android:id="@+id/txt_thongtin_sex"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="17dp"
+                            />
+
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -263,6 +274,7 @@
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:inputType="date"
+                            android:focusableInTouchMode="false"
                             android:id="@+id/edngaysinh"
                             />
 
@@ -273,7 +285,7 @@
                             android:background="@android:color/transparent"
                             android:gravity="left"
                             android:hint="Cập nhập..."
-                            android:onClick="openDatePicker"
+
                             android:paddingLeft="0dp"
                             android:textColor="@color/black"
                             android:textSize="17dp" />
@@ -284,6 +296,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/update"
+                        android:layout_marginTop="40dp"
                         >
                         <TextView
                             android:layout_width="match_parent"
@@ -294,24 +307,24 @@
                             android:text="Cập nhập"
                             android:textStyle="bold"
                             android:gravity="center"
-                            android:layout_marginTop="40dp"
+
                             />
                     </LinearLayout>
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginBottom="15dp"-->
-<!--                        >-->
-<!--                        <TextView-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="50dp"-->
-<!--                            android:textSize="18dp"-->
-<!--                            android:textColor="@color/colorAccrnt"-->
-<!--                            android:text="Xóa tài khoản"-->
-<!--                            android:textStyle="bold"-->
-<!--                            android:gravity="center"-->
-<!--                            />-->
-<!--                    </LinearLayout>-->
+                    <!--                    <LinearLayout-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginBottom="15dp"-->
+                    <!--                        >-->
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="match_parent"-->
+                    <!--                            android:layout_height="50dp"-->
+                    <!--                            android:textSize="18dp"-->
+                    <!--                            android:textColor="@color/colorAccrnt"-->
+                    <!--                            android:text="Xóa tài khoản"-->
+                    <!--                            android:textStyle="bold"-->
+                    <!--                            android:gravity="center"-->
+                    <!--                            />-->
+                    <!--                    </LinearLayout>-->
 
                 </LinearLayout>
             </ScrollView>
@@ -319,3 +332,4 @@
 
     </LinearLayout>
 </FrameLayout>
+

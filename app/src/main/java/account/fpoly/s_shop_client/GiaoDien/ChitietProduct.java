@@ -109,7 +109,7 @@ public class ChitietProduct extends AppCompatActivity {
         clickmua = findViewById(R.id.clickmua);
         img_chuyen_gh=findViewById(R.id.img_chuyen_gh);
         back = findViewById(R.id.back);
-        chat = findViewById(R.id.chat);
+
         chitiet_giaProduct = findViewById(R.id.chitiet_giaProduct);
         chitiet_tenProduct = findViewById(R.id.chitiet_tenProduct);
         chitiet_description = findViewById(R.id.chitiet_description);
@@ -499,7 +499,7 @@ public class ChitietProduct extends AppCompatActivity {
 //                        }, 1700);
 //                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 //                        dialog.show();
-                        Toast.makeText(this, "qua roi", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Sản phẩm quá số lượng ", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (!buyNow) {

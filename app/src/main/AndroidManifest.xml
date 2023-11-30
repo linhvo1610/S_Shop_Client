@@ -4,16 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
 
     <application
         android:name=".Application.MyApplication"
@@ -29,7 +26,9 @@
         tools:replace="android:theme"
         tools:targetApi="31">
         <activity
-
+            android:name=".thongtinUser"
+            android:exported="false" />
+        <activity
             android:name=".NotifyActivity"
             android:exported="false" />
 
@@ -41,13 +40,9 @@
             </intent-filter>
         </service>
 
-
-            android:name=".ContactUsActivity"
-            android:exported="false" />
         <activity
             android:name=".Update_PassWord"
             android:exported="false" />
-
         <activity
             android:name=".UploadImage"
             android:exported="false" />
