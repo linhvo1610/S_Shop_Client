@@ -40,12 +40,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
-                android:text="Thanh toán"
-                android:textSize="18dp"
-                android:background=" #b0006d"
+                android:text="Đặt hàng"
+                android:textSize="22dp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:id="@+id/thanhtoanmomo"
                 />
         </LinearLayout>
         <LinearLayout
@@ -416,22 +414,35 @@
                     android:layout_gravity="center"
                     android:src="@drawable/next" />
             </LinearLayout>
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:orientation="horizontal"
-                android:background="@color/white"
                 android:layout_marginTop="1dp"
-                android:padding="10dp"
-                >
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:scaleType="centerCrop"
+                    android:layout_alignParentStart="true"
                     android:layout_gravity="center"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/dollar" />
 
-            </LinearLayout>
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/thanhtoanmomo"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:background=" #b0006d"
+                    android:text="Thanh toán"
+                    android:textColor="@color/white"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
