@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_marginTop="2dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="4dp"
             android:layout_weight="0.1"
             android:layout_gravity="center"
@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:layout_weight="1"
-            android:text="Đổi mật khẩu "
-            android:textSize="20dp"
+            android:text="Đổi mật khẩu"
+            android:textSize="20sp"
             android:gravity="center"
             android:layout_gravity="center" />
 
@@ -56,14 +56,23 @@
             android:layout_margin="10dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/ed_passcu"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nhập mật khẩu hiện tại"
-                android:inputType="textPassword"
-                android:background="@drawable/edittext_background"
-                android:padding="12dp" />
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:hint="Mật khẩu cũ"
+                app:endIconMode="password_toggle"
+                android:background="#FFFFFF">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_passcu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:maxLength="20" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -72,25 +81,41 @@
             android:layout_margin="10dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/ed_passnew"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nhập mật khẩu mới"
-                android:inputType="textPassword"
-                android:background="@drawable/edittext_background"
-                android:padding="12dp"
-                android:layout_marginBottom="20dp"
-                />
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:hint="Mật khẩu mới"
+                app:endIconMode="password_toggle"
+                android:background="#FFFFFF">
 
-            <EditText
-                android:id="@+id/nhaplai"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_passnew"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:maxLength="20" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nhập lại mật khẩu mới"
-                android:inputType="textPassword"
-                android:background="@drawable/edittext_background"
-                android:padding="12dp" />
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:hint="Xác nhận mật khẩu mới"
+                app:endIconMode="password_toggle"
+                android:background="#FFFFFF">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nhaplai"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:maxLength="20" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
     </LinearLayout>
@@ -102,6 +127,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="#cf3067"
-        android:text="Cập nhập" />
+        android:text="Cập nhật" />
 
 </LinearLayout>
