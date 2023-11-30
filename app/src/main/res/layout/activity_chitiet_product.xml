@@ -59,12 +59,12 @@
                             android:layout_marginTop="8dp"
                             android:src="@drawable/shoppingcart" />
 
-<!--                        <ImageView-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="26dp"-->
-<!--                            android:layout_marginTop="8dp"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:src="@drawable/heart" />-->
+                        <!--                        <ImageView-->
+                        <!--                            android:layout_width="0dp"-->
+                        <!--                            android:layout_height="26dp"-->
+                        <!--                            android:layout_marginTop="8dp"-->
+                        <!--                            android:layout_weight="1"-->
+                        <!--                            android:src="@drawable/heart" />-->
                     </LinearLayout>
 
 
@@ -343,6 +343,28 @@ Return Policy 🔄
         android:orientation="horizontal"
         android:layout_gravity="bottom"
         >
+        <LinearLayout
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:background="#2BBCAE"
+            android:orientation="vertical"
+            android:id="@+id/chat"
+            >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/tuvan"
+                android:layout_gravity="center"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tư vấn"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btn_add_detail"
