@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import account.fpoly.s_shop_client.API.API_User;
 import account.fpoly.s_shop_client.Modal.UserModal;
 import retrofit2.Call;
@@ -21,7 +23,7 @@ import retrofit2.Response;
 public class Update_PassWord extends AppCompatActivity {
 
     Button btnupdate;
-    EditText ed_passcu,ed_passnew,nhaplai;
+    TextInputEditText ed_passcu,ed_passnew,nhaplai;
     String password,iduser;
     ImageView img_back_updatePass;
     @Override
