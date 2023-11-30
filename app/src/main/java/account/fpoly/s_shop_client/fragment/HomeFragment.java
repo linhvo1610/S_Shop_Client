@@ -58,6 +58,8 @@ import account.fpoly.s_shop_client.Notification;
 import account.fpoly.s_shop_client.NotifyActivity;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.IClickItemListener;
+import account.fpoly.s_shop_client.SplassActivity;
+import account.fpoly.s_shop_client.Tools.ACCOUNT;
 import account.fpoly.s_shop_client.adapter.ProductAdapter;
 import account.fpoly.s_shop_client.adapter.ProductNewAdapter;
 import retrofit2.Call;
@@ -69,39 +71,44 @@ public class HomeFragment extends Fragment {
 
     public static final String TAG = HomeFragment.class.getName();
     EditText etd_timkiem;
-    ImageView chat_admin,notification,dialog;
+    ImageView chat_admin, notification, dialog;
     ProductAdapter productAdapter;
     ProductNewAdapter productNewAdapter;
     private List<ProductModal> listproduct;
+    ImageView iconNotification;
     TextView chuyen;
-    RecyclerView recyclerView,rcv_new;
+    RecyclerView recyclerView, rcv_new;
     private String anhProduct, tenProduct, giaProduct;
-
+    LinearLayout ln_cart_emty;
     CustomDialog dialog1;
     String minPrice = null;
     String maxPrice = null;
     LinearLayout nameLayout;
+    Button btn_buy_cart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Truyền dữ liệu vào Chi Tiết Activity
         Bundle bundle = getArguments();
-        if (bundle != null){
+        if (bundle != null) {
             tenProduct = bundle.getString("tenProduct");
             giaProduct = bundle.getString("giaProduct");
             anhProduct = bundle.getString("anhProduct");
         }
         //=====================================
-        etd_timkiem=view.findViewById(R.id.edt_timkiem);
-        dialog=view.findViewById(R.id.dialog);
+        etd_timkiem = view.findViewById(R.id.edt_timkiem);
+        dialog = view.findViewById(R.id.dialog);
 
 
-        recyclerView=view.findViewById(R.id.rcv_product);
-        rcv_new=view.findViewById(R.id.rcv_new);
+        recyclerView = view.findViewById(R.id.rcv_product);
+        btn_buy_cart = view.findViewById(R.id.btn_buy_cart);
+        ln_cart_emty = view.findViewById(R.id.ln_cart_emty);
+
+        rcv_new = view.findViewById(R.id.rcv_new);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rcv_new.setLayoutManager(layoutManager);
 
@@ -111,18 +118,17 @@ public class HomeFragment extends Fragment {
 
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
-        listproduct= new ArrayList<>();
+        listproduct = new ArrayList<>();
 
 
         callApiSeviceListProduct();
         callApiSeviceListProductHot();
 
 
-
         dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog1=new CustomDialog(getContext());
+                dialog1 = new CustomDialog(getContext());
                 ImageView dimiss = dialog1.findViewById(R.id.dimiss);
 //                nameLayout = dialog1.findViewById(R.id.nameLayout);
                 dimiss.setOnClickListener(new View.OnClickListener() {
@@ -158,10 +164,9 @@ public class HomeFragment extends Fragment {
                             maxPrice = null;
                             callApiSeviceListProduct();
                             dialog1.dismiss();
-                        }
-                        else if (selectedItem.equals("Dưới 200k")) {
+                        } else if (selectedItem.equals("Dưới 200k")) {
                             minPrice = "0";
-                            maxPrice= "200000";
+                            maxPrice = "200000";
                         } else if (selectedItem.equals("200k - 500k")) {
                             maxPrice = "500000";
                             minPrice = "200000";
@@ -198,19 +203,24 @@ public class HomeFragment extends Fragment {
 
 
 //        chat_admin = view.findViewById(R.id.chat_admin);
-        notification= view.findViewById(R.id.iconNotification);
-        chuyen= view.findViewById(R.id.chuyen);
+        notification = view.findViewById(R.id.iconNotification);
+        chuyen = view.findViewById(R.id.chuyen);
+
 
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), NotifyActivity.class));
+
+                loadInfomation();
+
+
             }
         });
 
 
         return view;
     }
+
     private void ghetName() {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "filterproduct",
@@ -266,7 +276,7 @@ public class HomeFragment extends Fragment {
                                 });
 
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 //                        listFilter.add(nameFilter);
@@ -285,6 +295,7 @@ public class HomeFragment extends Fragment {
         });
         requestQueue.add(jsonObjectRequest);
     }
+
     private void filterByPrice(String minPrice, String maxPrice) {
         API_Product.apiProduct.filterProducts(minPrice, maxPrice).enqueue(new Callback<List<ProductModal>>() {
             @Override
@@ -296,7 +307,7 @@ public class HomeFragment extends Fragment {
                     dialog1.dismiss();
 
 
-                }else{
+                } else {
 
                 }
             }
@@ -326,11 +337,12 @@ public class HomeFragment extends Fragment {
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                     }
+
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        String keyword=removeVietnameseDiacritics(etd_timkiem.getText().toString().trim());
-                        List<ProductModal> serarchResult=searchProducts(keyword);
-                        productAdapter= new ProductAdapter(serarchResult, getContext(), new IClickItemListener() {
+                        String keyword = removeVietnameseDiacritics(etd_timkiem.getText().toString().trim());
+                        List<ProductModal> serarchResult = searchProducts(keyword);
+                        productAdapter = new ProductAdapter(serarchResult, getContext(), new IClickItemListener() {
                             @Override
                             public void onCLickItemProduct(ProductModal productModal) {
                                 onClickGoToDetailProduct(productModal);
@@ -338,6 +350,7 @@ public class HomeFragment extends Fragment {
                         });
                         recyclerView.setAdapter(productAdapter);
                     }
+
                     @Override
                     public void afterTextChanged(Editable editable) {
 
@@ -355,6 +368,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     private void callApiSeviceListProductHot() {
         API_Product.apiProduct.listProductNew().enqueue(new Callback<ReceProduct>() {
             @Override
@@ -381,7 +395,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void onClickGoToDetailProduct(ProductModal productModal){
+    private void onClickGoToDetailProduct(ProductModal productModal) {
         Intent intent = new Intent(getContext(), ChitietProduct.class);
         intent.putExtra("id", productModal.getId());
         intent.putExtra("tenProduct", tenProduct);
@@ -389,6 +403,7 @@ public class HomeFragment extends Fragment {
         intent.putExtra("anhProduct", anhProduct);
         startActivity(intent);
     }
+
     private List<ProductModal> searchProducts(String keyword) {
         List<ProductModal> filteredProducts = new ArrayList<>();
         String normalizedKeyword = removeVietnameseDiacritics(keyword);
@@ -400,15 +415,33 @@ public class HomeFragment extends Fragment {
         }
         return filteredProducts;
     }
+
     @Override
     public void onResume() {
         super.onResume();
         callApiSeviceListProduct();
         callApiSeviceListProductHot();
     }
+
     private String removeVietnameseDiacritics(String text) {
         String normalizedText = Normalizer.normalize(text, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(normalizedText).replaceAll("").toLowerCase();
+    }
+
+    private void loadInfomation() {
+
+        if (ACCOUNT.user == null) {
+            ln_cart_emty.setVisibility(View.VISIBLE);
+            btn_buy_cart.setText("Bạn cần đăng nhập để  sử dụng chức năng này ");
+            btn_buy_cart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), SplassActivity.class));
+                }
+            });
+            return;
+        }
+
     }
 }

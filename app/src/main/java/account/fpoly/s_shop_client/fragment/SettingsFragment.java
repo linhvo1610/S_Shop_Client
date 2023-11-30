@@ -34,18 +34,20 @@ import account.fpoly.s_shop_client.DangGiao_Activity;
 import account.fpoly.s_shop_client.HistoryOrderClient;
 import account.fpoly.s_shop_client.HuyBill;
 import account.fpoly.s_shop_client.InfoUserActivity;
+import account.fpoly.s_shop_client.NotifyActivity;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.SplassActivity;
 import account.fpoly.s_shop_client.Tools.ACCOUNT;
 import account.fpoly.s_shop_client.Update_PassWord;
 import account.fpoly.s_shop_client.Xacnhan_Bill;
+import account.fpoly.s_shop_client.thongtinUser;
 
 public class SettingsFragment extends Fragment {
     ImageView imginfo, imghistory;
     String image,curidUser,fullname;
     TextView txtfullname;
     API_User api_user;
-    LinearLayout linnerXacnhan,linnerDanggiao,xacnhanPro,huyBill,ln_thongtin;
+    LinearLayout linnerXacnhan,linnerDanggiao,xacnhanPro,huyBill,ln_thongtin,ln_thongbao;
     LinearLayout ln_cart_emty,updatepass,contactus;
     Button btn_buy_cart;
     @SuppressLint("MissingInflatedId")
@@ -66,11 +68,19 @@ public class SettingsFragment extends Fragment {
         ln_thongtin=view.findViewById(R.id.ln_thongtin);
         updatepass=view.findViewById(R.id.updatepass);
         contactus = view.findViewById(R.id.contact_us);
+        ln_thongbao= view.findViewById(R.id.ln_thongbao_setting);
 
         contactus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ContactUsActivity.class);
+                startActivity(intent);
+            }
+        });
+        ln_thongbao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), NotifyActivity.class);
                 startActivity(intent);
             }
         });
@@ -92,7 +102,7 @@ public class SettingsFragment extends Fragment {
         ln_thongtin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), InfoUserActivity.class));
+                startActivity(new Intent(getContext(), thongtinUser.class));
             }
         });
         linnerXacnhan.setOnClickListener(new View.OnClickListener() {

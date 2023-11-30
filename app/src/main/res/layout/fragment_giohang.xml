@@ -56,12 +56,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_gravity="center"
                 >
-                <ImageView
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
-                    android:src="@drawable/messenger"
-                    android:scaleType="centerCrop"
-                    />
+
             </LinearLayout>
         </LinearLayout>
 

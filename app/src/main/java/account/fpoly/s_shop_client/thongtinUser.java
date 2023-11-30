@@ -55,7 +55,6 @@ import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_User;
 import account.fpoly.s_shop_client.GiaoDien.DangNhapActivity;
 import account.fpoly.s_shop_client.Modal.UserModal;
-import account.fpoly.s_shop_client.fragment.SettingsFragment;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -63,12 +62,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InfoUserActivity extends AppCompatActivity {
-
+public class thongtinUser extends AppCompatActivity {
     TextInputEditText edfullname,edgioitinh,edngaysinh,edemail,edphone;
     ImageView image,back;
     Spinner genderSpinner;
-    TextView add_image,linkimage;
+    TextView btndangxuat,add_image,linkimage,txt_thongtin_sex;
     String curgioitinh,curid,name,email,phone,ngaysinh,curpasswd,curphanquyen,
             curimage,currol;
     LinearLayout update;
@@ -108,39 +106,39 @@ public class InfoUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info_user);
-
+        setContentView(R.layout.activity_thongtin_user);
         anhxa();
 
         hienthiInfo();
         hienthiInfomationUser();
-
-
+        btndangxuat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
     }
-
     @SuppressLint("WrongViewCast")
     private void anhxa() {
         dateButton = findViewById(R.id.datePickerButton);
         initDatePicker();
         dateButton.setText(getTodaysDate());
+
+        btndangxuat=findViewById(R.id.btndangxuat);
         edfullname = findViewById(R.id.edfullname);
         edgioitinh = findViewById(R.id.edgioitinh);
         edngaysinh = findViewById(R.id.edngaysinh);
         edemail = findViewById(R.id.edemail);
         edphone = findViewById(R.id.edphone);
         genderSpinner = findViewById(R.id.gender_spinner);
+
         image = findViewById(R.id.image);
         update = findViewById(R.id.update);
         back = findViewById(R.id.back);
         add_image = findViewById(R.id.add_image);
         linkimage = findViewById(R.id.linkimage);
-        add_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                chonanh();
-                startActivity(new Intent(getBaseContext(), UploadImage.class));
-            }
-        });
+        txt_thongtin_sex=findViewById(R.id.txt_thongtin_sex);
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,7 +160,7 @@ public class InfoUserActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateUser();
+                startActivity(new Intent(getBaseContext(), InfoUserActivity.class));
             }
         });
     }
@@ -188,27 +186,27 @@ public class InfoUserActivity extends AppCompatActivity {
         user.setPassword(curpasswd);
 
         user.setDob(ngaysinhDate);
-            API_User.apiUser.updateUser(curid, user).enqueue(new Callback<UserModal>() {
-                @Override
-                public void onResponse(Call<UserModal> call, Response<UserModal> response) {
-                    if (response.isSuccessful()) {
-                        list.clear();
-                        UserModal user = response.body();
-                        list.add(user);
-                        adapter.notifyDataSetChanged();
-                        Toast.makeText(getBaseContext(), "Cập Nhât Thông Tin Thành Công", Toast.LENGTH_SHORT).show();
-                        onBackPressed();
+        API_User.apiUser.updateUser(curid, user).enqueue(new Callback<UserModal>() {
+            @Override
+            public void onResponse(Call<UserModal> call, Response<UserModal> response) {
+                if (response.isSuccessful()) {
+                    list.clear();
+                    UserModal user = response.body();
+                    list.add(user);
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(getBaseContext(), "Cập Nhât Thông Tin Thành Công", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
 
-                    } else {
-                        Toast.makeText(InfoUserActivity.this, "Cập Nhât Thông Tin Không  Thành Công", Toast.LENGTH_SHORT).show();
-                    }
+                } else {
+                    Toast.makeText(thongtinUser.this, "Cập Nhât Thông Tin Không  Thành Công", Toast.LENGTH_SHORT).show();
                 }
+            }
 
-                @Override
-                public void onFailure(Call<UserModal> call, Throwable t) {
+            @Override
+            public void onFailure(Call<UserModal> call, Throwable t) {
 
-                }
-            });
+            }
+        });
     }
     private void updateUserImage() {
         String fullnameuser = edfullname.getText().toString().trim();
@@ -248,7 +246,7 @@ public class InfoUserActivity extends AppCompatActivity {
                         list.add(user);
                         Toast.makeText(getBaseContext(), "Cap nhap thanh cong", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(InfoUserActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(thongtinUser.this, "Fail", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -291,7 +289,7 @@ public class InfoUserActivity extends AppCompatActivity {
         genderSpinner.setSelection(position);
     }
     public void logout() {
-        Intent intent = new Intent(InfoUserActivity.this, DangNhapActivity.class);
+        Intent intent = new Intent(thongtinUser.this, DangNhapActivity.class);
         SharedPreferences preferences= getSharedPreferences("infoUser", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferences.edit();
         editor.remove("token");
@@ -314,11 +312,13 @@ public class InfoUserActivity extends AppCompatActivity {
                         edphone.setText(jsonObject.getString("phone"));
                         edemail.setText(jsonObject.getString("email"));
                         edfullname.setText(jsonObject.getString("fullname"));
+                        txt_thongtin_sex.setText(jsonObject.getString("sex"));
                         String gioitinhuser = jsonObject.getString("sex");
 
                         String selectedGender = gioitinhuser; // Giới tính đã chọn
                         int position = Arrays.asList(genders).indexOf(selectedGender);
                         genderSpinner.setSelection(position);
+                        genderSpinner.setClickable(false);
 
                         dateButton.setText(jsonObject.getString("dob"));
 
