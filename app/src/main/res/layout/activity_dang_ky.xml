@@ -25,7 +25,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="Đăng kí "
         android:textSize="30dp"
         android:layout_marginLeft="25dp"
         android:textColor="@color/black"/>
@@ -37,7 +37,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:hint="Username"
+        android:hint="Tài khoản "
         app:startIconDrawable="@drawable/baseline_person_24"
         app:helperTextTextColor="@color/black"
         app:endIconMode="clear_text"
@@ -56,7 +56,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:hint="Phone"
+        android:hint="Số điện thoại"
         app:startIconDrawable="@drawable/baseline_phone_24"
         app:helperTextTextColor="@color/black"
         app:endIconMode="clear_text"
@@ -96,7 +96,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:hint="Password"
+        android:hint="Mật khẩu"
         app:startIconDrawable="@drawable/baseline_vpn_key_24"
         app:endIconMode="password_toggle">
 
@@ -137,7 +137,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="Sign up"
+            android:text="Đăng kí"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:backgroundTint="#cf3068"/>

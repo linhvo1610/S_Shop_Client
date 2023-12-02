@@ -441,7 +441,10 @@ public class HomeFragment extends Fragment {
                 }
             });
             return;
+        }else  {
+            startActivity(new Intent(getActivity(), NotifyActivity.class));
         }
+
 
     }
 }
