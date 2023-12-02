@@ -35,6 +35,7 @@ import account.fpoly.s_shop_client.AddCommentActivity;
 import account.fpoly.s_shop_client.Modal.Bill;
 import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
+import account.fpoly.s_shop_client.NotifyActivity;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.SplassActivity;
 import account.fpoly.s_shop_client.Tools.ACCOUNT;
@@ -43,7 +44,7 @@ import account.fpoly.s_shop_client.adapter.StatusBillAdapter;
 
 
 public class LichsuFragment extends Fragment {
-    ImageView img_back;
+    ImageView img_back, img_noti_lichsu;
     RecyclerView rcv;
     List<BillMore> list;
     StatusBillAdapter adapter;String iduser;
@@ -57,6 +58,7 @@ public class LichsuFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_trangthaidon, container, false);
         rcv=view.findViewById(R.id.rcv_lichsu);
+        img_noti_lichsu=view.findViewById(R.id.img_noti_lichsu);
         ln_cart_emty=view.findViewById(R.id.ln_cart_emty);
         btn_buy_cart=view.findViewById(R.id.btn_buy_cart);
         SharedPreferences preferences = getActivity().getSharedPreferences("infoUser", Context.MODE_PRIVATE);
@@ -64,10 +66,30 @@ public class LichsuFragment extends Fragment {
         list = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rcv.setLayoutManager(manager);
+        img_noti_lichsu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ACCOUNT.user == null){
+                    ln_cart_emty.setVisibility(View.VISIBLE);
+                    btn_buy_cart.setText("Đăng nhập để mua sắm");
+                    btn_buy_cart.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(getActivity(), SplassActivity.class));
+                        }
+                    });
+                    return;
+                }
+                else {
+                    startActivity(new Intent(getActivity(), NotifyActivity.class));
+                }
+            }
+        });
         hienthiHistoty();
 
         return view;
     }
+
 
     String idpro;
     private void hienthiHistoty() {
