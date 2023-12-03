@@ -202,18 +202,33 @@
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
          />
+
     <TextView
-        android:id="@+id/totalPrice"
+    android:id="@+id/totalPrice"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right"
+    android:layout_marginTop="4dp"
+    android:layout_marginRight="15dp"
+    android:text="300000"
+    android:textColor="@color/colorAccrnt"
+    android:textSize="16dp"
+    android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/mualai"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="300000"
-        android:textColor="@color/colorAccrnt"
-        android:textStyle="bold"
-        android:textSize="16dp"
         android:layout_gravity="right"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="4dp"
-        />
+        android:layout_marginRight="15dp"
+        android:text="Mua lại"
+        android:background="@drawable/borderrdio"
+        android:padding="5dp"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -56,10 +56,9 @@ public class NestesCommentAdapter extends RecyclerView.Adapter<NestesCommentAdap
         holder.sizePro.setText("Size:"+ cart.getSize());
         // truyen du lieu sang comment
 
-
-
         Picasso.get().load(API.api_image + cart.getImage()).into(holder.imageBill);
 
+        holder.danhgia.setVisibility(View.VISIBLE);
         holder.danhgia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,7 +82,7 @@ public class NestesCommentAdapter extends RecyclerView.Adapter<NestesCommentAdap
 
     public static class NestesViewHolder extends RecyclerView.ViewHolder {
         TextView totalQuantity,totalPrice,statusPro,namePro,sizePro;
-        LinearLayout danhgia;
+        LinearLayout danhgia,btn_mualai;
         ImageView imageBill;
         public NestesViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -93,6 +92,7 @@ public class NestesCommentAdapter extends RecyclerView.Adapter<NestesCommentAdap
             imageBill = itemView.findViewById(R.id.imageBills);
             sizePro = itemView.findViewById(R.id.sizePros);
             danhgia=itemView.findViewById(R.id.btn_danhgia);
+            btn_mualai=itemView.findViewById(R.id.btn_mualai);
         }
     }
 }

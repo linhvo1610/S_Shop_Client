@@ -32,7 +32,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Xác nhận sản phẩm "
+            android:text="Xác nhận đươn hàng "
             android:textColor="@color/white"
             android:textSize="20dp" />
 

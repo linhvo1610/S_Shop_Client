@@ -436,7 +436,7 @@
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:background=" #b0006d"
-                    android:text="Thanh toán"
+                    android:text="Thanh toán qua ví MOMO"
                     android:textColor="@color/white"
                     android:layout_alignParentEnd="true"
                     android:textSize="18dp"

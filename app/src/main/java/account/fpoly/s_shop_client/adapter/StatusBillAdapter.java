@@ -202,6 +202,91 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
         else if (billMore.getStatus() == 4){
             holder.statusPro.setVisibility(View.INVISIBLE);
             holder.xacnhanPro.setVisibility(View.INVISIBLE);
+            holder.mualai.setVisibility(View.VISIBLE);
+            holder.mualai.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                    View view = LayoutInflater.from(context).inflate(R.layout.dialog_huydon,null);
+                    builder.setView(view);
+                    AlertDialog dialog1 = builder.create();
+
+                    TextView huydonDialog,dong,title;
+                    huydonDialog = view.findViewById(R.id.huydondl);
+                    dong = view.findViewById(R.id.dong);
+                    title = view.findViewById(R.id.title);
+                    title.setText("Mua lại sản phẩm!!!");
+                    huydonDialog.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog1.dismiss();
+                    ApiService.apiService.updateBillHuy(billMore.get_id()).enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            if (response.isSuccessful()&&response.body()!=null) {
+                                if (response.body() == 1) {
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                                    View view = LayoutInflater.from(context).inflate(R.layout.dialog_thongbao, null);
+                                    builder.setView(view);
+                                    AlertDialog dialog = builder.create();
+
+                                    ImageView imageView = view.findViewById(R.id.imageView);
+                                    TextView title = view.findViewById(R.id.title);
+// Tạo hiệu ứng chuông rung
+                                    title.setText("Đơn hàng của bạn đã được mua lại!!!");
+
+                                    ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                                    animator.setDuration(1000);
+                                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                                    animator.setRepeatCount(ObjectAnimator.INFINITE);
+                                    animator.start();
+
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            list.remove(billMore);
+                                            notifyDataSetChanged();
+                                            dialog.dismiss();
+//                                            Intent intent = new Intent(context, Tab_Giaodien_Activity.class);
+//
+//                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                            context.startActivity(intent);
+
+                                        }
+                                    }, 1700);
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    dialog.show();
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+
+                        }
+                    });
+                        }
+                    });
+                    dong.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog1.cancel();
+                        }
+                    });
+                    ImageView imageView = view.findViewById(R.id.imageView);
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                    animator.setDuration(1000);
+                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                    animator.setRepeatCount(ObjectAnimator.INFINITE);
+                    animator.start();
+                    dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                    dialog1.show();
+                }
+            });
 
         }
         // lich su dat hang
@@ -223,7 +308,7 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
 
     public static class StatusBillViewHolder extends RecyclerView.ViewHolder {
         TextView totalPrice,statusPro,xacnhanPro,huydon;
-        TextView maDonhang,tv_name,tv_phonenumber,tv_address;
+        TextView maDonhang,tv_name,tv_phonenumber,tv_address,mualai;
         ImageView imageBill;
         RecyclerView nestedRecyclerView;
         public StatusBillViewHolder(@NonNull View itemView) {
@@ -233,6 +318,7 @@ public class StatusBillAdapter extends RecyclerView.Adapter<StatusBillAdapter.St
             tv_name = itemView.findViewById(R.id.tv_name);
             tv_phonenumber = itemView.findViewById(R.id.tv_phonenumber);
             tv_address = itemView.findViewById(R.id.tv_address);
+            mualai = itemView.findViewById(R.id.mualai);
 
 
 
