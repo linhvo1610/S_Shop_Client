@@ -418,6 +418,13 @@ public class thongtinUser extends AppCompatActivity {
         return   day + "/" + getMonthFormat(month) +  "/" + year;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hienthiInfo();
+        hienthiInfomationUser();
+    }
+
     private String getMonthFormat(int month)
     {
         if(month == 1)

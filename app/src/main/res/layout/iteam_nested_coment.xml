@@ -106,11 +106,9 @@
                     android:id="@+id/btn_danhgia"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:background="@drawable/button_background"
                     android:layout_gravity="center"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
                     android:layout_marginTop="8dp"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -118,10 +116,31 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Đánh giá sản phẩm"
+                        android:background="@drawable/button_background"
                         android:textColor="@color/white"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
                         android:textStyle="bold" />
+                    <LinearLayout
+                        android:id="@+id/btn_mualai"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone"
+                        android:orientation="horizontal">
 
-
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Mua lại"
+                            android:background="@drawable/button_background"
+                            android:textColor="@color/white"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                 </LinearLayout>
 
 
