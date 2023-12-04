@@ -5,17 +5,17 @@ import java.util.Date;
 public class Notify {
     private String _id;
     private String id_user;
-    private String id_billmore;
+    private String content;
     private Date time;
     private int status;
 
     public Notify() {
     }
 
-    public Notify(String _id, String id_user, String id_billmore, Date time, int status) {
+    public Notify(String _id, String id_user, String content, Date time, int status) {
         this._id = _id;
         this.id_user = id_user;
-        this.id_billmore = id_billmore;
+        this.content = content;
         this.time = time;
         this.status = status;
     }
@@ -36,12 +36,12 @@ public class Notify {
         this.id_user = id_user;
     }
 
-    public String getId_billmore() {
-        return id_billmore;
+    public String getContent() {
+        return content;
     }
 
-    public void setId_billmore(String id_billmore) {
-        this.id_billmore = id_billmore;
+    public void setContent(String id_billmore) {
+        this.content = id_billmore;
     }
 
     public Date getTime() {

@@ -20,6 +20,7 @@ import account.fpoly.s_shop_client.DangGiao_Activity;
 import account.fpoly.s_shop_client.HuyBill;
 import account.fpoly.s_shop_client.Modal.Notify;
 import account.fpoly.s_shop_client.R;
+import account.fpoly.s_shop_client.Tab_Giaodien_Activity;
 import account.fpoly.s_shop_client.Xacnhan_Bill;
 
 public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.NotifyViewHolder>{
@@ -48,9 +49,6 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.NotifyView
         Notify notify = list.get(position);
         if(notify!=null){
             holder.ln_notify.setOnClickListener(v -> {
-//                Intent intent = new Intent(context, SettingsFragment.class);
-//                intent.putExtra("status",notify.getStatus());
-//                context.startActivity(intent);
                 int status = notify.getStatus();
                 if (status == 0){
                     Intent intent = new Intent(context, Xacnhan_Bill.class);
@@ -64,23 +62,19 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.NotifyView
                     Intent intent = new Intent(context, DaGiao_activity.class);
                     context.startActivity(intent);
                 }
-                if (status == 3){
+                if (status == 4){
                     Intent intent = new Intent(context, HuyBill.class);
+                    context.startActivity(intent);
+                }
+                if (status == 10){
+                    Intent intent = new Intent(context, Tab_Giaodien_Activity.class);
                     context.startActivity(intent);
                 }
                 ((Activity)context).overridePendingTransition(R.anim.next_enter,R.anim.next_exit);
                 ((Activity)context).finish();
             });
             holder.tv_time.setText(String.valueOf(notify.getTime()));
-            String body  = "";
-            switch (notify.getStatus()){
-                case 0: body = " đã đặt thành công";break;
-                case 1: body = " đã được xác nhận tồn tại trong kho";break;
-                case 2: body = " đang giao hàng";break;
-                case 3: body = " đã giao hàng thành công";break;
-                case 4: body = " đã bị hủy";break;
-            }
-            holder.tv_body.setText("Đơn hàng có mã "+notify.getId_billmore().toUpperCase()+body);
+            holder.tv_body.setText(notify.getContent());
         }
     }
 

@@ -76,5 +76,7 @@ public interface ApiService {
     Call<List<Notify>> getNotify(@Path("id_user") String id_cart);
     @POST("api/tokenNotify/{id_user}")
     Call<Integer> tokenNotify(@Path("id_user") String id_user,@Body RequestBody requestBody);
+    @POST("notify/add")
+    Call<Notify> addNotify(@Body Notify notify);
 
 }
