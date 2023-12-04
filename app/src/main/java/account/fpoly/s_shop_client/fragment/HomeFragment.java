@@ -213,7 +213,6 @@ public class HomeFragment extends Fragment {
 
                 loadInfomation();
 
-
             }
         });
 
@@ -441,10 +440,10 @@ public class HomeFragment extends Fragment {
                 }
             });
             return;
-        }else  {
-            startActivity(new Intent(getActivity(), NotifyActivity.class));
+        }else {
+            Intent intent = new Intent(getContext(), NotifyActivity.class);
+            startActivity(intent);
         }
-
 
     }
 }

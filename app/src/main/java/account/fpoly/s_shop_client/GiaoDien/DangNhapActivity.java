@@ -16,7 +16,10 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -226,6 +229,19 @@ public class DangNhapActivity extends AppCompatActivity {
 //                            gotoSettings();
                         }
                     });
+
+                    FirebaseMessaging.getInstance().subscribeToTopic("event")
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    String msg = "Subscribed";
+                                    if (!task.isSuccessful()) {
+                                        msg = "Subscribe failed";
+                                    }
+                                    Log.d("TAG", msg);
+                                    Toast.makeText(DangNhapActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                 }else {
                     Toast.makeText(DangNhapActivity.this, "Vui lòng kiếm tra lại tài khoản!!!", Toast.LENGTH_SHORT).show();
