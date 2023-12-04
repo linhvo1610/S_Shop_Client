@@ -95,6 +95,7 @@ public class ChitietProduct extends AppCompatActivity {
     DecimalFormat decimalFormat;
     TextView sluongMuaText;
     String sluongMuaSP;
+    int totalQuantityBills;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,6 +221,7 @@ public class ChitietProduct extends AppCompatActivity {
                             }
                         }
                     }
+                    totalQuantityBills = totalQuantityBill;
                     sluongMuaText.setText(String.valueOf(totalQuantityBill));
                     soluongdamua = totalQuantityBill;
                 } catch (Exception e) {
@@ -285,7 +287,7 @@ public class ChitietProduct extends AppCompatActivity {
 
 
 
-        int resul = qantityFormat - soluongdamua;
+        int resul = qantityFormat ;
         String qantity = decimalFormat.format(resul);
         totalQuantity.setText(qantity);
 
@@ -360,6 +362,12 @@ public class ChitietProduct extends AppCompatActivity {
                                         if (isChecked) {
                                             layoutSize.setVisibility(View.VISIBLE);
                                             totalQuantitySizes.setText(String.valueOf(finalCurrentQuantity));
+                                            totalQuantitySizes.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Toast.makeText(getBaseContext(), "sl: "+ finalCurrentQuantity, Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
 
                                             SharedPreferences sharedPreferencesCheckQuantity = getSharedPreferences("soluongSize", MODE_PRIVATE);
                                             SharedPreferences.Editor editors = sharedPreferencesCheckQuantity.edit();
