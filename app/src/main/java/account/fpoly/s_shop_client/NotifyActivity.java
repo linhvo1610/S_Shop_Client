@@ -72,7 +72,6 @@ public class NotifyActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<Notify>> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                Toast.makeText(NotifyActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
             }
         });
     }
