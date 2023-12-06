@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,7 +45,7 @@ import account.fpoly.s_shop_client.adapter.BillAdapter;
 import account.fpoly.s_shop_client.adapter.StatusBillAdapter;
 
 
-public class LichsuFragment extends Fragment {
+public class LichsuFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     ImageView img_back, img_noti_lichsu;
     RecyclerView rcv;
     List<BillMore> list;
@@ -51,6 +53,7 @@ public class LichsuFragment extends Fragment {
     TextView title;
     LinearLayout ln_cart_emty;
     Button btn_buy_cart;
+    private SwipeRefreshLayout swipeRefreshLayoutlichsu;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,6 +69,8 @@ public class LichsuFragment extends Fragment {
         list = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rcv.setLayoutManager(manager);
+       swipeRefreshLayoutlichsu = view.findViewById(R.id.swiperefreshlayoutlichsu);
+       swipeRefreshLayoutlichsu.setOnRefreshListener(this);
         img_noti_lichsu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,4 +163,15 @@ public class LichsuFragment extends Fragment {
     }
 
 
+    @Override
+    public void onRefresh() {
+        adapter.notifyDataSetChanged();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayoutlichsu.setRefreshing(false);
+            }
+        },2000);
+    }
 }
