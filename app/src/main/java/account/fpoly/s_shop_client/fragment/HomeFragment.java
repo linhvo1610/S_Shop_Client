@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import com.android.volley.Request;
@@ -67,7 +68,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     public static final String TAG = HomeFragment.class.getName();
     EditText etd_timkiem;
@@ -85,7 +86,7 @@ public class HomeFragment extends Fragment {
     String maxPrice = null;
     LinearLayout nameLayout;
     Button btn_buy_cart;
-
+    private SwipeRefreshLayout refresh;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,6 +110,7 @@ public class HomeFragment extends Fragment {
         ln_cart_emty = view.findViewById(R.id.ln_cart_emty);
 
         rcv_new = view.findViewById(R.id.rcv_new);
+        refresh= view.findViewById(R.id.swiperefreshlayout);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rcv_new.setLayoutManager(layoutManager);
 
@@ -120,7 +122,7 @@ public class HomeFragment extends Fragment {
         recyclerView.addItemDecoration(itemDecoration);
         listproduct = new ArrayList<>();
 
-
+          refresh.setOnRefreshListener(this);
         callApiSeviceListProduct();
         callApiSeviceListProductHot();
 
@@ -445,5 +447,17 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         }
 
+    }
+
+    @Override
+    public void onRefresh() {
+        productAdapter.notifyDataSetChanged();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+refresh.setRefreshing(false);
+            }
+        },2000);
     }
 }
