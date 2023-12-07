@@ -23,7 +23,7 @@ public class SplassActivity extends AppCompatActivity {
                 startActivity(mainIntent);
                 finish();
             }
-        }, 2000);
+        }, 2);
 
     }
 }
