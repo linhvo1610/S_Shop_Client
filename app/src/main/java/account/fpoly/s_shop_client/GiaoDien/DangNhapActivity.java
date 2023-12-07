@@ -239,7 +239,6 @@ public class DangNhapActivity extends AppCompatActivity {
                                         msg = "Subscribe failed";
                                     }
                                     Log.d("TAG", msg);
-                                    Toast.makeText(DangNhapActivity.this, msg, Toast.LENGTH_SHORT).show();
                                 }
                             });
 
