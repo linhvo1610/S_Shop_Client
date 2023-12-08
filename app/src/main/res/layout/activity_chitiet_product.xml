@@ -262,13 +262,7 @@
                         android:layout_height="wrap_content"
                         android:text="Thương hiệu:"
                         android:textSize="16dp" />
-                    <TextView
-                        android:id="@+id/trademark"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Thuong hieu sp"
-                        android:layout_marginRight="8dp"
-                        android:textSize="16dp" />
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -304,6 +298,17 @@
                     android:orientation="vertical"
                     android:layout_margin="15dp"
                     >
+
+                    <TextView
+                        android:id="@+id/sizechart"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="8dp"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Bảng đo kích cỡ chân >"
+                        android:textColor="#BFBFBF"
+                        />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -330,6 +335,14 @@ Return Policy 🔄
 ▶️ Shipping Fee will depend on proper approval of support team.
 ▶️ Return And Exchange is allowed as long as the item is not yet worn and use."
                         />
+
+                    <TextView
+                        android:id="@+id/trademark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:text="Thuong hieu sp"
+                        android:textSize="16dp" />
 
                 </LinearLayout>
             </LinearLayout>

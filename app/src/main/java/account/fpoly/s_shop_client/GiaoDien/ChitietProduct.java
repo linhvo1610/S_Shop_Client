@@ -68,6 +68,7 @@ import account.fpoly.s_shop_client.MuaProduct;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.ApiService;
 import account.fpoly.s_shop_client.Service.ServiceProduct;
+import account.fpoly.s_shop_client.Size_Chart;
 import account.fpoly.s_shop_client.SplassActivity;
 import account.fpoly.s_shop_client.TabCartActivity;
 import account.fpoly.s_shop_client.Tab_Giaodien_Activity;
@@ -82,9 +83,10 @@ public class ChitietProduct extends AppCompatActivity {
 
     LinearLayout clickmua, chat, btn_add_cart;
     ImageView back, chitiet_imgProduct,img_chuyen_gh;
-    TextView chitiet_tenProduct, chitiet_giaProduct, chitiet_description,trademark,namecat;
+    TextView chitiet_tenProduct, chitiet_giaProduct, chitiet_description,trademark,namecat,sizechart;
     String idProduct;
     String imagePro;
+
 
 
     private int sol = 1;
@@ -112,6 +114,7 @@ public class ChitietProduct extends AppCompatActivity {
         img_chuyen_gh=findViewById(R.id.img_chuyen_gh);
         back = findViewById(R.id.back);
         chat = findViewById(R.id.chat);
+        sizechart = findViewById(R.id.sizechart);
 
         chitiet_giaProduct = findViewById(R.id.chitiet_giaProduct);
         chitiet_tenProduct = findViewById(R.id.chitiet_tenProduct);
@@ -121,6 +124,13 @@ public class ChitietProduct extends AppCompatActivity {
         namecat = findViewById(R.id.namecat);
         LinearLayout linearLayout = findViewById(R.id.Ln_danhgia);
         sluongMuaText = findViewById(R.id.sluongMua);
+
+        sizechart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), Size_Chart.class));
+            }
+        });
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
