@@ -305,6 +305,17 @@
                     android:layout_margin="15dp"
                     >
                     <TextView
+                        android:id="@+id/sizechart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Bảng đo kích cỡ"
+                        android:layout_marginRight="8dp"
+                        android:layout_gravity="right"
+                        android:textColor="#C1C1C1"
+                        />
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
