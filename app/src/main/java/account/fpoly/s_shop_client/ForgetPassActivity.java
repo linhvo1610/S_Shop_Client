@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ public class ForgetPassActivity extends AppCompatActivity {
     TextInputLayout ed_layoutName, ed_layoutOTP;
     LinearLayout ln_resetPass;
     Button btn_getOTP;
+    ImageView img_back_updatePass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,14 @@ public class ForgetPassActivity extends AppCompatActivity {
         ed_reNewPass = findViewById(R.id.nhaplai);
         ln_resetPass = findViewById(R.id.ln_resetPass);
         btn_getOTP = findViewById(R.id.btnupdate);
+        img_back_updatePass = findViewById(R.id.img_back_updatePass);
 
+        img_back_updatePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         btn_getOTP.setOnClickListener(view -> {
             if (btn_getOTP.getText().toString().equals("Lấy mã")){
                 SharedPreferences sharedPreferences = getSharedPreferences("namerepass", getBaseContext().MODE_PRIVATE);
