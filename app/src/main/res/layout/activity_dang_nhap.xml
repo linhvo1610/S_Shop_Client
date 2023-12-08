@@ -67,6 +67,14 @@
             android:inputType="textPassword"
             android:maxLength="20" />
     </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/tv_forgetPass"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quên mật khẩu?"
+        android:textSize="15dp"/>
     <CheckBox
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
@@ -75,6 +83,8 @@
         android:layout_height="wrap_content"
         android:text="Lưu tài khoản"
         android:checked="false" />
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
