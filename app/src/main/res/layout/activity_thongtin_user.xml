@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".thongtinUser">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F8EBEB"
+        android:background="#FFFFFF"
         android:orientation="vertical"
         >
 
@@ -132,7 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:background="@drawable/borderwith"
+
                         android:padding="10dp"
                         android:layout_marginBottom="5dp"
                         >
@@ -159,7 +160,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:background="@drawable/borderwith"
+
                         android:padding="10dp"
                         android:layout_marginBottom="5dp"
                         >
@@ -187,7 +188,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:background="@drawable/borderwith"
+
                         android:padding="10dp"
                         android:layout_marginBottom="5dp"
                         >
@@ -215,7 +216,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:background="@drawable/borderwith"
+
                         android:padding="10dp"
                         android:layout_marginBottom="5dp"
                         >
@@ -256,7 +257,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:background="@drawable/borderwith"
+
                         android:padding="10dp"
                         >
                         <TextView
@@ -304,7 +305,7 @@
                             android:background="@drawable/borderrdio"
                             android:textSize="18dp"
                             android:textColor="@color/white"
-                            android:text="Cập nhập"
+                            android:text="Cập nhật thông tin "
                             android:textStyle="bold"
                             android:gravity="center"
 

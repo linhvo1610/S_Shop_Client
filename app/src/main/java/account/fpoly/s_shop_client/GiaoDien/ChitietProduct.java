@@ -362,12 +362,6 @@ public class ChitietProduct extends AppCompatActivity {
                                         if (isChecked) {
                                             layoutSize.setVisibility(View.VISIBLE);
                                             totalQuantitySizes.setText(String.valueOf(finalCurrentQuantity));
-                                            totalQuantitySizes.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    Toast.makeText(getBaseContext(), "sl: "+ finalCurrentQuantity, Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
 
                                             SharedPreferences sharedPreferencesCheckQuantity = getSharedPreferences("soluongSize", MODE_PRIVATE);
                                             SharedPreferences.Editor editors = sharedPreferencesCheckQuantity.edit();
@@ -488,6 +482,10 @@ public class ChitietProduct extends AppCompatActivity {
                     currentValue = Integer.parseInt(edsoluong.getText().toString());
                     newValue = currentValue;
                     saveValueToSharedPreferences(newValue);
+                    if (soluongSize == 0){
+                        Toast.makeText(this, "Sản phẩm đã hết hàng!!!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     if (newValue > soluongSize){
 //                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
 //                        View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_check, null);

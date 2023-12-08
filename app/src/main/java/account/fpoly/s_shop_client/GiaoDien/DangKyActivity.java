@@ -4,7 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.AlignmentSpan;
+import android.util.Log;
+import android.util.Patterns;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.regex.Pattern;
 
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_User;
@@ -83,26 +92,55 @@ public class DangKyActivity extends AppCompatActivity {
         String fullname = dangky_fullname.getText().toString().trim();
         String image = register_img.getText().toString().trim();
         String token = TOOLS.getToken(DangKyActivity.this);;
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
 
         if (TextUtils.isEmpty(username)){
             Toast.makeText(this, "Không được để trống Username", Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(phone)){
+        }
+        else if (TextUtils.isEmpty(phone)){
             Toast.makeText(this, "Không được để trống họ tên", Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(password)){
+        }
+        else if (TextUtils.isEmpty(password)){
             Toast.makeText(this, "Không được để trống password", Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(email)){
+        }
+        else if (TextUtils.isEmpty(email)){
             Toast.makeText(this, "Không được để trống email", Toast.LENGTH_SHORT).show();
-        }else {
+        }
+        else if (!pattern.matcher(email).matches()) {
+            Toast.makeText(this, "Email không hợp lệ", Toast.LENGTH_SHORT).show();
+        }
+        else {
             serviceUser = retrofit.create(ServiceUser.class);
             Call<UserModal> call = serviceUser.dangkiUser(new UserModal(username, password, email, phone, dob, fullname, token));
             call.enqueue(new Callback<UserModal>() {
                 @Override
                 public void onResponse(Call<UserModal> call, Response<UserModal> response) {
-                    Toast.makeText(DangKyActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(DangKyActivity.this, DangNhapActivity.class);
-                    startActivity(intent);
-
-                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                    if (response.isSuccessful()){
+                        Toast.makeText(DangKyActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(DangKyActivity.this, DangNhapActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                    }else{
+                        if (response.code() == 409) {
+                            Toast.makeText(DangKyActivity.this, "Tên tài khoản đã tồn tại", Toast.LENGTH_SHORT).show();
+                        } else if (response.code() == 401) {
+                            Spannable centeredText = new SpannableString("Đã có tài khoản sử dụng bằng email này");
+                            centeredText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, centeredText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            Toast toast = Toast.makeText(DangKyActivity.this,centeredText , Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                        else if (response.code() == 403) {
+                            Spannable centeredText = new SpannableString("Số điện thoại tài khoản đã tồn tại");
+                            centeredText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, centeredText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            Toast toast = Toast.makeText(DangKyActivity.this, centeredText, Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                        else {
+                            Toast.makeText(DangKyActivity.this, "Đăng ký thất bại, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
 
                 @Override
