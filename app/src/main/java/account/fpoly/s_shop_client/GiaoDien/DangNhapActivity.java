@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import account.fpoly.s_shop_client.API.API_User;
+import account.fpoly.s_shop_client.ForgetPassActivity;
 import account.fpoly.s_shop_client.MainActivity;
 import account.fpoly.s_shop_client.Modal.Address;
 import account.fpoly.s_shop_client.Modal.UserModal;
@@ -48,7 +49,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class DangNhapActivity extends AppCompatActivity {
-    TextView tvDangKy;
+    TextView tvDangKy, tvForgetPass;
     Button btnDangNhap;
     private TextInputEditText txtuser, txtpass;
     private List<UserModal> listUser = new ArrayList<>();
@@ -65,10 +66,19 @@ public class DangNhapActivity extends AppCompatActivity {
 
         tvDangKy = findViewById(R.id.tv_dangky);
         btnDangNhap = findViewById(R.id.btn_DangNhap);
+        tvForgetPass = findViewById(R.id.tv_forgetPass);
 
         txtuser = findViewById(R.id.txt_username);
         txtpass = findViewById(R.id.txt_password);
         savepass=findViewById(R.id.savePasswordCheckBox);
+
+        tvForgetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DangNhapActivity.this, ForgetPassActivity.class);
+                startActivity(intent);
+            }
+        });
         savepass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

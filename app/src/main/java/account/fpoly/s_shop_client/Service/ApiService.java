@@ -78,5 +78,11 @@ public interface ApiService {
     Call<Integer> tokenNotify(@Path("id_user") String id_user,@Body RequestBody requestBody);
     @POST("notify/add")
     Call<Notify> addNotify(@Body Notify notify);
+    @POST("api/sendOTP")
+    Call<Void> sendOTP(@Body RequestBody requestBody);
+    @POST("api/verifyOTP")
+    Call<Void> verifyOTP(@Body RequestBody requestBody);
+    @POST("api/resetPass")
+    Call<Void> resetPassword(@Body RequestBody requestBody);
 
 }
