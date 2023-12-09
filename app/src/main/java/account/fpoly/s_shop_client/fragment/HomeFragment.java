@@ -122,7 +122,16 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.addItemDecoration(itemDecoration);
         listproduct = new ArrayList<>();
 
-          refresh.setOnRefreshListener(this);
+//          refresh.setOnRefreshListener(this);
+
+          refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+              @Override
+              public void onRefresh() {
+                  callApiSeviceListProduct();
+                  callApiSeviceListProductHot();
+                  refresh.setRefreshing(false);
+              }
+          });
         callApiSeviceListProduct();
         callApiSeviceListProductHot();
 

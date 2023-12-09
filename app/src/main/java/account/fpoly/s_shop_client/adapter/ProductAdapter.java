@@ -50,6 +50,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private final Context context;
     private final IClickItemListener iClickItemListener;
     String iduser;
+
+
+
+
+
+
+
+
+
+
+
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
+
+
+
     public ProductAdapter(List<ProductModal> list, Context context, IClickItemListener iClickItemListener) {
         this.list = list;
         this.context=context;
@@ -74,6 +99,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         productViewHoder.PriceProduct.setText("" + productModal.getPrice());
         productViewHoder.Category.setText(""+ productModal.getId_cat().getName());
 
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(position);
+                }
+            }
+        });
 
 
 

@@ -433,7 +433,7 @@
                 <TextView
                     android:gravity="center"
                     android:id="@+id/thanhtoanmomo"
-                    android:layout_width="120dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background=" #b0006d"
                     android:text="Thanh toán qua ví MOMO"
