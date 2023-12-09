@@ -81,7 +81,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChitietProduct extends AppCompatActivity {
 
-    LinearLayout clickmua, chat, btn_add_cart;
+    LinearLayout clickmua, chat, btn_add_cart,hotro;
     ImageView back, chitiet_imgProduct,img_chuyen_gh;
     TextView chitiet_tenProduct, chitiet_giaProduct, chitiet_description,trademark,namecat,sizechart;
     String idProduct;
@@ -115,6 +115,7 @@ public class ChitietProduct extends AppCompatActivity {
         back = findViewById(R.id.back);
         chat = findViewById(R.id.chat);
         sizechart = findViewById(R.id.sizechart);
+        hotro = findViewById(R.id.hotro);
 
         chitiet_giaProduct = findViewById(R.id.chitiet_giaProduct);
         chitiet_tenProduct = findViewById(R.id.chitiet_tenProduct);
@@ -124,6 +125,13 @@ public class ChitietProduct extends AppCompatActivity {
         namecat = findViewById(R.id.namecat);
         LinearLayout linearLayout = findViewById(R.id.Ln_danhgia);
         sluongMuaText = findViewById(R.id.sluongMua);
+
+        hotro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), ContactUsActivity.class));
+            }
+        });
 
         sizechart.setOnClickListener(new View.OnClickListener() {
             @Override
