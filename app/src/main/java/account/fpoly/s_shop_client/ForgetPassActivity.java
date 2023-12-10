@@ -88,6 +88,8 @@ public class ForgetPassActivity extends AppCompatActivity {
                             ed_layoutOTP.setVisibility(View.GONE);
                             ln_resetPass.setVisibility(View.VISIBLE);
                             btn_getOTP.setText("Cập nhật");
+                        } else {
+                            Toast.makeText(ForgetPassActivity.this, "OTP không đúng!!!", Toast.LENGTH_SHORT).show();
                         }
                     }
 
