@@ -92,13 +92,14 @@ public class DangKyActivity extends AppCompatActivity {
         String fullname = dangky_fullname.getText().toString().trim();
         String image = register_img.getText().toString().trim();
         String token = TOOLS.getToken(DangKyActivity.this);;
-        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        Pattern patternemail = Patterns.EMAIL_ADDRESS;
+
 
         if (TextUtils.isEmpty(username)){
             Toast.makeText(this, "Không được để trống Username", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(phone)){
-            Toast.makeText(this, "Không được để trống họ tên", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Không được để số điện thoại", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(password)){
             Toast.makeText(this, "Không được để trống password", Toast.LENGTH_SHORT).show();
@@ -106,8 +107,11 @@ public class DangKyActivity extends AppCompatActivity {
         else if (TextUtils.isEmpty(email)){
             Toast.makeText(this, "Không được để trống email", Toast.LENGTH_SHORT).show();
         }
-        else if (!pattern.matcher(email).matches()) {
+        else if (!patternemail.matcher(email).matches()) {
             Toast.makeText(this, "Email không hợp lệ", Toast.LENGTH_SHORT).show();
+        }
+        else if (!isValidPhoneNumber(phone)) {
+            Toast.makeText(this, "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
         }
         else {
             serviceUser = retrofit.create(ServiceUser.class);
@@ -149,6 +153,12 @@ public class DangKyActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        // Biểu thức chính quy cho số điện thoại bắt đầu bằng 0 và có tổng cộng 10 chữ số
+        String phoneRegex = "^0[0-9]{9}$";
+        Pattern pattern = Pattern.compile(phoneRegex);
+        return pattern.matcher(phoneNumber).matches();
     }
 
 }
