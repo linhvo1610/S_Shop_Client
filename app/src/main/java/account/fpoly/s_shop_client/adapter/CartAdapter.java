@@ -143,7 +143,13 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     holder.tv_price.setText(TOOLS.convertPrice(cart.getQuantity() * cart.getPrice_product()));
                     replaceCartItem(cart);
                 });
-                holder.ln_delete.setOnClickListener(v -> deleteCart(holder, cart.get_id()));
+                holder.ln_delete.setOnClickListener(v -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Xóa sản phẩm " + cart.getName_product() + " khỏi giỏ hàng?");
+                    builder.setPositiveButton("Xóa", (dialog, which) -> deleteCart(holder, cart.get_id()));
+                    builder.setNegativeButton("Hủy", null);
+                    builder.create().show();
+                });
             } else if (holder1 instanceof CartHolderView1) {
                 CartHolderView1 holder = (CartHolderView1) holder1;
                 Picasso.get().load(API.api_image + cart.getImage()).into(holder.imv_image);

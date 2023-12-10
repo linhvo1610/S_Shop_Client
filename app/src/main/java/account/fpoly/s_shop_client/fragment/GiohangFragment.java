@@ -29,6 +29,7 @@ import account.fpoly.s_shop_client.MuaProduct;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.ApiService;
 import account.fpoly.s_shop_client.SplassActivity;
+import account.fpoly.s_shop_client.Tab_Giaodien_Activity;
 import account.fpoly.s_shop_client.Tools.ACCOUNT;
 import account.fpoly.s_shop_client.Tools.LIST;
 import account.fpoly.s_shop_client.Tools.TOOLS;
@@ -106,6 +107,10 @@ public class GiohangFragment extends Fragment {
             });
             return;
         }
+
+        btn_buy_cart.setOnClickListener(view -> {
+            startActivity(new Intent(getActivity(), Tab_Giaodien_Activity.class));
+        });
 
         adapter = new CartAdapter(requireContext(),false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
@@ -203,6 +208,7 @@ public class GiohangFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        cbox_check_all.setChecked(false);
         LIST.listBuyCart.clear();
         TOOLS.checkAllCarts = false;
         if(adapter!=null){
