@@ -2,6 +2,8 @@ package account.fpoly.s_shop_client.GiaoDien;
 
 import static java.lang.String.valueOf;
 
+import static account.fpoly.s_shop_client.API.API_Product.gson;
+
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
@@ -42,12 +44,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,6 +63,7 @@ import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_Product;
 import account.fpoly.s_shop_client.CommentActivity;
 import account.fpoly.s_shop_client.ContactUsActivity;
+import account.fpoly.s_shop_client.ImageBig;
 import account.fpoly.s_shop_client.Message;
 import account.fpoly.s_shop_client.Modal.BillMore;
 import account.fpoly.s_shop_client.Modal.Cart;
@@ -98,7 +103,8 @@ public class ChitietProduct extends AppCompatActivity {
     TextView sluongMuaText;
     String sluongMuaSP;
     int totalQuantityBills;
-
+    LinearLayout imageContainer;
+    String imagesJson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +114,7 @@ public class ChitietProduct extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
         SharedPreferences sharedPreferencesSluong = getSharedPreferences("billPro", MODE_PRIVATE);
         sluongMuaSP = sharedPreferencesSluong.getString("sluongMua", null);
+        imagesJson = sharedPreferences.getString("images",null);
         decimalFormat = new DecimalFormat("#,###");
 
         clickmua = findViewById(R.id.clickmua);
@@ -116,6 +123,7 @@ public class ChitietProduct extends AppCompatActivity {
         chat = findViewById(R.id.chat);
         sizechart = findViewById(R.id.sizechart);
         hotro = findViewById(R.id.hotro);
+        imageContainer = findViewById(R.id.imageContainer);
 
         chitiet_giaProduct = findViewById(R.id.chitiet_giaProduct);
         chitiet_tenProduct = findViewById(R.id.chitiet_tenProduct);
@@ -177,6 +185,38 @@ public class ChitietProduct extends AppCompatActivity {
 
         Picasso.get().load(API.api_image + imagePro).into(chitiet_imgProduct);
 
+// lay anhhh
+        Type type = new TypeToken<List<ProductModal.ImageItem>>(){}.getType();
+        List<ProductModal.ImageItem> imageItems = gson.fromJson(imagesJson, type);
+        if (imageItems != null) {
+            for (ProductModal.ImageItem imageItem : imageItems) {
+                String imageUrl = imageItem.getImage();
+                ImageView imageView = new ImageView(this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT
+                );
+                int width = 3400;
+                int height = 850;
+                imageView.setLayoutParams(layoutParams);
+                Glide.with(getBaseContext()).load(API.api_image + imageUrl)
+                        .override(width, height)
+                        .into(imageView);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        startActivity(new Intent(getBaseContext(), ImageBig.class));
+                        SharedPreferences sharedPreferencesImage = getSharedPreferences("image", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferencesImage.edit();
+                        editor.putString("link", imageUrl);
+                        editor.apply();
+                    }
+                });
+                imageContainer.addView(imageView);
+            }
+        }
+// --------------
 
         chat.setOnClickListener(new View.OnClickListener() {
             @Override

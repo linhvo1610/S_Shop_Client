@@ -25,12 +25,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +53,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private final Context context;
     private final IClickItemListener iClickItemListener;
     String iduser;
-
+    String firstImage;
 
 
 
@@ -116,7 +119,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         productViewHoder.PriceProduct.setText(Price);
 
 
-        Picasso.get().load(API.api_image + productModal.getImage()).into(holder.ImageProduct);
+//        Picasso.get().load(API.api_image + productModal.getImage()).into(holder.ImageProduct);
+// lay anh
+        List<ProductModal.ImageItem> images = productModal.getImages();
+        // Hiển thị ảnh đầu tiên từ danh sách hình ảnh (nếu có)
+        if (images != null && !images.isEmpty()) {
+            firstImage = images.get(0).getImage();
+            Glide.with(context).load("http://192.168.1.9:3000/" + firstImage).into(holder.ImageProduct);
+        }
+//----------
 
         int totalQuantity = 0;
         for (ProductModal.Size size : productModal.getSizes()) {
@@ -181,13 +192,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 editor.putString("idProduct", id);
                 editor.putString("tenProduct", productModal.getName());
                 editor.putString("giaProduct", productModal.getPrice());
-                editor.putString("anhProduct", productModal.getImage());
+                editor.putString("anhProduct", firstImage);
                 editor.putString("quantityPro", sluong);
                 editor.putString("descriptionPro", description);
-                editor.putString("image", productModal.getImage());
+                editor.putString("image", firstImage);
                 editor.putString("trademark", productModal.getTrademark());
                 editor.putString("namecat", productModal.getId_cat().getName());
                 editor.putString("importPrice", productModal.getImportPrice());
+
+
+// gui mang images
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<ProductModal.ImageItem>>(){}.getType();
+                String imagesJson = gson.toJson(productModal.getImages(), type);
+                editor.putString("images", imagesJson);
+
 
 
                 editor.apply();
@@ -199,7 +218,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 holder.PriceProduct.setText(""+sp.getPrice());
                 holder.Category.setText(""+sp.getId_cat().getName());
 
-                String urlImage = API.api+sp.getImage();
+                String urlImage = API.api+ firstImage;
                 Glide.with(holder.itemView).load(urlImage).into(holder.ImageProduct);
 
 

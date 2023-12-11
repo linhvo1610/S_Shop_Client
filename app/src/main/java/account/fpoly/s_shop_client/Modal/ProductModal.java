@@ -17,8 +17,29 @@ public class ProductModal {
     private  String description;
     private List<Size> sizes;
     private  CatModal id_cat;
-    private String image;
+//    private String image;
     private String gianhap;
+
+    List<ImageItem> images;
+    public class ImageItem {
+        private String image;
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+    }
+
+    public List<ImageItem> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ImageItem> images) {
+        this.images = images;
+    }
 
     public static class Size {
         private int size;
@@ -97,13 +118,13 @@ public class ProductModal {
         this.id_cat = id_cat;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
+//    public String getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(String image) {
+//        this.image = image;
+//    }
 
     public String getImportPrice() {
         return gianhap;
