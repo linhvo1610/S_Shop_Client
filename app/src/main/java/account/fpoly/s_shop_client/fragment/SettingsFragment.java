@@ -1,6 +1,7 @@
 package account.fpoly.s_shop_client.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,9 +29,11 @@ import java.util.Arrays;
 
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.API.API_User;
+import account.fpoly.s_shop_client.AddressActivity;
 import account.fpoly.s_shop_client.ContactUsActivity;
 import account.fpoly.s_shop_client.DaGiao_activity;
 import account.fpoly.s_shop_client.DangGiao_Activity;
+import account.fpoly.s_shop_client.GiaoDien.DangNhapActivity;
 import account.fpoly.s_shop_client.HistoryOrderClient;
 import account.fpoly.s_shop_client.HuyBill;
 import account.fpoly.s_shop_client.InfoUserActivity;
@@ -44,31 +47,52 @@ import account.fpoly.s_shop_client.thongtinUser;
 
 public class SettingsFragment extends Fragment {
     ImageView imginfo, imghistory;
-    String image,curidUser,fullname;
-    TextView txtfullname;
+    String image,curidUser,fullname,sdt;
+    TextView txtfullname,txtsdt,txtdiachi;
     API_User api_user;
-    LinearLayout linnerXacnhan,linnerDanggiao,xacnhanPro,huyBill,ln_thongtin,ln_thongbao;
+    LinearLayout linnerXacnhan,linnerDanggiao,xacnhanPro,huyBill,ln_thongtin,ln_thongbao,ln_diachi,ln_ds;
     LinearLayout ln_cart_emty,updatepass,contactus;
     Button btn_buy_cart;
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_setting_user, container, false);
         imginfo = view.findViewById(R.id.imginfo);
         txtfullname = view.findViewById(R.id.txtfullname);
+        ln_diachi=view.findViewById(R.id.ln_diachi_setting);
+        ln_ds=view.findViewById(R.id.ln_ds);
+        txtsdt=view.findViewById(R.id.txtsdt);
         linnerXacnhan = view.findViewById(R.id.linnerXacnhan);
         linnerDanggiao = view.findViewById(R.id.linnerDanggiao);
         xacnhanPro = view.findViewById(R.id.xacnhanPro);
         huyBill = view.findViewById(R.id.huyBill);
         ln_cart_emty=view.findViewById(R.id.ln_cart_emty);
         btn_buy_cart=view.findViewById(R.id.btn_buy_cart);
-        ln_thongtin=view.findViewById(R.id.ln_thongtin);
+//        ln_thongtin=view.findViewById(R.id.ln_thongtin);
         updatepass=view.findViewById(R.id.updatepass);
         contactus = view.findViewById(R.id.contact_us);
         ln_thongbao= view.findViewById(R.id.ln_thongbao_setting);
+        ln_ds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+//                    Intent intent = new Intent(getContext(), DangNhapActivity.class);
+//                    getActivity();
+//                    SharedPreferences preferences= getSharedPreferences("infoUser", Context.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor=preferences.edit();
+//                    editor.remove("token");
+//                    editor.apply();
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(intent);
+
+                }
+
+
+
+
+        });
 
         contactus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +105,13 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), NotifyActivity.class);
+                startActivity(intent);
+            }
+        });
+        ln_diachi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), AddressActivity.class);
                 startActivity(intent);
             }
         });
@@ -99,12 +130,12 @@ public class SettingsFragment extends Fragment {
                 startActivity(new Intent(getContext(), HuyBill.class));
             }
         });
-        ln_thongtin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), thongtinUser.class));
-            }
-        });
+//        ln_thongtin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getContext(), thongtinUser.class));
+//            }
+//        });
         linnerXacnhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +165,21 @@ public class SettingsFragment extends Fragment {
         image=sharedPreferences.getString("image",null);
         curidUser=sharedPreferences.getString("iduser",null);
         fullname = sharedPreferences.getString("fullname", null);
+        sdt =sharedPreferences.getString("phone",null);
+
+        if (sdt == null || sdt.equals("")){
+            txtsdt.setText("Cập nhật số điện thoại của bạn ");
+            txtsdt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getContext(), InfoUserActivity.class));
+                }
+            });
+        }else {
+            txtsdt.setText(sdt);
+        }
+
+
 
 
         if (fullname == null || fullname.equals("")){
@@ -220,4 +266,5 @@ public class SettingsFragment extends Fragment {
         });
         requestQueue.add(jsonObjectRequest);
     }
+
 }
