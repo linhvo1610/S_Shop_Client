@@ -369,9 +369,7 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
         SharedPreferences preferencesUser = getSharedPreferences("infoUser",MODE_PRIVATE);
         iduser = preferencesUser.getString("iduser",null);
         imagePro = sharedPreferences.getString("image", null);
-
-
-
+        Log.d("imaaaaageeeeee",imagePro);
         fullname = preferencesUser.getString("fullname",null);
         phone = preferencesUser.getString("phone",null);
         addressU = preferencesUser.getString("addressUser",null);

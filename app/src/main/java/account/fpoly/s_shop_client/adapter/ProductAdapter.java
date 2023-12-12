@@ -54,16 +54,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private final IClickItemListener iClickItemListener;
     String iduser;
     String firstImage;
-
-
-
-
-
-
-
-
-
-
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
@@ -125,7 +115,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         // Hiển thị ảnh đầu tiên từ danh sách hình ảnh (nếu có)
         if (images != null && !images.isEmpty()) {
             firstImage = images.get(0).getImage();
-            Glide.with(context).load("http://192.168.1.9:3000/" + firstImage).into(holder.ImageProduct);
+            Glide.with(context).load(API.api_image + firstImage).into(holder.ImageProduct);
         }
 //----------
 
@@ -185,7 +175,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         productViewHoder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                List<ProductModal.ImageItem> images = productModal.getImages();
+                if (images != null && !images.isEmpty()) {
+                    firstImage = images.get(0).getImage();
+                }
 //                Log.d("TAG", "sizeeeee: "+ finalSizes);
                 SharedPreferences sharedPreferences = context.getSharedPreferences("product", context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
