@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import account.fpoly.s_shop_client.API.API;
+
 public class ImageBig extends AppCompatActivity {
     ImageView imageBig;
     @Override
@@ -32,7 +34,7 @@ public class ImageBig extends AppCompatActivity {
         SharedPreferences sharedPreferencesImage = getSharedPreferences("image", MODE_PRIVATE);
         String link = sharedPreferencesImage.getString("link", null);
 
-        Glide.with(getBaseContext()).load("http://192.168.1.9:3000/"+ link)
+        Glide.with(getBaseContext()).load(API.api_image + link)
                 .into(imageBig);
 
     }
