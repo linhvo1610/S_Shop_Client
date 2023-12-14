@@ -78,14 +78,14 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-//                    Intent intent = new Intent(getContext(), DangNhapActivity.class);
-//                    getActivity();
-//                    SharedPreferences preferences= getSharedPreferences("infoUser", Context.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor=preferences.edit();
-//                    editor.remove("token");
-//                    editor.apply();
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getContext(), DangNhapActivity.class);
+                    getActivity();
+                    SharedPreferences preferences= getActivity().getSharedPreferences("infoUser", getActivity().MODE_PRIVATE);
+                    SharedPreferences.Editor editor=preferences.edit();
+                    editor.remove("token");
+                    editor.apply();
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
 
                 }
 

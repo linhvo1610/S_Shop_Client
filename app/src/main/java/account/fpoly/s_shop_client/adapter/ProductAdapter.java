@@ -88,7 +88,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         ProductViewHoder productViewHoder = holder;
         ProductModal productModal = list.get(position);
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        productViewHoder.NameProduct.setText("" + productModal.getName());
+//        productViewHoder.NameProduct.setText("" + productModal.getName());
+
+        String productName = productModal.getName();
+
+// Check if the length of the product name is greater than 30 characters
+        if (productName.length() > 50) {
+            // If yes, truncate the string to the first 30 characters and append "..."
+            productName = productName.substring(0, 30) + "...";
+        }
+
+// Set the truncated product name in the TextView
+        productViewHoder.NameProduct.setText(productName);
+
         productViewHoder.PriceProduct.setText("" + productModal.getPrice());
         productViewHoder.Category.setText(""+ productModal.getId_cat().getName());
 

@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -91,6 +92,7 @@ public class ChitietProduct extends AppCompatActivity {
     TextView chitiet_tenProduct, chitiet_giaProduct, chitiet_description,trademark,namecat,sizechart;
     String idProduct;
     String imagePro;
+    Button add_Cart;
 
 
 
@@ -196,7 +198,7 @@ public class ChitietProduct extends AppCompatActivity {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT
                 );
-                int width = 3400;
+                int width = 3900;
                 int height = 850;
                 imageView.setLayoutParams(layoutParams);
                 Glide.with(getBaseContext()).load(API.api_image + imageUrl)
@@ -253,6 +255,7 @@ public class ChitietProduct extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showBottomSheet(false);
+                add_Cart.setText("Thêm vào giỏ hàng");
             }
         });
     }
@@ -492,7 +495,12 @@ public class ChitietProduct extends AppCompatActivity {
         bottomSheetDialog.show();
         isDialogOpen = true;
 
-        bottomView.findViewById(R.id.muasp).setOnClickListener(v -> {
+        add_Cart = bottomView.findViewById(R.id.muasp);
+
+        add_Cart.setOnClickListener(v -> {
+//            runOnUiThread(() -> {
+//                add_Cart.setText("Thêm vào giỏ hàng");
+//            });
             Cart cart = new Cart();
 
             if (ACCOUNT.user == null){
@@ -545,26 +553,6 @@ public class ChitietProduct extends AppCompatActivity {
                         return;
                     }
                     if (newValue > soluongSize){
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
-//                        View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_check, null);
-//                        builder.setView(view);
-//                        AlertDialog dialog = builder.create();
-//                        ImageView imageView = view.findViewById(R.id.imageView);
-//// Tạo hiệu ứng chuông rung
-//                        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
-//                        animator.setDuration(1000);
-//                        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-//                        animator.setRepeatCount(ObjectAnimator.INFINITE);
-//                        animator.start();
-//                        Handler handler = new Handler();
-//                        handler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                dialog.dismiss();
-//                            }
-//                        }, 1700);
-//                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                        dialog.show();
                         Toast.makeText(this, "Sản phẩm quá số lượng ", Toast.LENGTH_SHORT).show();
                         return;
                     }

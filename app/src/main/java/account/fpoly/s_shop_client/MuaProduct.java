@@ -96,6 +96,8 @@ public class MuaProduct extends AppCompatActivity {
     private String merchantCode = "MOMOC2IC20220510";
     private String merchantNameLabel = "Nhà cung cấp";
     private String description = "Thanh toán ";
+    private boolean isChoosingMomo = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +127,7 @@ public class MuaProduct extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<BillMore> call, @NonNull Response<BillMore> response) {
                         if (response.isSuccessful() ) {
+                            isChoosingMomo = true;
                             if (LIST.listBuyCart != null && GiohangFragment.cartList != null) {
                                 if (LIST.listBuyCart.size() != GiohangFragment.cartList.size()) {
                                     for (int i = 0; i < GiohangFragment.cartList.size(); i++) {
@@ -144,9 +147,11 @@ public class MuaProduct extends AppCompatActivity {
                             AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                             View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_thongbao, null);
                             builder.setView(view);
-                            AlertDialog dialog = builder.create();
+                             dialog = builder.create();
 
                             ImageView imageView = view.findViewById(R.id.imageView);
+                            TextView title = view.findViewById(R.id.title);
+                            title.setText("Mở ứng dụng MOMO");
 // Tạo hiệu ứng chuông rung
                             ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
                             animator.setDuration(1000);
@@ -155,14 +160,6 @@ public class MuaProduct extends AppCompatActivity {
                             animator.start();
                             requestPayment(billMore.get_id());
 
-//                            Handler handler = new Handler();
-//                            handler.postDelayed(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    dialog.dismiss();
-//                                    startActivity(new Intent(getBaseContext(), Tab_Giaodien_Activity.class));
-//                                }
-//                            }, 2500);
                             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             dialog.show();
 
@@ -209,6 +206,23 @@ public class MuaProduct extends AppCompatActivity {
             }
         });
     }
+    AlertDialog dialog;
+    private boolean isReturningFromMomo = false;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+            if (!isChoosingMomo) {
+                isReturningFromMomo = true;
+                startActivity(new Intent(getBaseContext(), Tab_Giaodien_Activity.class));
+            }
+        }
+
+
+    }
+
     private SharedPreferences sharedPreferences;
 
     //Get token through MoMo app
@@ -302,6 +316,11 @@ public class MuaProduct extends AppCompatActivity {
 
         // Thực hiện cập nhật dữ liệu ở đây
         layDulieu();
+        if (isReturningFromMomo) {
+            // Thực hiện các hành động cần thiết khi quay lại từ Momo
+            // Ví dụ: Hiển thị thanh toán hoặc trang liên quan
+            isReturningFromMomo = false; // Đặt lại trạng thái
+        }
     }
  int tongtienHang;
     @SuppressLint("SetTextI18n")
