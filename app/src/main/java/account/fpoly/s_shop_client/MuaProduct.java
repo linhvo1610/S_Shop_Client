@@ -123,59 +123,8 @@ public class MuaProduct extends AppCompatActivity {
                     Toast.makeText(MuaProduct.this, "Vui lòng chọn địa chỉ", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ApiService.apiService.createBill(ACCOUNT.user.getToken(),billMore).enqueue(new Callback<BillMore>() {
-                    @Override
-                    public void onResponse(@NonNull Call<BillMore> call, @NonNull Response<BillMore> response) {
-                        if (response.isSuccessful() ) {
-                            isChoosingMomo = true;
-                            if (LIST.listBuyCart != null && GiohangFragment.cartList != null) {
-                                if (LIST.listBuyCart.size() != GiohangFragment.cartList.size()) {
-                                    for (int i = 0; i < GiohangFragment.cartList.size(); i++) {
-                                        for (int j = 0; j < LIST.listBuyCart.size(); j++) {
-                                            if (GiohangFragment.cartList.get(i).get_id().equals(LIST.listBuyCart.get(j).get_id())) {
-                                                GiohangFragment.cartList.remove(i);
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            if (LIST.listBuyCart != null) {
-                                LIST.listBuyCart.clear();
-                            }
-                            TOOLS.checkAllCarts = false;
-                            AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                            View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_thongbao, null);
-                            builder.setView(view);
-                             dialog = builder.create();
+                requestPayment(billMore.get_id());
 
-                            ImageView imageView = view.findViewById(R.id.imageView);
-                            TextView title = view.findViewById(R.id.title);
-                            title.setText("Mở ứng dụng MOMO");
-// Tạo hiệu ứng chuông rung
-                            ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
-                            animator.setDuration(1000);
-                            animator.setInterpolator(new AccelerateDecelerateInterpolator());
-                            animator.setRepeatCount(ObjectAnimator.INFINITE);
-                            animator.start();
-                            requestPayment(billMore.get_id());
-
-                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                            dialog.show();
-
-                        }
-                        else {
-
-                            Toast.makeText(MuaProduct.this, response.message()+"", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-
-                    @Override
-                    public void onFailure(@NonNull Call<BillMore> call, @NonNull Throwable t) {
-                        Toast.makeText(MuaProduct.this, "Lỗi!", Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
         });
          // AppMoMoLib.ENVIRONMENT.PRODUCTION
@@ -252,11 +201,7 @@ public class MuaProduct extends AppCompatActivity {
         JSONObject objExtraData = new JSONObject();
         try {
             objExtraData.put("site_code", "008");
-            objExtraData.put("site_name", "CGV Cresent Mall");
-            objExtraData.put("screen_code", 0);
-            objExtraData.put("screen_name", "Special");
-            objExtraData.put("movie_name", "Kẻ Trộm Mặt Trăng 3");
-            objExtraData.put("movie_format", "2D");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -268,47 +213,9 @@ public class MuaProduct extends AppCompatActivity {
     }
 //    Get token callback from MoMo app an submit to server side
 
-    @Override
-    public void onActivityReenter(int resultCode, Intent data) {
-        super.onActivityReenter(resultCode, data);
 
-            if(resultCode == AppMoMoLib.getInstance().REQUEST_CODE_MOMO && resultCode == -1) {
-                if(data != null) {
-                    if(data.getIntExtra("status", -1) == 0) {
-                        //TOKEN IS AVAILABLE
-                        Log.d("Thành công",data.getStringExtra("message"));
-                        String token = data.getStringExtra("data"); //Token response
-                        String phoneNumber = data.getStringExtra("phonenumber");
-                        String env = data.getStringExtra("env");
-                        if(env == null){
-                            env = "app";
-                        }
 
-                        if(token != null && !token.equals("")) {
-                            // TODO: send phoneNumber & token to your server side to process payment with MoMo server
-                            // IF Momo topup success, continue to process your order
-                        } else {
-                            Log.d(" ko Thành công",data.getStringExtra("message"));
-                        }
-                    } else if(data.getIntExtra("status", -1) == 1) {
-                        //TOKEN FAIL
-                        String message = data.getStringExtra("message") != null?data.getStringExtra("message"):"Thất bại";
-                        Log.d(" ko Thành công",data.getStringExtra("message"));
-                    } else if(data.getIntExtra("status", -1) == 2) {
-                        //TOKEN FAIL
-                        Log.d(" ko Thành công",data.getStringExtra("message"));
-                    } else {
-                        //TOKEN FAIL
-                        Log.d(" ko Thành công",data.getStringExtra("message"));
-                    }
-                } else {
-                    Log.d(" ko Thành công",data.getStringExtra("message"));
-                }
-            } else {
-                Log.d(" ko Thành công",data.getStringExtra("message"));
-            }
 
-    }
 
     @Override
     public void onResume() {
@@ -369,6 +276,166 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
                 tv_address.setText(address.getAddress()+", "+address.getWards() + ", " + address.getDistrict() + ", " + address.getProvince());
 
             }
+        } else if (requestCode == AppMoMoLib.getInstance().REQUEST_CODE_MOMO && resultCode == RESULT_OK) {
+            if (data != null) {
+                if (data.getIntExtra("status", -1) == 0) {
+                    // TOKEN IS AVAILABLE
+                    Log.d("Thành công", data.getStringExtra("message"));
+                    String token = data.getStringExtra("data"); // Token response
+                    String phoneNumber = data.getStringExtra("phonenumber");
+                    String env = data.getStringExtra("env");
+                    if (env == null) {
+                        env = "app";
+                    }
+
+                    if (token != null && !token.equals("")) {
+                        // TODO: gửi phoneNumber và token đến phía máy chủ để xử lý thanh toán với máy chủ MoMo
+                        // Nếu Momo nạp tiền thành công, tiếp tục xử lý đơn hàng của bạn
+                        Log.d("Thành công", "onActivityResult: " );
+                        ApiService.apiService.createBill(ACCOUNT.user.getToken(),billMore).enqueue(new Callback<BillMore>() {
+                            @Override
+                            public void onResponse(@NonNull Call<BillMore> call, @NonNull Response<BillMore> response) {
+                                if (response.isSuccessful() ) {
+                                    isChoosingMomo = true;
+                                    if (LIST.listBuyCart != null && GiohangFragment.cartList != null) {
+                                        if (LIST.listBuyCart.size() != GiohangFragment.cartList.size()) {
+                                            for (int i = 0; i < GiohangFragment.cartList.size(); i++) {
+                                                for (int j = 0; j < LIST.listBuyCart.size(); j++) {
+                                                    if (GiohangFragment.cartList.get(i).get_id().equals(LIST.listBuyCart.get(j).get_id())) {
+                                                        GiohangFragment.cartList.remove(i);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (LIST.listBuyCart != null) {
+                                        LIST.listBuyCart.clear();
+                                    }
+                                    TOOLS.checkAllCarts = false;
+//
+
+
+//
+
+                                }
+                                else {
+
+                                    Toast.makeText(MuaProduct.this, response.message()+"", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+
+                            @Override
+                            public void onFailure(@NonNull Call<BillMore> call, @NonNull Throwable t) {
+                                Toast.makeText(MuaProduct.this, "Lỗi!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MuaProduct.this);
+                        View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_thongbao, null);
+                        builder.setView(view);
+                        dialog = builder.create();
+
+                        ImageView imageView = view.findViewById(R.id.imageView);
+                        TextView title = view.findViewById(R.id.title);
+                        title.setText("Bạn đã thanh toán thành công");
+// Tạo hiệu ứng chuông rung
+                        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                        animator.setDuration(3000);
+                        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                        animator.setRepeatCount(ObjectAnimator.INFINITE);
+                        animator.start();
+//                        requestPayment(billMore.get_id());
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                startActivity(new Intent(getBaseContext(), Tab_Giaodien_Activity.class));
+                            }
+                        }, 3000);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MuaProduct.this);
+                        View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_thongbao, null);
+                        builder.setView(view);
+                        dialog = builder.create();
+
+                        ImageView imageView = view.findViewById(R.id.imageView);
+                        TextView title = view.findViewById(R.id.title);
+                        title.setText("Thanh toán bị hủy bỏ");
+// Tạo hiệu ứng chuông rung
+                        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                        animator.setDuration(3000);
+                        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                        animator.setRepeatCount(ObjectAnimator.INFINITE);
+                        animator.start();
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+                    }
+                } else if (data.getIntExtra("status", -1) == 1) {
+                    // TOKEN FAIL
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MuaProduct.this);
+                    View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_thongbao, null);
+                    builder.setView(view);
+                    dialog = builder.create();
+
+                    ImageView imageView = view.findViewById(R.id.imageView);
+                    TextView title = view.findViewById(R.id.title);
+                    title.setText("Thanh toán bị hủy bỏ");
+
+// Tạo hiệu ứng chuông rung
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                    animator.setDuration(3000);
+                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                    animator.setRepeatCount(ObjectAnimator.INFINITE);
+                    animator.start();
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+                } else if (data.getIntExtra("status", -1) == 2) {
+                    // TOKEN FAIL
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MuaProduct.this);
+                    View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_thongbao, null);
+                    builder.setView(view);
+                    dialog = builder.create();
+
+                    ImageView imageView = view.findViewById(R.id.imageView);
+                    TextView title = view.findViewById(R.id.title);
+                    title.setText("Thanh toán bị hủy bỏ");
+// Tạo hiệu ứng chuông rung
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                    animator.setDuration(3000);
+                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                    animator.setRepeatCount(ObjectAnimator.INFINITE);
+                    animator.start();
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+                } else {
+                    // TOKEN FAIL
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MuaProduct.this);
+                    View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_thongbao, null);
+                    builder.setView(view);
+                    dialog = builder.create();
+
+                    ImageView imageView = view.findViewById(R.id.imageView);
+                    TextView title = view.findViewById(R.id.title);
+                    title.setText("Thanh toán bị hủy bỏ");
+// Tạo hiệu ứng chuông rung
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", 0f, -15f, 20f, -15f, 0f);
+                    animator.setDuration(3000);
+                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                    animator.setRepeatCount(ObjectAnimator.INFINITE);
+                    animator.start();
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+                }
+            } else {
+                Log.d(" ko Thành công", "Data là null");
+            }
+        } else {
+            Log.d(" ko Thành công", "Result code hoặc request code không khớp");
         }
 
 }
