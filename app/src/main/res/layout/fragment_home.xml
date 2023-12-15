@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/swiperefreshlayout"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HomeFragment">
 
@@ -159,80 +159,88 @@
                 android:textAllCaps="false"/>
 
         </LinearLayout>
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-            <LinearLayout
-                android:id="@+id/ln_home"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#EFEFEF"
-                >
+       <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+           android:layout_width="match_parent"
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="10dp"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sản phẩm mới "
-                        android:textSize="14dp"
-                        android:textColor="@color/black"
-                        />
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:src="@drawable/next"
-                        android:layout_gravity="center"
-                        />
-                </LinearLayout>
+           android:layout_height="match_parent"
+           android:id="@+id/swiperefreshlayout"
+           >
+           <ScrollView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               >
+               <LinearLayout
+                   android:id="@+id/ln_home"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   android:background="#EFEFEF"
+                   >
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_new"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    tools:listitem="@layout/iteam_product_hot" />
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_marginTop="8dp"
+                       android:layout_gravity="right"
+                       android:layout_marginRight="10dp"
+                       >
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="Sản phẩm mới "
+                           android:textSize="14dp"
+                           android:textColor="@color/black"
+                           />
+                       <ImageView
+                           android:layout_width="10dp"
+                           android:layout_height="10dp"
+                           android:src="@drawable/next"
+                           android:layout_gravity="center"
+                           />
+                   </LinearLayout>
 
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="left"
-                    android:background="@color/white"
-                    >
-                    <TextView
-                        android:id="@+id/chuyen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:text="Gợi ý cho bạn "
-                        android:layout_marginLeft="8dp"
-                        android:gravity="center"
-                        android:textColor="@color/colorAccrnt"
-                        />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_product"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="2"
-                    tools:listitem="@layout/iteam_product" />
-            </LinearLayout>
+                   <androidx.recyclerview.widget.RecyclerView
+                       android:id="@+id/rcv_new"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                       tools:listitem="@layout/iteam_product_hot" />
 
 
-        </ScrollView>
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:gravity="left"
+                       android:background="@color/white"
+                       >
+                       <TextView
+                           android:id="@+id/chuyen"
+                           android:layout_width="wrap_content"
+                           android:layout_height="25dp"
+                           android:text="Gợi ý cho bạn "
+                           android:layout_marginLeft="8dp"
+                           android:gravity="center"
+                           android:textColor="@color/colorAccrnt"
+                           />
+                   </LinearLayout>
+
+                   <androidx.recyclerview.widget.RecyclerView
+                       android:id="@+id/rcv_product"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                       app:spanCount="2"
+                       tools:listitem="@layout/iteam_product" />
+
+               </LinearLayout>
+
+
+           </ScrollView>
+       </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </LinearLayout>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>
