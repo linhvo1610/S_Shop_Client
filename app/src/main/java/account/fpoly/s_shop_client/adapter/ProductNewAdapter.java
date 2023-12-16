@@ -69,9 +69,12 @@ public class ProductNewAdapter extends RecyclerView.Adapter<ProductNewAdapter.Pr
         String productName = productModal.getName();
 
 // Check if the length of the product name is greater than 30 characters
-        if (productName.length() > 20) {
+        if (productName.length() > 30) {
             // If yes, truncate the string to the first 30 characters and append "..."
-            productName = productName.substring(0, 30) + "...";
+//            productName = productName.substring(0, 30) + "...";
+            int maxLength = 30;
+            productName = productName.length() > maxLength ? productName.substring(0, maxLength) + "..." : productName;
+
         }
 
 // Set the truncated product name in the TextView
