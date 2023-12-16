@@ -50,7 +50,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             @Override
             public void onResponse(Call<Notify> call, Response<Notify> response) {
                 if (response.isSuccessful()){
-                    Toast.makeText(MyFirebaseMessagingService.this, "Đã thêm thông báo", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MyFirebaseMessagingService.this, "Đã thêm thông báo", Toast.LENGTH_SHORT).show();
                 }
             }
 

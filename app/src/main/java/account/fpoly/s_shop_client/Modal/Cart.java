@@ -1,6 +1,7 @@
 package account.fpoly.s_shop_client.Modal;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Cart implements Serializable {
     private String _id;

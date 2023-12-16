@@ -280,6 +280,21 @@
                         android:text="Thương hiệu:"
                         android:textSize="16dp" />
 
+                    <TextView
+                        android:id="@+id/trademark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:text="Thuong hieu sp"
+                        android:textSize="16dp" />
+                    <TextView
+                        android:id="@+id/testname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="nametesst"
+                        android:textColor="@color/colorAccrnt"
+                        />
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -391,13 +406,7 @@ Return Policy 🔄
 ▶️ Return And Exchange is allowed as long as the item is not yet worn and use."
                         />
 
-                    <TextView
-                        android:id="@+id/trademark"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:text="Thuong hieu sp"
-                        android:textSize="16dp" />
+
 
                 </LinearLayout>
             </LinearLayout>

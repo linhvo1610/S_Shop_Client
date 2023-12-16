@@ -21,7 +21,7 @@ public class ProductModal {
     private String gianhap;
 
     List<ImageItem> images;
-    public class ImageItem {
+    public static class ImageItem {
         private String image;
 
         public String getImage() {
