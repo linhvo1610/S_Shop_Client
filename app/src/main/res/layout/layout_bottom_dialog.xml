@@ -126,41 +126,22 @@
             android:textSize="16dp"
             android:layout_gravity="center"
             />
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-<!--        <RadioButton-->
-<!--            android:id="@+id/checkBoxSize40"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:text="40"-->
-<!--            android:textSize="15sp"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:button="@drawable/custom_checkbox"-->
-<!--            android:gravity="center"-->
-<!--            android:background="#EAEAEA"-->
-<!--            />-->
 
-<!--        <RadioButton-->
-<!--            android:id="@+id/checkBoxSize41"-->
-<!--            android:layout_width="65dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:text="41"-->
-<!--            android:textSize="15sp"-->
-<!--            android:layout_marginLeft="10dp"-->
-<!--            android:button="@drawable/custom_checkbox"-->
-<!--            android:gravity="center"-->
-<!--            android:background="#EAEAEA"-->
-<!--            />-->
-        </RadioGroup>
 
 
 
     </LinearLayout>
-
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+    </RadioGroup>
+    </HorizontalScrollView>
 
     <LinearLayout
         android:id="@+id/checkboxLayout"

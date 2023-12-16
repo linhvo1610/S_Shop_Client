@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -380,9 +381,7 @@ public class ChitietProduct extends AppCompatActivity {
                             JSONArray dataArray = response.getJSONArray("data");
                             for (int i = 0; i < dataArray.length(); i++) {
                                 JSONObject item = dataArray.getJSONObject(i);
-
-                                List<Integer> sizeList = new ArrayList<>(); // Sử dụng List để lưu trữ các size
-
+                                List<Integer> sizeList = new ArrayList<>();
                                 JSONArray sizesArray = item.getJSONArray("sizes");
                                 for (int j = 0; j < sizesArray.length(); j++) {
                                     JSONObject sizeItem = sizesArray.getJSONObject(j);
@@ -392,10 +391,8 @@ public class ChitietProduct extends AppCompatActivity {
                                         sizeList.add(size); // Thêm size vào danh sách
                                     }
                                 }
-
                                 // Sắp xếp danh sách size từ thấp đến cao
                                 Collections.sort(sizeList);
-
                                 for (int k = 0; k < sizeList.size(); k++) {
                                     final int currentSize = sizeList.get(k);
                                     int currentQuantity = 0;
@@ -409,11 +406,6 @@ public class ChitietProduct extends AppCompatActivity {
                                         }
                                     }
 
-                                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                                            LinearLayout.LayoutParams.WRAP_CONTENT
-                                    );
-                                    params.setMargins(10, 0, 0, 0);
                                     RadioButton radioButton = new RadioButton(getBaseContext());
                                     radioButton.setId(View.generateViewId());
                                     radioButton.setText(String.valueOf(currentSize));
@@ -421,19 +413,22 @@ public class ChitietProduct extends AppCompatActivity {
                                     radioButton.setHeight(90);
                                     radioButton.setWidth(160);
                                     radioButton.setBackgroundResource(R.color.colorAccrnt);
-                                    radioButton.setLayoutParams(params);
+
                                     radioButton.setTextSize(15);
                                     radioButton.setGravity(Gravity.CENTER);
                                     radioButton.setButtonTintList(ColorStateList.valueOf(Color.GRAY));
-
+                                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                                            LinearLayout.LayoutParams.WRAP_CONTENT
+                                    );
+                                    params.setMargins(10, 0, 0, 0);
+                                    radioButton.setLayoutParams(params);
                                     SharedPreferences sharedPreferences1 = getSharedPreferences("size", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences1.edit();
                                     editor.clear();
                                     editor.apply();
-
                                     int finalCurrentQuantity = currentQuantity;
                                     String finalCurrentID = currentID;
-
                                     radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
                                         if (isChecked) {
                                             layoutSize.setVisibility(View.VISIBLE);
@@ -466,8 +461,6 @@ public class ChitietProduct extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-
-
                 }, error -> {
         });
         requestQueue.add(jsonObjectRequest);
