@@ -87,6 +87,7 @@ public class DangGiao_Activity extends AppCompatActivity {
                         for (int j = 0; j < jsonArrayList.length(); j++) {
                             JSONObject jsonObjectList = jsonArrayList.getJSONObject(j);
                             Cart cart = new Cart();
+                            cart.setId_product(jsonObjectList.getString("id_product"));
                             cart.setSize(jsonObjectList.getInt("size"));
                             cart.setQuantity(jsonObjectList.getInt("quantity"));
                             cart.setPrice_product(jsonObjectList.getInt("price_product"));
