@@ -107,10 +107,24 @@ public class ChitietProduct extends AppCompatActivity {
     int totalQuantityBills;
     LinearLayout imageContainer;
     String imagesJson;
+    TextView testname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chitiet_product);
+
+        testname =  findViewById(R.id.testname);
+        testname.setVisibility(View.GONE);
+//        SharedPreferences sharedPreferencesCart = getSharedPreferences("cartpro", MODE_PRIVATE);
+//        String namecart = sharedPreferencesCart.getString("tenProduct",null);
+//        // Check for null before setting the value to the TextView
+//        if (namecart != null) {
+//            testname.setText(namecart);
+//        } else {
+//            // Handle the case where the value is null, for example, set a default value or show an error message
+//            testname.setText("Default Value"); // or testname.setText("Error: Value is null");
+//        }
+
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("product", MODE_PRIVATE);
@@ -168,6 +182,7 @@ public class ChitietProduct extends AppCompatActivity {
 
         String priceProduct = sharedPreferences.getString("giaProduct", null);
         idProduct = sharedPreferences.getString("idProduct", null);
+
 //        chitiet_giaProduct.setText(priceProduct);
         int priceFormatPro = Integer.parseInt(priceProduct);
         String PricePro = decimalFormat.format(priceFormatPro);
@@ -632,4 +647,5 @@ public class ChitietProduct extends AppCompatActivity {
         bottomSheetDialog.show();
         isDialogOpen = true;
     }
+
 }

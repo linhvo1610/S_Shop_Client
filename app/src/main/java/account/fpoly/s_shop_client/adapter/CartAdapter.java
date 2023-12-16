@@ -1,10 +1,14 @@
 package account.fpoly.s_shop_client.adapter;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +19,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import account.fpoly.s_shop_client.API.API;
 import account.fpoly.s_shop_client.GiaoDien.ChitietProduct;
 import account.fpoly.s_shop_client.Modal.Cart;
+import account.fpoly.s_shop_client.Modal.ProductModal;
 import account.fpoly.s_shop_client.R;
 import account.fpoly.s_shop_client.Service.ApiService;
 import account.fpoly.s_shop_client.Tools.LIST;
@@ -42,6 +63,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final boolean type1;
     private static final int VIEW_TYPE_TYPE = 0;
     private static final int VIEW_TYPE_TYPE1 = 1;
+    String name,id,trademark,dec;
 
 
     public CartAdapter(Context context, boolean type1) {
@@ -97,11 +119,71 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
 
                 holder.imv_image.setOnClickListener(v -> {
-                    Intent intent = new Intent(context, ChitietProduct.class);
-                    intent.putExtra("id_product", cart.getId_product());
-                    context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(R.anim.next_enter, R.anim.next_exit);
+
+
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("product", context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    RequestQueue requestQueue = Volley.newRequestQueue(context);
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.api + "product?_id=" + cart.getId_product(),
+                            null, new com.android.volley.Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+
+                                JSONArray jsonArray = response.getJSONArray("data");
+                                if (jsonArray.length() > 0) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                JSONObject jsonObjectCat = jsonObject.getJSONObject("id_cat");
+
+                                    String namecat = jsonObjectCat.getString("name");
+
+                                    // Extract data from the jsonObject
+                                    String names = jsonObject.getString("name");
+                                    id = jsonObject.getString("_id");
+                                    String decs = jsonObject.getString("description");
+                                    String trademarks = jsonObject.getString("trademark");
+
+                                    JSONArray imagesArray = jsonObject.getJSONArray("images");
+                                    List<ProductModal.ImageItem> imageItemsList = new ArrayList<>();
+
+                                    for (int j = 0; j < imagesArray.length(); j++) {
+                                        JSONObject jsonObjectImage = imagesArray.getJSONObject(j);
+                                        String imageUrl = jsonObjectImage.getString("image");
+
+                                        // Tạo một đối tượng ImageItem và thêm vào danh sách
+                                        ProductModal.ImageItem imageItem = new ProductModal.ImageItem();
+                                        imageItem.setImage(imageUrl);
+                                        imageItemsList.add(imageItem);
+                                    }
+
+                                    editor.putString("images", new Gson().toJson(imageItemsList));
+                                    editor.putString("descriptionPro", decs);
+                                    editor.putString("trademark", trademarks);
+                                    editor.putString("tenProduct", names);
+                                    editor.putString("namecat", namecat);
+                                    // Save data to SharedPreferences
+                                    editor.apply();
+                                    startDetailActivity(context);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    });
+                    editor.putString("idProduct", cart.getId_product());
+                    editor.putString("giaProduct", cart.getPrice_product() + "");
+                    editor.apply();
+                    requestQueue.add(jsonObjectRequest);
                 });
+
+
+
                 holder.cbox_add.setOnClickListener(v -> {
                     if (holder.cbox_add.isChecked()) {
                         LIST.listBuyCart.add(cart);
@@ -161,7 +243,10 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
 
     }
-
+    private void startDetailActivity(Context context) {
+        Intent intent = new Intent(context, ChitietProduct.class);
+        context.startActivity(intent);
+    }
     private void replaceCartItem(Cart cart) {
         for (int i = 0; i < LIST.listBuyCart.size(); i++) {
             if(LIST.listBuyCart.get(i).get_id().equals(cart.get_id())){
