@@ -53,7 +53,7 @@ public class LichsuFragment extends Fragment implements SwipeRefreshLayout.OnRef
     TextView title;
     LinearLayout ln_cart_emty;
     Button btn_buy_cart;
-    private SwipeRefreshLayout swipeRefreshLayoutlichsu;
+//    private SwipeRefreshLayout swipeRefreshLayoutlichsu;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,8 +69,8 @@ public class LichsuFragment extends Fragment implements SwipeRefreshLayout.OnRef
         list = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rcv.setLayoutManager(manager);
-       swipeRefreshLayoutlichsu = view.findViewById(R.id.swiperefreshlayoutlichsu);
-       swipeRefreshLayoutlichsu.setOnRefreshListener(this);
+//       swipeRefreshLayoutlichsu = view.findViewById(R.id.swiperefreshlayoutlichsu);
+//       swipeRefreshLayoutlichsu.setOnRefreshListener(this);
         img_noti_lichsu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,12 +166,12 @@ public class LichsuFragment extends Fragment implements SwipeRefreshLayout.OnRef
     @Override
     public void onRefresh() {
         adapter.notifyDataSetChanged();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayoutlichsu.setRefreshing(false);
-            }
-        },2000);
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                swipeRefreshLayoutlichsu.setRefreshing(false);
+//            }
+//        },2000);
     }
 }

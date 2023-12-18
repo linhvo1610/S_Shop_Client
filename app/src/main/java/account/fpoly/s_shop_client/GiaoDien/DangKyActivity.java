@@ -104,6 +104,9 @@ public class DangKyActivity extends AppCompatActivity {
         else if (TextUtils.isEmpty(password)){
             Toast.makeText(this, "Không được để trống password", Toast.LENGTH_SHORT).show();
         }
+        else if (password.length() < 6){
+            Toast.makeText(this, "Password yếu vui lòng nhập lại!!!", Toast.LENGTH_SHORT).show();
+        }
         else if (TextUtils.isEmpty(email)){
             Toast.makeText(this, "Không được để trống email", Toast.LENGTH_SHORT).show();
         }
