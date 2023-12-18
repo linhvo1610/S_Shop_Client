@@ -50,9 +50,16 @@ public class Update_PassWord extends AppCompatActivity {
             btnupdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    
                     String currentPassword = ed_passcu.getText().toString();
                     String newPassword = ed_passnew.getText().toString();
                     String confirmPassword = nhaplai.getText().toString();
+                    
+                    if (newPassword.length() < 6 ){
+                        Toast.makeText(Update_PassWord.this, "Mật khẩu yếu vui lòng nhập lại!!!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    
                     UserModal userModal = new UserModal();
                     userModal.setCurrentPassword(currentPassword);
                     userModal.setNewPassword(newPassword);

@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     String maxPrice = null;
     LinearLayout nameLayout;
     Button btn_buy_cart;
-    private SwipeRefreshLayout refresh;
+//    private SwipeRefreshLayout refresh;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,7 +110,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         ln_cart_emty = view.findViewById(R.id.ln_cart_emty);
 
         rcv_new = view.findViewById(R.id.rcv_new);
-        refresh= view.findViewById(R.id.swiperefreshlayout);
+//        refresh= view.findViewById(R.id.swiperefreshlayout);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rcv_new.setLayoutManager(layoutManager);
 
@@ -124,14 +124,14 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
 //          refresh.setOnRefreshListener(this);
 
-          refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-              @Override
-              public void onRefresh() {
-                  callApiSeviceListProduct();
-                  callApiSeviceListProductHot();
-                  refresh.setRefreshing(false);
-              }
-          });
+//          refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//              @Override
+//              public void onRefresh() {
+//                  callApiSeviceListProduct();
+//                  callApiSeviceListProductHot();
+//                  refresh.setRefreshing(false);
+//              }
+//          });
         callApiSeviceListProduct();
         callApiSeviceListProductHot();
 
@@ -460,13 +460,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        productAdapter.notifyDataSetChanged();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-refresh.setRefreshing(false);
-            }
-        },2000);
+//        productAdapter.notifyDataSetChanged();
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//refresh.setRefreshing(false);
+//            }
+//        },2000);
     }
 }
